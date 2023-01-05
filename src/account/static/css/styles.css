@@ -1,0 +1,79 @@
+:root {
+  --light-color: #dddddd;
+  --dark-color: #333333;
+}
+
+@font-face {
+  font-family: Vazirmatn;
+  src: url("../fonts/Vazirmatn-Regular.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: VazirmatnBold;
+  src: url("../fonts/Vazirmatn-Bold.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font-family: Vazirmatn;
+  background-color: #fefefe;
+}
+
+* {
+  font-family: Vazirmatn;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+.rtl {
+  direction: rtl;
+}
+
+.ltr {
+  direction: ltr;
+}
+
+.bold-font {
+  font-family: VazirmatnBold;
+}
+
+/* Login % Register */
+
+.custom-search input {
+  border: none !important;
+}
+
+.custom-search button {
+  border: 1px solid var(--light-color);
+}
+
+.custom-search button:hover {
+  border: 1px solid var(--light-color);
+}
+
+.form input {
+  width: 100%;
+}
+
+.form-control {
+  border: 1px solid var(--dark-color);
+}
+
+ul.errorlist.nonfield {
+  padding: 0;
+}
+
+ul.errorlist.nonfield li {
+  color: #b02a37;
+}
