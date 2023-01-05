@@ -49,6 +49,11 @@
                   </li>
                   <li><hr class="dropdown-divider"></li>
                   <li>
+                    <a class="dropdown-item text-light" href="{% url 'account:change_password' %}">
+                      تغییر رمز عبور
+                    </a>
+                  </li>
+                  <li>
                     <a class="dropdown-item text-light" href="{% url 'account:logout' %}">
                       خروج از حساب
                     </a>
@@ -83,14 +88,14 @@
     </nav>
   </header>
   {% if messages %}
-  <ul class="messages">
+  <div class="messages">
     {% for message in messages %}
-      <li class="{{ message.tags }}">
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
         {{ message|safe }}
-        <a href="#" class="close">x</a>
-      </li>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
     {% endfor %}
-  </ul>
+  </div>
   {% endif %}
   <div class="container-fluid" id="content">
     {% block content %}
