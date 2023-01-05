@@ -7,3 +7,9 @@ for (let i = 0; i < fields.length; i++) {
     }
   });
 }
+
+for (let i = 0; i < fields.length; i++) {
+  if (fields[i].value) {
+    fields[i].style.direction = "ltr";
+  }
+}
