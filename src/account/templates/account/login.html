@@ -3,7 +3,7 @@
 {% block title %}ورود{% endblock %}
 
 {% block content %}
-  <h1 class="mt-4 bold-font">ورود</h1>
+  <h2 class="mt-4 bold-font">ورود به حساب کاربری</h2>
   <div class="form mx-md-3">
     {% if form.errors %}
       <p class="mt-4"></p>
@@ -20,5 +20,17 @@
         <input class="btn btn-success" type="submit" value="ورود">
       </div>
     </form>
+    <p class="mt-5 mb-2">
+      حساب کاربری نداری؟
+      <a href="" class="btn btn-primary btn-sm">
+        ثبت نام
+      </a>
+    </p>
+    <p class="mb-5">
+      رمز عبورت رو فراموش کردی؟
+      <a href="{% url 'account:reset_password' %}" class="btn btn-primary btn-sm">
+        بازنشانی رمز عبور
+      </a>
+    </p>
   </div>
 {% endblock %}
