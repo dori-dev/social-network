@@ -83,3 +83,7 @@ ul.errorlist li {
 .helptext {
   color: var(--gray);
 }
+
+.messages > div {
+  width: fit-content !important;
+}

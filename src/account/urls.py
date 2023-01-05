@@ -13,4 +13,15 @@ urlpatterns = [
         views.ChangePassword.as_view(),
         name='change_password'
     ),
+    # Reset password
+    path(
+        'reset-password/',
+        views.ResetPassword.as_view(),
+        name='reset_password'
+    ),
+    path(
+        'reset/<uidb64>/<token>/',
+        views.ResetPasswordConfirm.as_view(),
+        name='reset_password_confirm'
+    ),
 ]
