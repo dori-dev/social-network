@@ -72,7 +72,7 @@
                   <li><hr class="dropdown-divider"></li>
                   <li>
                     <a class="dropdown-item text-light" href="#">
-                      بازنشانی رمز
+                      فراموشی رمز عبور
                     </a>
                   </li>
                 {% endif %}
@@ -88,9 +88,9 @@
     </nav>
   </header>
   {% if messages %}
-  <div class="messages">
+  <div class="messages d-grid gap-2 col-md-6 mx-4">
     {% for message in messages %}
-      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show mt-2 mb-2" role="alert">
         {{ message|safe }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
