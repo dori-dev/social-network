@@ -81,6 +81,5 @@ ul.errorlist li {
 }
 
 .helptext {
-  padding-top: 50px !important;
   color: var(--gray);
 }
