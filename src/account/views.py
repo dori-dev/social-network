@@ -1,8 +1,10 @@
+from django.shortcuts import redirect
 from django.views import generic
 from django.contrib.auth import views as auth_views
+from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from . import forms
 
 
@@ -15,9 +17,53 @@ class UserLogin(auth_views.LoginView):
     template_name = 'account/login.html'
     redirect_authenticated_user = True
 
+    def get_success_url(self) -> str:
+        messages.add_message(
+            self.request,
+            messages.SUCCESS,
+            "با موفقیت وارد حساب ات شدی!",
+        )
+        return super().get_success_url()
+
 
 class UserLogout(auth_views.LogoutView):
     template_name = 'account/logged_out.html'
+
+
+class Register(generic.FormView):
+    form_class = forms.RegisterForm
+    success_url = reverse_lazy('account:dashboard')
+    template_name = 'account/register.html'
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        context['form'] = forms.RegisterForm()
+        return self.render_to_response(context)
+
+    def post(self, request, *args, **kwargs):
+        form: forms.RegisterForm = forms.RegisterForm(request.POST)
+        if form.is_valid():
+            return self.form_valid(form, **kwargs)
+        else:
+            return self.form_invalid(form, **kwargs)
+
+    def form_valid(self, form: forms.RegisterForm, **kwargs):
+        user = form.save()
+        login(
+            self.request,
+            user,
+        )
+        messages.add_message(
+            self.request,
+            messages.SUCCESS,
+            "به سایت <strong>بگو مگو</strong> خوش اومدی :)",
+        )
+        return redirect(self.success_url)
+
+    def form_invalid(self, form, **kwargs):
+        context = self.get_context_data(**kwargs)
+        context['form'] = form
+        return self.render_to_response(context)
 
 
 class ChangePassword(LoginRequiredMixin, auth_views.PasswordChangeView):

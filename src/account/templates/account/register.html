@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}ساخت اکانت{% endblock %}
+
+{% block content %}
+  <h2 class="mt-4 bold-font">ساخت حساب کاربری</h2>
+  <div class="form mx-md-3">
+    {% if form.errors %}
+      <p class="mt-4"></p>
+    {% else %}
+      <p class="mt-4">با پر کردن فیلد های زیر ثبت نام کن:</p>
+    {% endif %}
+    <form action="{% url 'account:register' %}" method="post">
+      <div class="d-grid gap-2 col-md-6">
+        {{ form.as_p }}
+      </div>
+      {% csrf_token %}
+      <div class="d-grid gap-2 col-md-6 mt-2">
+        <input class="btn btn-success" type="submit" value="ثبت نام">
+      </div>
+    </form>
+    <p class="mt-5 mb-2">
+      حساب کاربری داری؟
+      <a href="" class="btn btn-primary btn-sm">
+        ورود به حساب کاربری
+      </a>
+    </p>
+  </div>
+  <div class="py-5"></div>
+{% endblock %}
+
+
