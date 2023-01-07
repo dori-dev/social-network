@@ -54,6 +54,7 @@ class Register(generic.FormView):
         login(
             self.request,
             user,
+            'django.contrib.auth.backends.ModelBackend',
         )
         messages.add_message(
             self.request,
