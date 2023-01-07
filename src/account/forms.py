@@ -207,6 +207,7 @@ class RegisterForm(auth_forms.UserCreationForm):
         email.error_messages = {
             'required': 'پر کردن فیلد ایمیل ضروری است!',
             'invalid': 'یک ایمیل صحیح وارد کن.',
+            'unique': 'هم اکنون کاربری با این ایمیل وجود دارد.',
         }
 
 

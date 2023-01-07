@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 from . import models
 
 
@@ -19,3 +20,8 @@ class ProfileAdmin(admin.ModelAdmin):
     raw_id_fields = [
         'user',
     ]
+
+
+@admin.register(models.CustomUser)
+class CustomUserAdmin(UserAdmin):
+    pass

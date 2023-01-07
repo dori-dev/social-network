@@ -2,8 +2,16 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.db.models.fields.files import ImageFieldFile
+
+
+class CustomUser(AbstractUser):
+    email = models.EmailField(
+        unique=True,
+    )
+
 
 User = get_user_model()
 
