@@ -1,11 +1,14 @@
+from django.shortcuts import render
 from django.shortcuts import redirect
 from django.views import generic
 from django.contrib.auth import views as auth_views
-from django.contrib.auth import login
+from django.contrib.auth import login, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
 from . import forms
+
+User = get_user_model()
 
 
 class Dashboard(LoginRequiredMixin, generic.TemplateView):
@@ -44,8 +47,7 @@ class Register(generic.FormView):
         form: forms.RegisterForm = forms.RegisterForm(request.POST)
         if form.is_valid():
             return self.form_valid(form, **kwargs)
-        else:
-            return self.form_invalid(form, **kwargs)
+        return self.form_invalid(form, **kwargs)
 
     def form_valid(self, form: forms.RegisterForm, **kwargs):
         user = form.save()
@@ -64,6 +66,53 @@ class Register(generic.FormView):
         context = self.get_context_data(**kwargs)
         context['form'] = form
         return self.render_to_response(context)
+
+
+class Edit(LoginRequiredMixin, generic.View):
+    success_url = reverse_lazy('account:dashboard')
+    template_name = 'account/edit.html'
+
+    def get(self, request, *args, **kwargs):
+        context = {
+            'user_form': forms.UserEditForm(
+                instance=request.user,
+            ),
+            'profile_form': forms.UserProfileEditForm(
+                instance=request.user.profile,
+            ),
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        user_form = forms.UserEditForm(
+            data=request.POST,
+            instance=request.user,
+        )
+        profile_form = forms.UserProfileEditForm(
+            data=request.POST,
+            instance=request.user.profile,
+            files=request.FILES,
+        )
+        if user_form.is_valid() and profile_form.is_valid():
+            return self.form_valid(user_form, profile_form, **kwargs)
+        return self.form_invalid(user_form, profile_form, **kwargs)
+
+    def form_valid(self, user_form, profile_form, **kwargs):
+        user_form.save()
+        profile_form.save()
+        messages.add_message(
+            self.request,
+            messages.SUCCESS,
+            "پروفایلت با موفقیت بروزرسانی شد!",
+        )
+        return redirect(self.success_url)
+
+    def form_invalid(self, user_form, profile_form, **kwargs):
+        context = {
+            'user_form': user_form,
+            'profile_form': profile_form,
+        }
+        return render(self.request, self.template_name, context)
 
 
 class ChangePassword(LoginRequiredMixin, auth_views.PasswordChangeView):
