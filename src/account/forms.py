@@ -1,6 +1,17 @@
+from io import BytesIO
+from django.core.exceptions import ValidationError
 from django import forms
 from django.contrib.auth import forms as auth_forms
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from .models import Profile
+
+User = get_user_model()
+User._meta.get_field('first_name').validators[0].limit_value = 30
+error_message = (
+    'طول اسم باید کمتر از 30 کاراکتر باشد'
+    ' اما تو %(show_value)s کاراکتر وارد کردی!'
+)
+User._meta.get_field('first_name').validators[0].message = error_message
 
 
 class LoginForm(auth_forms.AuthenticationForm):
@@ -154,7 +165,6 @@ class RegisterForm(auth_forms.UserCreationForm):
         model = User
         fields = (
             'username',
-            'first_name',
             'email',
         )
         field_classes = {
@@ -162,7 +172,6 @@ class RegisterForm(auth_forms.UserCreationForm):
         }
         labels = {
             'username': 'نام کاربری',
-            'first_name': 'اسم',
             'email': 'ایمیل',
         }
 
@@ -188,14 +197,6 @@ class RegisterForm(auth_forms.UserCreationForm):
             'invalid': 'یک نام کاربری صحیح وارد کن.',
             'unique': 'هم اکنون کاربری با این آیدی وجود دارد.',
         }
-        # first name
-        first_name = self.fields['first_name']
-        first_name.required = True
-        first_name.widget.attrs['class'] = 'form-control mt-2 mb-2'
-        first_name.widget.attrs['placeholder'] = 'اسم ات رو وارد کن...'
-        first_name.error_messages = {
-            'required': 'اسمتو بهم بگو تا بدونم چی صدات کنم!',
-        }
         # email
         email = self.fields['email']
         email.required = True
@@ -207,3 +208,138 @@ class RegisterForm(auth_forms.UserCreationForm):
             'required': 'پر کردن فیلد ایمیل ضروری است!',
             'invalid': 'یک ایمیل صحیح وارد کن.',
         }
+
+
+class UserEditForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = (
+            'first_name',
+            'username',
+        )
+        field_classes = {
+            'username': auth_forms.UsernameField
+        }
+        labels = {
+            'username': 'نام کاربری',
+            'first_name': 'اسم',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].error_messages = {
+                'required': 'پر کردن این فیلد ضروری است!',
+                'invalid': 'این فیلد رو به درستی وارد کن!',
+            }
+        # username
+        help_text = "استفاده از حروف، اعداد و @ . + - _ مجاز است."
+        username = self.fields['username']
+        username.required = True
+        username.help_text = help_text
+        username.widget.attrs[
+            'class'
+        ] = 'form-control mt-2 mb-2 direction-change'
+        username.widget.attrs[
+            'placeholder'
+        ] = 'آیدی یا نام کاربری مورد نظرت...'
+        username.error_messages = {
+            'required': 'تعیین نام کاربری ضروری است!',
+            'invalid': 'یک نام کاربری صحیح وارد کن.',
+            'unique': 'هم اکنون کاربری با این آیدی وجود دارد.',
+        }
+        # first_name
+        first_name = self.fields['first_name']
+        first_name.widget.attrs['class'] = 'form-control mt-2 mb-2'
+        first_name.widget.attrs[
+            'placeholder'
+        ] = 'اسمتو بهم بگو تا بدونم چی صدات کنم!'
+
+
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
+
+class ImageField(forms.FileField):
+    default_error_messages = {
+        "invalid_image": (
+            "لطفا یک عکس آپولود کن."
+        ),
+    }
+
+    def to_python(self, data):
+        f = super().to_python(data)
+        if f is None:
+            return None
+
+        from PIL import Image
+
+        if hasattr(data, "temporary_file_path"):
+            file = data.temporary_file_path()
+        else:
+            if hasattr(data, "read"):
+                file = BytesIO(data.read())
+            else:
+                file = BytesIO(data["content"])
+
+        try:
+            image = Image.open(file)
+            image.verify()
+            f.image = image
+            f.content_type = Image.MIME.get(image.format)
+        except Exception as exc:
+            raise ValidationError(
+                self.default_error_messages["invalid_image"],
+                code="invalid_image",
+            ) from exc
+        if hasattr(f, "seek") and callable(f.seek):
+            f.seek(0)
+        return f
+
+    def widget_attrs(self, widget):
+        attrs = super().widget_attrs(widget)
+        if isinstance(widget, forms.FileInput) and \
+                "accept" not in widget.attrs:
+            attrs.setdefault("accept", "image/*")
+        return attrs
+
+
+class UserProfileEditForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = (
+            'date_of_birth',
+            'photo',
+        )
+        widgets = {
+            'date_of_birth': DateInput(),
+        }
+        field_classes = {
+            'photo': ImageField,
+        }
+        labels = {
+            'date_of_birth': 'تاریخ تولد',
+            'photo': 'عکس پروفایل',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].error_messages = {
+                'required': 'پر کردن این فیلد ضروری است!',
+                'invalid': 'این فیلد رو به درستی وارد کن!',
+            }
+        # date of birth
+        date_of_birth = self.fields['date_of_birth']
+        date_of_birth.widget.attrs[
+            'class'
+        ] = 'form-control mt-2 mb-2 direction-change'
+        date_of_birth.widget.attrs[
+            'placeholder'
+        ] = 'تاریخ تولدت رو اینجا وارد کن...'
+        # photo
+        photo = self.fields['photo']
+        photo.widget.attrs['class'] = 'form-control mt-2 mb-2'
+        photo.widget.attrs[
+            'placeholder'
+        ] = 'عکس پروفایل ات رو آپلود کن...'
