@@ -2,8 +2,17 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.core.exceptions import ValidationError
+from django.db.models.fields.files import ImageFieldFile
 
 User = get_user_model()
+
+
+def check_image(image: ImageFieldFile):
+    if image.size > 2_000_000:
+        raise ValidationError(
+            "حجم عکس ات بیشتر از 2 مگابایت است!"
+        )
 
 
 class Profile(models.Model):
@@ -18,6 +27,9 @@ class Profile(models.Model):
     photo = models.ImageField(
         upload_to='users/%Y/%m/%d/',
         blank=True,
+        validators=[
+            check_image,
+        ]
     )
 
     @receiver(post_save, sender=User)
