@@ -87,3 +87,9 @@ ul.errorlist li {
 .messages > div {
   width: fit-content !important;
 }
+
+.mini-img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}

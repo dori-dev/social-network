@@ -5,4 +5,16 @@
 {% block content %}
   <h2 class="bold-font mt-4">داشبورد</h2>
   <p class="mt-4">به داشبورد ات خوش آمدی</p>
+  <p class="mt-1">
+    میخوای پروفایلت رو تغییر بدی؟
+    <a class="btn btn-primary btn-sm" href="{% url 'account:edit' %}">
+      تغییر پروفایل
+    </a>
+  </p>
+  <p class="mt-1">
+    میخوای رمز عبورت رو عوض کنی؟
+    <a class="btn btn-primary btn-sm" href="{% url 'account:change_password' %}">
+      تغییر رمز عبور
+    </a>
+  </p>
 {% endblock %}
