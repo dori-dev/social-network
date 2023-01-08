@@ -4,3 +4,5 @@ db.sqlite3
 migrations
 media/
 README.md
+cert.crt
+cert.key
