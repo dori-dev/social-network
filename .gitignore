@@ -6,3 +6,4 @@ media/
 README.md
 cert.crt
 cert.key
+.env
