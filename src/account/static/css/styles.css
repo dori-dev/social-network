@@ -93,3 +93,14 @@ ul.errorlist li {
   height: 50px;
   object-fit: cover;
 }
+
+.google-login {
+  padding: 2px 15px;
+}
+
+.google-login svg {
+  width: 27px;
+  height: 27px;
+  fill: #fefefe;
+  margin-right: 5px;
+}

@@ -1,4 +1,7 @@
 from django.contrib.auth import get_user_model
+from django.db.utils import IntegrityError
+from social_core.backends.google import GoogleOAuth2
+from social_core.exceptions import AuthAlreadyAssociated
 
 User = get_user_model()
 
@@ -23,3 +26,17 @@ class EmailAuthBackend(object):
         except User.DoesNotExist:
             return None
         return user if self.user_can_authenticate(user) else None
+
+
+class CustomGoogleOAuth2(GoogleOAuth2):
+    def pipeline(self, pipeline, pipeline_index=0, *args, **kwargs):
+        try:
+            return super().pipeline(pipeline, pipeline_index, *args, **kwargs)
+        except IntegrityError:
+            email = kwargs['response']['email']
+            user = User.objects.get(email=email)
+            user.social_user = None
+            user.is_new = False
+            return user
+        except AuthAlreadyAssociated:
+            return None
