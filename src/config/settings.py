@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'django_extensions',
     # local apps
     'account.apps.AccountConfig',
-    'image.apps.ImageConfig',
+    'post.apps.PostConfig',
 ]
 
 MIDDLEWARE = [
