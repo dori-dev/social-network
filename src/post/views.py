@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.shortcuts import redirect
 from . import forms
+from . import models
 
 
 class CreatePost(LoginRequiredMixin, generic.FormView):
@@ -37,3 +38,8 @@ class CreatePost(LoginRequiredMixin, generic.FormView):
         context = self.get_context_data(**kwargs)
         context['form'] = form
         return self.render_to_response(context)
+
+
+class PostDetail(generic.DeleteView):
+    model = models.Post
+    template_name = 'post/detail.html'
