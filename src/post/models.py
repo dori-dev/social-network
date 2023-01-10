@@ -5,6 +5,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.db.models.fields.files import ImageFieldFile
+from django.urls import reverse
 
 
 UserModel = get_user_model()
@@ -17,7 +18,7 @@ def check_image(image: ImageFieldFile):
         )
 
 
-class Image(models.Model):
+class Post(models.Model):
     user = models.ForeignKey(
         UserModel,
         related_name='images',
@@ -59,7 +60,7 @@ class Image(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             slug = self._random_slug(8)
-            while Image.objects.filter(slug=slug).exists():
+            while Post.objects.filter(slug=slug).exists():
                 slug = self._random_slug(8)
             self.slug = slug
         return super().save(*args, **kwargs)
@@ -67,6 +68,9 @@ class Image(models.Model):
     @staticmethod
     def _random_slug(length: int) -> str:
         return "".join(choices(ascii_letters, k=length))
+
+    def get_absolute_url(self):
+        return reverse('posts:detail', kwargs={'slug': self.slug})
 
     def __str__(self):
         return self.title
