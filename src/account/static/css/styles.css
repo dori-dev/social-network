@@ -98,6 +98,14 @@ ul.errorlist li {
   object-fit: cover;
 }
 
+.username {
+  font-size: 22px;
+}
+
+.mini-username {
+  font-size: 20px;
+}
+
 .google-login {
   padding: 2px 15px;
 }
