@@ -37,6 +37,10 @@ ul {
   list-style: none;
 }
 
+textarea {
+  resize: none;
+}
+
 .rtl {
   direction: rtl;
 }
@@ -103,4 +107,9 @@ ul.errorlist li {
   height: 27px;
   fill: #fefefe;
   margin-right: 5px;
+}
+
+input.post-title-input {
+  text-align: start;
+  unicode-bidi: plaintext;
 }

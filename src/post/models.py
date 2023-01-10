@@ -25,7 +25,7 @@ class Post(models.Model):
         on_delete=models.CASCADE,
     )
     title = models.CharField(
-        max_length=256,
+        max_length=100,
     )
     slug = models.SlugField(
         max_length=8,
