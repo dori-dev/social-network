@@ -34,11 +34,11 @@ class LikeFilter(admin.SimpleListFilter):
             )
 
 
-@admin.register(models.Image)
-class ImageAdmin(admin.ModelAdmin):
+@admin.register(models.Post)
+class PostAdmin(admin.ModelAdmin):
     list_display = [
         'user',
-        'post',
+        'post_link',
         'image_file',
         'created',
         'likes',
@@ -92,17 +92,17 @@ class ImageAdmin(admin.ModelAdmin):
         LikeFilter,
     ]
 
-    def post(self, model: models.Image):
-        slug = model.slug
+    def post_link(self, model: models.Post):
+        url = model.get_absolute_url()
         return format_html(
-            f'<a target="_blank" href="{slug}">Url</a>'
+            f'<a target="_blank" href="{url}">Url</a>'
         )
 
-    def image_file(self, model: models.Image):
+    def image_file(self, model: models.Post):
         image_url = model.image.url
         return format_html(
             f'<a target="_blank" href="{image_url}">File</a>'
         )
 
-    def likes(self, model: models.Image):
+    def likes(self, model: models.Post):
         return model.users_like.count()
