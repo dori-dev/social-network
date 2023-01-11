@@ -2,6 +2,8 @@
   --light-color: #dddddd;
   --dark-color: #333333;
   --gray: #777;
+  --primary: #198754;
+  --like-color: #ed4956;
 }
 
 @font-face {
@@ -104,6 +106,24 @@ ul.errorlist li {
 
 .mini-username {
   font-size: 18px;
+}
+
+.like .liked svg {
+  width: 40px;
+  height: 40px;
+  fill: var(--like-color);
+  -webkit-filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.3));
+  cursor: pointer;
+}
+
+.like .default svg {
+  width: 40px;
+  height: 40px;
+  fill: #555;
+  -webkit-filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.3));
+  cursor: pointer;
 }
 
 .google-login {

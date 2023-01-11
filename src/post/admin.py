@@ -73,7 +73,6 @@ class PostAdmin(admin.ModelAdmin):
         (
             'Image', {
                 'fields': [
-                    'url',
                     'image',
                 ]
             }
