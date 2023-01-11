@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}پروفایل{% endblock %}
+
+{% block content %}
+  <h2 class="bold-font mt-4">پروفایل</h2>
+  <p class="mt-4">به پروفایل ات خوش آمدی</p>
+  {% with total_images_created=request.user.posts.count %}
+    <p>تو تاحالا {{ total_images_created }} پست به اشتراک گذاشتی.</p>
+  {% endwith %}
+  <p>
+    برای اشتراک عکس های سایر وبسایت ها این دکمه رو بکش و توی قسمت بوکمارت ها رها کن
+    <a href="" class="btn btn-success btn-sm mx-2">اشتراک عکس</a>
+  <p>
+  <p class="mt-1">
+    میخوای پروفایلت رو تغییر بدی؟
+    <a class="btn btn-primary btn-sm mx-2" href="{% url 'account:edit' %}">
+      تغییر پروفایل
+    </a>
+  </p>
+  <p class="mt-1">
+    میخوای رمز عبورت رو عوض کنی؟
+    <a class="btn btn-primary btn-sm mx-2" href="{% url 'account:change_password' %}">
+      تغییر رمز عبور
+    </a>
+  </p>
+{% endblock %}

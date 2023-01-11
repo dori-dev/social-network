@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}تغییر اطلاعات حساب{% endblock %}
+
+{% block content %}
+  <h2 class="mt-4 bold-font">تغییر اطلاعات اکانت</h2>
+  <div class="form mx-md-3">
+    {% if form.errors %}
+      <p class="mt-4"></p>
+    {% else %}
+      <p class="mt-4">اطلاعات دلخواه ات با فیلد های زیر تغییر بده و ثبت کن:</p>
+    {% endif %}
+    <form method="post" enctype="multipart/form-data">
+      <div class="d-grid gap-2 col-md-6">
+        {{ user_form.as_p }}
+        <p>
+          <label for="id_date_of_birth">تاریخ تولد:</label>
+          {{ profile_form.date_of_birth }}
+        </p>
+        <p class="mb-0">
+          {{ profile_form.photo.errors }}
+          <label for="id_photo">عکس پروفایل:</label>
+          <input type="file" name="photo" accept="image/*" class="form-control mt-2" placeholder="عکس پروفایل ات رو آپلود کن..." id="id_photo">
+          {% if profile_form.photo.value %}
+            <p class="mt-0 mb-0 d-table">
+              <input class="w-auto mx-2" type="checkbox" name="photo-clear" id="photo-clear_id">
+              <label for="photo-clear_id">حذف پروفایل فعلی</label>
+              <a class="mx-1" target="_blank" href="{{ profile_form.photo.value.url }}">
+                <img class="img-thumbnail rounded-circle mini-img" src="{{ profile_form.photo.value.url }}" alt="">
+              </a>
+            </p>
+          {% else %}
+          <div class="mb-2"></div>
+          {% endif %}
+        </p>
+      </div>
+      {% csrf_token %}
+      <div class="d-grid gap-2 col-md-6">
+        <input class="btn btn-success" type="submit" value="ثبت تغییرات">
+      </div>
+    </form>
+  </div>
+  <div class="py-5"></div>
+{% endblock %}
+
+
+

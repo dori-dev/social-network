@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}انتشار یک پست{% endblock title %}
+
+{% block content %}
+  <h2 class="mt-4 bold-font">انتشار پست</h2>
+  <div class="row form mx-md-3 d-flex justify-content-between align-content-center">
+    <div class="col-md-6 order-md-0 order-1 mt-0 mt-md-4">
+      <form method="post">
+        <div class="d-grid gap-2 col-md-12">
+          {{ form.as_p }}
+          <input type="hidden" name="url" value="{{ request.GET.url }}" id="id_url">
+        </div>
+        {% csrf_token %}
+        <div class="d-grid gap-2 col-md-12">
+          <input class="btn btn-success" type="submit" value="انتشار">
+        </div>
+      </form>
+    </div>
+    <div class="col-md-5 order-md-1 order-0 mb-md-0 mb-4 mt-md-4 mt-3">
+      <img src="{{ request.GET.url }}" class="w-100 rounded img-thumbnail" alt="تصویر پست">
+    </div>
+  </div>
+  <div class="py-5"></div>
+{% endblock content %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}رمز عبور ات رو بازنشانی کن{% endblock %}
+
+{% block content %}
+  <h2 class="mt-4 bold-font">بازنشانی رمز عبور</h2>
+  {% if validlink %}
+  <div class="form mx-md-3">
+    <p class="mt-4">لطفا رمز عبور جدیدی وارد کن:</p>
+    <form method="post">
+      <div class="d-grid gap-2 col-md-6">
+        {{ form.as_p }}
+      </div>
+      {% csrf_token %}
+      <div class="d-grid gap-2 col-md-6">
+        <input class="btn btn-success" type="submit" value="تغییر رمز عبور">
+      </div>
+    </form>
+  </div>
+  {% else %}
+  <p class="mt-4">
+    این لینک بازنشانی رمز عبور نامعتبر است. لطفا یکبار دیگر درخواست بازنشانی رمز
+    عبور بده.
+  </p>
+  {% endif %}
+{% endblock %}
