@@ -109,18 +109,18 @@ ul.errorlist li {
 }
 
 .like .liked svg {
-  width: 40px;
-  height: 40px;
-  fill: var(--like-color);
+  width: 45px;
+  height: 45px;
+  fill: var(--primary) !important;
   -webkit-filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.3));
   filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.3));
   cursor: pointer;
 }
 
 .like .default svg {
-  width: 40px;
-  height: 40px;
-  fill: #555;
+  width: 45px;
+  height: 45px;
+  fill: #000;
   -webkit-filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.3));
   filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.3));
   cursor: pointer;

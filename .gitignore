@@ -4,6 +4,7 @@ db.sqlite3
 migrations
 */media/users/
 */media/images/
+*/media/profile.png.*
 README.md
 cert.crt
 cert.key

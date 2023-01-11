@@ -6,22 +6,59 @@
   <h2 class="mt-4 bold-font">{{ post.title }}</h2>
   <div class="row mt-4 form mx-md-3 d-flex justify-content-between align-content-center">
     <div class="col-md-6 order-md-0 order-1 mt-0 mt-md-4">
-      <div class="row mt-md-3 mt-1 mb-4 d-flex justify-content-center align-content-center">
-        <div class="like col-6 d-flex align-content-center flex-wrap">
+      <div class="row mt-md-3 mt-1 mb-4 d-flex justify-content-center align-content-center align-items-center">
+        <div class="like col-6 d-flex">
           {% if request.user in post.users_like.all %}
           <div class="liked">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/></svg>
+            <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="768.000000pt" height="768.000000pt" viewBox="0 0 768.000000 768.000000" preserveAspectRatio="xMidYMid meet">
+              <g transform="translate(0.000000,768.000000) scale(0.100000,-0.100000)" stroke="none">
+                <path d="M4545 6816 c-82 -19 -183 -66 -261 -121 -87 -62 -120 -106 -744 -975
+                -574 -801 -595 -827 -976 -1220 -250 -259 -263 -275 -275 -347 -6 -34 -12
+                -563 -16 -1285 l-5 -1227 50 -69 c73 -97 462 -478 547 -534 148 -97 288 -151
+                441 -170 153 -18 2198 -18 2279 1 97 21 209 68 292 123 101 65 258 224 300
+                303 76 145 842 1872 985 2220 99 242 102 259 100 570 -1 148 -7 284 -13 315
+                -47 229 -268 464 -497 526 -77 21 -493 33 -1188 33 l-542 1 85 213 c268 677
+                299 787 273 963 -51 337 -249 585 -527 662 -98 28 -232 35 -308 18z"/>
+                <path d="M910 4519 c-201 -58 -333 -164 -451 -363 l-59 -100 0 -1248 0 -1249
+                26 -52 c97 -191 248 -338 409 -399 54 -20 78 -23 240 -22 l180 0 75 32 c162
+                70 286 193 371 369 l49 102 0 1218 0 1218 -50 100 c-94 187 -230 312 -402 370
+                -71 24 -102 28 -218 31 -74 2 -151 -1 -170 -7z"/>
+              </g>
+            </svg>
           </div>
           {% else %}
           <div class="default">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M244 84L255.1 96L267.1 84.02C300.6 51.37 347 36.51 392.6 44.1C461.5 55.58 512 115.2 512 185.1V190.9C512 232.4 494.8 272.1 464.4 300.4L283.7 469.1C276.2 476.1 266.3 480 256 480C245.7 480 235.8 476.1 228.3 469.1L47.59 300.4C17.23 272.1 0 232.4 0 190.9V185.1C0 115.2 50.52 55.58 119.4 44.1C164.1 36.51 211.4 51.37 244 84C243.1 84 244 84.01 244 84L244 84zM255.1 163.9L210.1 117.1C188.4 96.28 157.6 86.4 127.3 91.44C81.55 99.07 48 138.7 48 185.1V190.9C48 219.1 59.71 246.1 80.34 265.3L256 429.3L431.7 265.3C452.3 246.1 464 219.1 464 190.9V185.1C464 138.7 430.4 99.07 384.7 91.44C354.4 86.4 323.6 96.28 301.9 117.1L255.1 163.9z"/></svg>
+            <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="768.000000pt" height="768.000000pt" viewBox="0 0 768.000000 768.000000" preserveAspectRatio="xMidYMid meet">
+              <g transform="translate(0.000000,768.000000) scale(0.100000,-0.100000)" stroke="none">
+                <path d="M4545 6816 c-82 -19 -183 -66 -261 -121 -87 -62 -120 -106 -744 -975
+                -574 -801 -595 -827 -976 -1220 -250 -259 -263 -275 -275 -347 -6 -34 -12
+                -563 -16 -1285 l-5 -1227 50 -69 c73 -97 462 -478 547 -534 148 -97 288 -151
+                441 -170 153 -18 2198 -18 2279 1 97 21 209 68 292 123 101 65 258 224 300
+                303 76 145 842 1872 985 2220 99 242 102 259 100 570 -1 148 -7 284 -13 315
+                -47 229 -268 464 -497 526 -77 21 -493 33 -1188 33 l-542 1 85 213 c268 677
+                299 787 273 963 -51 337 -249 585 -527 662 -98 28 -232 35 -308 18z m240 -231
+                c171 -45 303 -192 355 -399 46 -183 40 -209 -236 -913 -85 -216 -154 -406
+                -154 -422 0 -46 19 -78 59 -98 33 -16 103 -18 931 -24 515 -4 913 -11 937 -16
+                115 -27 225 -112 296 -230 60 -101 62 -112 62 -403 0 -262 0 -266 -27 -341
+                -55 -156 -322 -770 -765 -1759 l-267 -595 -90 -90 c-104 -103 -185 -154 -302
+                -191 l-81 -25 -1109 3 -1109 4 -86 32 c-142 54 -223 109 -385 260 -154 143
+                -272 264 -299 306 -14 21 -15 148 -13 1223 l3 1199 30 36 c17 20 131 142 256
+                271 345 358 338 350 988 1255 557 775 583 809 661 860 36 23 85 49 110 57 61
+                18 163 18 235 0z"/>
+                <path d="M910 4519 c-201 -58 -333 -164 -451 -363 l-59 -100 0 -1248 0 -1249
+                26 -52 c97 -191 248 -338 409 -399 54 -20 78 -23 240 -22 l180 0 75 32 c162
+                70 286 193 371 369 l49 102 0 1218 0 1218 -50 100 c-94 187 -230 312 -402 370
+                -71 24 -102 28 -218 31 -74 2 -151 -1 -170 -7z"/>
+              </g>
+            </svg>
           </div>
           {% endif %}
         </div>
         <div class="author col-6">
           <a href="" class="">
             <div class="d-flex flex-row-reverse">
-              <img src="{{ post.user.profile.photo.url }}" class="img-thumbnail rounded-circle mini-img">
+              {% load thumbnail %}
+              <img src="{% thumbnail post.user.profile.photo 240x0 %}" class="img-thumbnail rounded-circle mini-img">
               <div class="mx-2 d-flex flex-column justify-content-center align-content-center">
                 <span class="text-end username bold-font">{{ post.user.username }}</span>
                 <span>{{ post.user.posts.count }} پست</span>
@@ -49,7 +86,8 @@
           <div class="col-md-4 col-6 mb-5">
             <a class="text-center d-flex flex-column justify-content-center align-content-center" href="">
               <div>
-                <img src="{{ user.profile.photo.url }}" class="img-thumbnail rounded-circle mini-img">
+                {% load thumbnail %}
+                <img src="{% thumbnail user.profile.photo 240x0 %}" class="img-thumbnail rounded-circle mini-img">
               </div>
               <div>
                 <span class="mini-username bold-font text-center">{{ user.username }}</span>
