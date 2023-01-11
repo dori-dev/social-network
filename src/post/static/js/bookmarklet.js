@@ -1,6 +1,6 @@
 (function(){
-  var jquery_version = '3.4.1';
-  var site_url = 'https://127.0.0.1:8000/';
+  var jquery_version = '3.5.1';
+  var site_url = 'https://mysite.com:8000/';
   var static_url = site_url + 'static/';
   var min_width = 100;
   var min_height = 100;
@@ -33,14 +33,13 @@
         image_url +'" /></a>');
       }
     });
-
     // when an image is selected open URL with it
     jQuery('#bookmarklet .images a').click(function(e){
       selected_image = jQuery(this).children('img').attr('src');
       // hide bookmarklet
       jQuery('#bookmarklet').hide();
       // open new window to submit the image
-      window.open(site_url +'images/create/?url='
+      window.open(site_url +'posts/create/?url='
                   + encodeURIComponent(selected_image)
                   + '&title='
                   + encodeURIComponent(jQuery('title').text()),
