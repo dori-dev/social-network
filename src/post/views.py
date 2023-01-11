@@ -18,6 +18,7 @@ class CreatePost(LoginRequiredMixin, generic.FormView):
     def post(self, request, *args, **kwargs):
         form: forms.CreatePostForm = forms.CreatePostForm(
             request.POST,
+            files=request.FILES,
         )
         if form.is_valid():
             return self.form_valid(form, **kwargs)

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}انتشار یک پست{% endblock title %}
 
@@ -6,10 +7,9 @@
   <h2 class="mt-4 bold-font">انتشار پست</h2>
   <div class="row form mx-md-3 d-flex justify-content-between align-content-center">
     <div class="col-md-6 order-md-0 order-1 mt-0 mt-md-4">
-      <form method="post">
+      <form method="post" enctype="multipart/form-data" novalidate>
         <div class="d-grid gap-2 col-md-12">
           {{ form.as_p }}
-          <input type="hidden" name="url" value="{{ request.GET.url }}" id="id_url">
         </div>
         {% csrf_token %}
         <div class="d-grid gap-2 col-md-12">
@@ -18,8 +18,23 @@
       </form>
     </div>
     <div class="col-md-5 order-md-1 order-0 mb-md-0 mb-4 mt-md-4 mt-3">
-      <img src="{{ request.GET.url }}" class="w-100 rounded img-thumbnail" alt="تصویر پست">
+      <img src="{% static 'img/default.png' %}" id="preview" class="w-100 rounded" alt="تصویر پست">
     </div>
   </div>
   <div class="py-5"></div>
 {% endblock content %}
+{% block script %}
+  <script>
+    var output = document.getElementById("preview");
+    var loadImage = function (event) {
+      if (event.target.files[0] !== undefined) {
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function () {
+          URL.revokeObjectURL(output.src);
+        };
+      } else {
+        output.src = "{% static 'img/default.png' %}";
+      }
+    };
+  </script>
+{% endblock script %}

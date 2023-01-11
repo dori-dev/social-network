@@ -34,10 +34,6 @@ class Post(models.Model):
         db_index=True,
         blank=True,
     )
-    url = models.URLField(
-        blank=True,
-        null=True,
-    )
     image = models.ImageField(
         upload_to='images/%Y/%m/%d/',
         validators=[
