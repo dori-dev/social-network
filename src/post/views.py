@@ -50,7 +50,7 @@ class PostDetail(generic.DeleteView):
 
 
 @method_decorator(csrf_protect, name='dispatch')
-class LikePost(generic.UpdateView):
+class LikePost(LoginRequiredMixin, generic.UpdateView):
     http_method_names = [
         'post',
     ]
