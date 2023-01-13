@@ -1,7 +1,8 @@
 from django.views import generic
 from django.views.decorators.csrf import csrf_protect
-from django.contrib.auth.mixins import LoginRequiredMixin
+from utils.mixins import AjaxRequiredMixin
 from django.utils.decorators import method_decorator
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.http import JsonResponse
@@ -50,7 +51,10 @@ class PostDetail(generic.DeleteView):
 
 
 @method_decorator(csrf_protect, name='dispatch')
-class LikePost(LoginRequiredMixin, generic.UpdateView):
+class LikePost(
+        LoginRequiredMixin,
+        AjaxRequiredMixin,
+        generic.UpdateView):
     http_method_names = [
         'post',
     ]

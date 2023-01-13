@@ -170,6 +170,7 @@
       };
       request.open("POST", "{% url 'post:like' post.slug %}", true);
       request.setRequestHeader("X-CSRFToken", csrf);
+      request.setRequestHeader("x-requested-with", "XMLHttpRequest");
       var data = new FormData();
       data.append("action", action);
       request.send(data);
