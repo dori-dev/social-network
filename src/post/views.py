@@ -1,7 +1,10 @@
 from django.views import generic
+from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.shortcuts import redirect
+from django.http import JsonResponse
 from . import forms
 from . import models
 
@@ -44,3 +47,33 @@ class CreatePost(LoginRequiredMixin, generic.FormView):
 class PostDetail(generic.DeleteView):
     model = models.Post
     template_name = 'post/detail.html'
+
+
+@method_decorator(csrf_protect, name='dispatch')
+class LikePost(generic.UpdateView):
+    http_method_names = [
+        'post',
+    ]
+    model = models.Post
+
+    def post(self, request, *args, **kwargs):
+        action = request.POST.get('action')
+        if action:
+            try:
+                post: models.Post = self.get_object()
+                if action == 'like':
+                    post.users_like.add(request.user)
+                else:
+                    post.users_like.remove(request.user)
+                return JsonResponse(
+                    {
+                        'status': 'OK',
+                    }
+                )
+            except Exception:
+                pass
+        return JsonResponse(
+            {
+                'status': 'ERROR',
+            }
+        )
