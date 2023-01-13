@@ -7,9 +7,8 @@
   <div class="row mt-4 form mx-md-3 d-flex justify-content-between align-content-center">
     <div class="col-md-6 order-md-0 order-1 mt-0 mt-md-4">
       <div class="row mt-md-3 mt-1 mb-4 d-flex justify-content-center align-content-center align-items-center">
-        <div class="like col-6 d-flex">
-          {% if request.user in post.users_like.all %}
-          <div class="liked">
+        <div id="like-button" class="like col-6 d-flex" data-action="{% if request.user in post.users_like.all %}un{% endif %}like">
+          <div id="liked-svg" class="liked" {% if request.user not in post.users_like.all %}hidden{% endif %}>
             <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="768.000000pt" height="768.000000pt" viewBox="0 0 768.000000 768.000000" preserveAspectRatio="xMidYMid meet">
               <g transform="translate(0.000000,768.000000) scale(0.100000,-0.100000)" stroke="none">
                 <path d="M4545 6816 c-82 -19 -183 -66 -261 -121 -87 -62 -120 -106 -744 -975
@@ -26,8 +25,7 @@
               </g>
             </svg>
           </div>
-          {% else %}
-          <div class="default">
+          <div id="default-svg" class="default" {% if request.user in post.users_like.all %}hidden{% endif %}>
             <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="768.000000pt" height="768.000000pt" viewBox="0 0 768.000000 768.000000" preserveAspectRatio="xMidYMid meet">
               <g transform="translate(0.000000,768.000000) scale(0.100000,-0.100000)" stroke="none">
                 <path d="M4545 6816 c-82 -19 -183 -66 -261 -121 -87 -62 -120 -106 -744 -975
@@ -52,7 +50,6 @@
               </g>
             </svg>
           </div>
-          {% endif %}
         </div>
         <div class="author col-6">
           <a href="" class="">
@@ -71,7 +68,10 @@
       <hr>
       <div class="row">
         <div class="col-6 text-start">
-          {{ post.users_like.count }} لایک
+          <span id="total-like">
+            {{ post.users_like.count }}
+          </span>
+          لایک
         </div>
         <div class="col-6 text-end">
           {{ post.created }}
@@ -81,7 +81,7 @@
       <br>
       {% if post.users_like.exists %}
       <h5 class="bold-font">افرادی که این پست رو پسندیدند</h5>
-      <div class="row mt-4">
+      <div id="like-profile-list" class="row mt-4">
         {% for user in post.users_like.all %}
           <div class="col-md-4 col-6 mb-5">
             <a class="text-center d-flex flex-column justify-content-center align-content-center" href="">
@@ -102,5 +102,75 @@
       <img src="{{ post.image.url }}" class="w-100 rounded img-thumbnail" alt="تصویر پست">
     </div>
   </div>
+  <div id="csrf" hidden>
+    {% csrf_token %}
+  </div>
+  <div hidden>
+    <div id="new-profile" class="col-md-4 col-6 mb-5">
+      <a class="text-center d-flex flex-column justify-content-center align-content-center" href="">
+        <div>
+          {% load thumbnail %}
+          <img src="{% thumbnail request.user.profile.photo 240x0 %}" class="img-thumbnail rounded-circle mini-img">
+        </div>
+        <div>
+          <span class="mini-username bold-font text-center">{{ request.user.username }}</span>
+        </div>
+      </a>
+    </div>
+  </div>
   <div class="py-5"></div>
 {% endblock content %}
+
+{% block script %}
+<script>
+  function like() {
+    var csrf = document.getElementById("csrf").querySelector("input").value;
+    var likeButton = document.getElementById("like-button");
+    var likeCount = document.getElementById("total-like");
+    var newProfile = document.getElementById("new-profile");
+    var usersProfile = document.getElementById("like-profile-list");
+    likeButton.onclick = function (e) {
+      var request = new XMLHttpRequest();
+      var action = this.dataset.action;
+      request.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          var response = JSON.parse(this.responseText);
+          if (response["status"] == "OK") {
+            if (action == "like") {
+              likeButton.dataset.action = "unlike";
+              document.getElementById("liked-svg").hidden = false;
+              document.getElementById("default-svg").hidden = true;
+              likeCount.innerText = parseInt(likeCount.innerText) + 1;
+              usersProfile.innerHTML =
+                newProfile.outerHTML + usersProfile.innerHTML;
+            } else {
+              likeButton.dataset.action = "like";
+              document.getElementById("liked-svg").hidden = true;
+              document.getElementById("default-svg").hidden = false;
+              likeCount.innerText = parseInt(likeCount.innerText) - 1;
+              usersProfile.removeChild(usersProfile.firstElementChild);
+            }
+          } else {
+            console.log("you can not like this post");
+          }
+        }
+      };
+      request.onerror = function () {
+        var messages = document.getElementById("messages");
+        messages.innerHTML = `<div class="messages d-grid gap-2 mx-4">
+          <div class="alert alert-danger alert-dismissible fade show my-2" role="alert">
+            خطا در ارتباط با سرور!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        </div>`;
+      };
+      request.open("POST", "{% url 'post:like' post.slug %}", true);
+      request.setRequestHeader("X-CSRFToken", csrf);
+      var data = new FormData();
+      data.append("action", action);
+      request.send(data);
+    };
+  }
+  window.ready(like);
+</script> 
+{% endblock script %}
