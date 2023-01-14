@@ -30,7 +30,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'account:dashboard' %}">
+              <a class="nav-link active" aria-current="page" href="{% url 'post:list' %}">
                 اکسپلور
               </a>
             </li>
@@ -65,7 +65,7 @@
                   </li>
                   <li><hr class="dropdown-divider"></li>
                   <li>
-                    <a class="dropdown-item text-light" href="{% url 'account:logout' %}">
+                    <a class="dropdown-item text-light" href="{% url 'account:logout' %}?next={{ request.path }}">
                       خروج از حساب
                     </a>
                   </li>
