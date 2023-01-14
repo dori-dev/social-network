@@ -51,10 +51,7 @@ class PostDetail(generic.DeleteView):
 
 
 @method_decorator(csrf_protect, name='dispatch')
-class LikePost(
-        LoginRequiredMixin,
-        AjaxRequiredMixin,
-        generic.UpdateView):
+class LikePost(LoginRequiredMixin, AjaxRequiredMixin, generic.UpdateView):
     http_method_names = [
         'post',
     ]
@@ -81,3 +78,14 @@ class LikePost(
                 'status': 'ERROR',
             }
         )
+
+
+class PostList(generic.ListView):
+    model = models.Post
+    context_object_name = 'posts'
+    paginate_by = 12
+
+    def get_template_names(self):
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return 'post/add-posts.html'
+        return 'post/list.html'
