@@ -24,9 +24,6 @@ class Post(models.Model):
         related_name='posts',
         on_delete=models.CASCADE,
     )
-    title = models.CharField(
-        max_length=100,
-    )
     slug = models.SlugField(
         max_length=8,
         editable=True,
@@ -41,11 +38,13 @@ class Post(models.Model):
         ],
     )
     description = models.TextField(
-        blank=True,
+        null=False,
+        blank=False,
     )
     created = models.DateField(
         auto_now_add=True,
         db_index=True,
+        editable=True,
     )
     users_like = models.ManyToManyField(
         UserModel,
@@ -69,7 +68,7 @@ class Post(models.Model):
         return reverse('posts:detail', kwargs={'slug': self.slug})
 
     def __str__(self):
-        return self.title
+        return self.slug
 
     class Meta:
         indexes = [

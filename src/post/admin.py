@@ -45,10 +45,8 @@ class PostAdmin(admin.ModelAdmin):
     ]
     search_fields = [
         'user__username',
-        'title',
         'description',
         'slug',
-        'url',
     ]
     date_hierarchy = 'created'
     raw_id_fields = [
@@ -65,7 +63,6 @@ class PostAdmin(admin.ModelAdmin):
         (
             'Information', {
                 'fields': [
-                    'title',
                     'description',
                 ]
             }

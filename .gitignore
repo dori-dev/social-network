@@ -9,3 +9,6 @@ README.md
 cert.crt
 cert.key
 .env
+posts.json
+users.json
+add_fake_data.py

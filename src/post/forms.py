@@ -8,7 +8,6 @@ class CreatePostForm(forms.ModelForm):
         model = models.Post
         fields = [
             'image',
-            'title',
             'description',
         ]
         field_classes = {
@@ -16,7 +15,6 @@ class CreatePostForm(forms.ModelForm):
         }
         labels = {
             'image': 'تصویر',
-            'title': 'عنوان',
             'description': 'توضیحات',
         }
 
@@ -41,19 +39,6 @@ class CreatePostForm(forms.ModelForm):
         image.error_messages = {
             'required': 'پست ات باید یک تصویر داشته باشه.',
         }
-        # title
-        title = self.fields['title']
-        title.widget.attrs[
-            'class'
-        ] = 'form-control mt-2 mb-2 rtl post-title-input'
-        title.widget.attrs['dir'] = 'auto'
-        title.widget.attrs[
-            'placeholder'
-        ] = 'عنوان پست ات رو اینجا بنویس...'
-        title.error_messages = {
-            'required': 'پست ات حتما باید عنوان داشته باشه!',
-            'max_length': 'عنوان پست ات باید کمتر از ۱۰۰ کاراکتر باشه!',
-        }
         # description
         description = self.fields['description']
         description.widget.attrs['class'] = 'form-control mt-2 mb-2 rtl'
@@ -61,11 +46,7 @@ class CreatePostForm(forms.ModelForm):
         description.widget.attrs[
             'placeholder'
         ] = 'توضیحاتی درباره پست ات بنویس...'
-
-    def clean_title(self):
-        title = self.cleaned_data['title']
-        if len(title) > 100:
-            raise forms.ValidationError(
-                'عنوان پست ات باید کمتر از ۱۰۰ کاراکتر باشه!'
-            )
-        return title
+        description.error_messages = {
+            'required': 'پست ات حتما باید عنوان داشته باشه!',
+            'max_length': 'توضیحات پست ات خیلی زیاد شد!',
+        }
