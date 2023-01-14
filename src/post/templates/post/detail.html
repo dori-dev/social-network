@@ -3,7 +3,6 @@
 {% block title %}{{ post.title }}{% endblock title %}
 
 {% block content %}
-  <h2 class="mt-4 bold-font">{{ post.title }}</h2>
   <div class="row mt-4 form mx-md-3 d-flex justify-content-between align-content-center">
     <div class="col-md-6 order-md-0 order-1 mt-0 mt-md-4">
       <div class="row mt-md-3 mt-1 mb-4 d-flex justify-content-center align-content-center align-items-center">
@@ -64,7 +63,9 @@
           </a>
         </div>
       </div>
-      {{ post.description|linebreaks }}
+      <div dir="auto">
+        {{ post.description|linebreaks }}
+      </div>
       <hr>
       <div class="row">
         <div class="col-6 text-start">
