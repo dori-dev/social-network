@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     # local apps
     'account.apps.AccountConfig',
     'post.apps.PostConfig',
+    'contact.apps.ContactConfig',
 ]
 
 MIDDLEWARE = [

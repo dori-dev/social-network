@@ -13,7 +13,7 @@ class CustomUser(AbstractUser):
     )
     following = models.ManyToManyField(
         'self',
-        through='Contact',
+        through='contact.Contact',
         related_name='followers',
         symmetrical=False,
     )
@@ -54,29 +54,3 @@ class Profile(models.Model):
 
     def __str__(self):
         return f'{self.user.username}\'s profile'
-
-
-class Contact(models.Model):
-    user_from = models.ForeignKey(
-        User,
-        related_name='following_set',
-        on_delete=models.CASCADE,
-    )
-    user_to = models.ForeignKey(
-        User,
-        related_name='followers_set',
-        on_delete=models.CASCADE,
-    )
-    created = models.DateTimeField(
-        auto_now_add=True,
-        db_index=True,
-        editable=True,
-    )
-
-    class Meta:
-        ordering = (
-            '-created',
-        )
-
-    def __str__(self):
-        return f"{self.user_from} followed {self.user_to}"
