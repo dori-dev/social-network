@@ -1,0 +1,15 @@
+{% load thumbnail %}
+
+{% for user in users %}
+<div class="user-item col-lg-3 col-md-4 col-6 mb-5">
+  <a class="text-center d-flex flex-column justify-content-center align-content-center" href="{{ user.get_absolute_url }}">
+    <div>
+      <img src="{% thumbnail user.profile.photo 240x0 %}" class="img-thumbnail rounded-circle mini-img">
+    </div>
+    <div class="d-flex flex-column mt-1">
+      <span class="mini-username bold-font text-center">{{ user.username }}</span>
+      <span class="text-center">{{ user.posts.count }} پست</span>
+    </div>
+  </a>
+</div>
+{% endfor %}
