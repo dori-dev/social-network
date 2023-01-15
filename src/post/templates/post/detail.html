@@ -113,7 +113,7 @@
           {% load thumbnail %}
           <img src="{% thumbnail request.user.profile.photo 240x0 %}" class="img-thumbnail rounded-circle mini-img">
         </div>
-        <div>
+        <div class="mt-1">
           <span class="mini-username bold-font text-center">{{ request.user.username }}</span>
         </div>
       </a>

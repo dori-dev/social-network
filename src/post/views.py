@@ -83,7 +83,7 @@ class LikePost(LoginRequiredMixin, AjaxRequiredMixin, generic.UpdateView):
 class PostList(generic.ListView):
     model = models.Post
     context_object_name = 'posts'
-    paginate_by = 12
+    paginate_by = 24
 
     def get_template_names(self):
         if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':

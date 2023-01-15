@@ -65,7 +65,7 @@ class Post(models.Model):
         return "".join(choices(ascii_letters, k=length))
 
     def get_absolute_url(self):
-        return reverse('posts:detail', kwargs={'slug': self.slug})
+        return reverse('post:detail', kwargs={'slug': self.slug})
 
     def __str__(self):
         return self.slug

@@ -3,11 +3,11 @@
 {% block title %}پست های پیشنهادی{% endblock title %}
 
 {% block content %}
-<div class="alert alert-danger alert-dismissible fade show alert-fixed" role="alert" id="connection-error" hidden>
-  خطا در برقراری ارتباط با سرور!
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-  <h1 class="mt-4 bold-font">پست های پیشنهادی</h1>    
+  <div class="alert alert-danger alert-dismissible fade show alert-fixed" role="alert" id="connection-error" hidden>
+    خطا در برقراری ارتباط با سرور!
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <h2 class="mt-4 bold-font">پست های پیشنهادی</h2>    
   <div class="row mt-4 mx-2" id="post-list">
       {% include 'post/add-posts.html' %}
   </div>
