@@ -5,6 +5,7 @@ from django.dispatch import receiver
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.db.models.fields.files import ImageFieldFile
+from django.urls import reverse
 
 
 class CustomUser(AbstractUser):
@@ -17,6 +18,9 @@ class CustomUser(AbstractUser):
         related_name='followers',
         symmetrical=False,
     )
+
+    def get_absolute_url(self):
+        return reverse('user:detail', args=(self.username,))
 
 
 User = get_user_model()

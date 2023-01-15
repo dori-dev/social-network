@@ -51,7 +51,7 @@
           </div>
         </div>
         <div class="author col-6">
-          <a href="" class="">
+          <a href="{{ post.user.get_absolute_url }}" class="">
             <div class="d-flex flex-row-reverse">
               {% load thumbnail %}
               <img src="{% thumbnail post.user.profile.photo 240x0 %}" class="img-thumbnail rounded-circle mini-img">
@@ -85,7 +85,7 @@
       <div id="like-profile-list" class="row mt-4">
         {% for user in post.users_like.all %}
           <div class="col-md-4 col-6 mb-5">
-            <a class="text-center d-flex flex-column justify-content-center align-content-center" href="">
+            <a class="text-center d-flex flex-column justify-content-center align-content-center" href="{{ user.get_absolute_url }}">
               <div>
                 {% load thumbnail %}
                 <img src="{% thumbnail user.profile.photo 240x0 %}" class="img-thumbnail rounded-circle mini-img">

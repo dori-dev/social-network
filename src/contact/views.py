@@ -16,3 +16,13 @@ class UserList(LoginRequiredMixin, generic.ListView):
         if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
             return 'contact/add-users.html'
         return 'contact/list.html'
+
+
+class UserDetail(generic.DetailView):
+    queryset = UserModel.objects.filter(
+        is_active=True,
+    )
+    template_name = 'contact/detail.html'
+    slug_field = 'username'
+    slug_url_kwarg = 'username'
+    context_object_name = 'user'

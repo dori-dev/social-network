@@ -100,6 +100,12 @@ ul.errorlist li {
   object-fit: cover;
 }
 
+.profile {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+}
+
 .username {
   font-size: 22px;
 }
@@ -183,4 +189,18 @@ input.post-title-input {
   top: 50px;
   right: 20px;
   z-index: 10;
+}
+
+.user-info div {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.header-username {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  padding-top: 5px;
+  margin-bottom: 0;
 }
