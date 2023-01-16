@@ -11,130 +11,16 @@
 </head>
 <body>
   <header id="header">
-    <nav class="navbar navbar-expand-lg bg-success" data-bs-theme="dark">
-      <div class="container-fluid">
-        <a class="navbar-brand bold-font" href="#">بگو مگو</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'account:dashboard' %}">
-                خانه
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'account:dashboard' %}">
-                پروفایل
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'post:list' %}">
-                اکسپلور
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'user:list' %}">
-                چت
-              </a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                {% if request.user.is_authenticated %}
-                  {% if request.user.first_name %}
-                    {{ request.user.first_name }}
-                  {% else %}
-                    حساب کاربری
-                  {% endif %}
-                {% else %}
-                  ثبت نام | ورود
-                {% endif %}
-              </a>
-              <ul class="dropdown-menu bg-success">
-                {% if request.user.is_authenticated %}
-                  <li>
-                    <a class="dropdown-item text-light" href="{% url 'account:change_password' %}">
-                      تغییر رمز عبور
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item text-light" href="{% url 'account:edit' %}">
-                      تغییر اطلاعات حساب
-                    </a>
-                  </li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li>
-                    <a class="dropdown-item text-light" href="{% url 'account:logout' %}?next={{ request.path }}">
-                      خروج از حساب
-                    </a>
-                  </li>
-                {% else %}
-                  <li>
-                    <a class="dropdown-item text-light" href="{% url 'account:register' %}">
-                      ثبت نام
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item text-light" href="{% url 'account:login' %}">
-                      ورود
-                    </a>
-                  </li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li>
-                    <a class="dropdown-item text-light" href="{% url 'account:reset_password' %}">
-                      فراموشی رمز عبور
-                    </a>
-                  </li>
-                {% endif %}
-              </ul>
-            </li>
-          </ul>
-          <form class="d-flex custom-search" role="search">
-            <input class="form-control me-2" type="search" placeholder="جستجو..." aria-label="Search">
-            <button class="btn btn-success" type="submit">جستجو</button>
-          </form>
-        </div>
-      </div>
-    </nav>
+    {% include 'navbar.html' %}
   </header>
-  <div id="messages">
-    {% if messages %}
-    <div class="messages d-grid gap-2 mx-4">
-      {% for message in messages %}
-        <div class="alert alert-{{ message.tags }} alert-dismissible fade show mt-2 mb-2" role="alert">
-          {{ message|safe }}
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-      {% endfor %}
-    </div>
-    {% endif %}
-  </div>
+  {% include 'messages.html' %}
   <div class="container-fluid" id="content">
     {% block content %}
     {% endblock %}
   </div>
   <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
   <script src="{% static 'js/direction-change.js' %}"></script>
-  <script>
-    function ready(fn) {
-      if (typeof fn !== "function") {
-        throw new Error("Argument passed to ready should be a function");
-      }
-
-      if (document.readyState != "loading") {
-        fn();
-      } else if (document.addEventListener) {
-        document.addEventListener("DOMContentLoaded", fn, {
-          once: true,
-        });
-      } else {
-        document.attachEvent("onreadystatechange", function () {
-          if (document.readyState != "loading") fn();
-        });
-      }
-    }
-  </script>
+  <script src="{% static 'js/ajax-funcs.js' %}"></script>
   {% block script %}
   {% endblock script %}
 </body>

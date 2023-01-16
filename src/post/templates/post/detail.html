@@ -3,11 +3,15 @@
 {% block title %}{{ post.title }}{% endblock title %}
 
 {% block content %}
+  <div class="alert alert-danger alert-dismissible fade show alert-fixed" role="alert" id="connection-error" hidden>
+    خطا در برقراری ارتباط با سرور!
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
   <div class="row mt-4 form mx-md-3 d-flex justify-content-between align-content-center">
     <div class="col-md-6 order-md-0 order-1 mt-0 mt-md-4">
       <div class="row mt-md-3 mt-1 mb-4 d-flex justify-content-center align-content-center align-items-center">
         <div id="like-button" class="like col-6 d-flex" data-action="{% if request.user in post.users_like.all %}un{% endif %}like">
-          <div id="liked-svg" class="liked" {% if request.user not in post.users_like.all %}hidden{% endif %}>
+          <div id="like-svg" class="liked" {% if request.user not in post.users_like.all %}hidden{% endif %}>
             <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="768.000000pt" height="768.000000pt" viewBox="0 0 768.000000 768.000000" preserveAspectRatio="xMidYMid meet">
               <g transform="translate(0.000000,768.000000) scale(0.100000,-0.100000)" stroke="none">
                 <path d="M4545 6816 c-82 -19 -183 -66 -261 -121 -87 -62 -120 -106 -744 -975
@@ -24,7 +28,7 @@
               </g>
             </svg>
           </div>
-          <div id="default-svg" class="default" {% if request.user in post.users_like.all %}hidden{% endif %}>
+          <div id="unlike-svg" class="default" {% if request.user in post.users_like.all %}hidden{% endif %}>
             <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="768.000000pt" height="768.000000pt" viewBox="0 0 768.000000 768.000000" preserveAspectRatio="xMidYMid meet">
               <g transform="translate(0.000000,768.000000) scale(0.100000,-0.100000)" stroke="none">
                 <path d="M4545 6816 c-82 -19 -183 -66 -261 -121 -87 -62 -120 -106 -744 -975
@@ -124,59 +128,36 @@
 
 {% block script %}
 <script>
-  function like() {
-    var csrf = document.getElementById("csrf").querySelector("input").value;
-    var likeButton = document.getElementById("like-button");
-    var likeCount = document.getElementById("total-like");
-    var newProfile = document.getElementById("new-profile");
-    var usersProfile = document.getElementById("like-profile-list");
-    likeButton.onclick = function (e) {
-      var request = new XMLHttpRequest();
-      var action = this.dataset.action;
-      request.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          try {
-            var response = JSON.parse(this.responseText);
-          } catch (error) {
-            window.location.replace("{% url 'account:login' %}?next={{ request.path }}");
-          }
-          if (response["status"] == "OK") {
-            if (action == "like") {
-              likeButton.dataset.action = "unlike";
-              document.getElementById("liked-svg").hidden = false;
-              document.getElementById("default-svg").hidden = true;
-              likeCount.innerText = parseInt(likeCount.innerText) + 1;
-              usersProfile.innerHTML =
-                newProfile.outerHTML + usersProfile.innerHTML;
-            } else {
-              likeButton.dataset.action = "like";
-              document.getElementById("liked-svg").hidden = true;
-              document.getElementById("default-svg").hidden = false;
-              likeCount.innerText = parseInt(likeCount.innerText) - 1;
-              usersProfile.removeChild(usersProfile.firstElementChild);
-            }
-          } else {
-            console.log("you can not like this post");
-          }
-        }
-      };
-      request.onerror = function () {
-        var messages = document.getElementById("messages");
-        messages.innerHTML = `<div class="messages d-grid gap-2 mx-4">
-          <div class="alert alert-danger alert-dismissible fade show my-2" role="alert">
-            خطا در ارتباط با سرور!
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-        </div>`;
-      };
-      request.open("POST", "{% url 'post:like' post.slug %}", true);
-      request.setRequestHeader("X-CSRFToken", csrf);
-      request.setRequestHeader("x-requested-with", "XMLHttpRequest");
-      var data = new FormData();
-      data.append("action", action);
-      request.send(data);
-    };
+  var likeButton = document.getElementById("like-button");
+  var likeCount = document.getElementById("total-like");
+  var newProfile = document.getElementById("new-profile");
+  var usersProfile = document.getElementById("like-profile-list");
+  var like = document.getElementById("like-svg");
+  var unlike = document.getElementById("unlike-svg");
+  function success(response, action) {
+    if (response["status"] == "OK") {
+      if (action == "like") {
+        likeButton.dataset.action = "unlike";
+        like.hidden = false;
+        unlike.hidden = true;
+        likeCount.innerText = parseInt(likeCount.innerText) + 1;
+        usersProfile.innerHTML = newProfile.outerHTML + usersProfile.innerHTML;
+      } else {
+        likeButton.dataset.action = "like";
+        like.hidden = true;
+        unlike.hidden = false;
+        likeCount.innerText = parseInt(likeCount.innerText) - 1;
+        usersProfile.removeChild(usersProfile.firstElementChild);
+      }
+    }
   }
-  window.ready(like);
-</script> 
+  window.ready(function () {
+    ajaxPost(
+      "{% url 'post:like' post.slug %}",
+      "{% url 'account:login' %}?next={{ request.path }}",
+      likeButton,
+      success
+    );
+  });
+</script>
 {% endblock script %}

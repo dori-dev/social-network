@@ -16,60 +16,14 @@
 
 {% block script %}
 <script>
-  function getPosts() {
-    var page = "{{ request.GET.page }}";
-    if (page) {
-      var page = parseInt(page);
-    } else {
-      var page = 1;
-    }
-    var empty_page = false;
-    var block_request = false;
-    var connect = true;
-    window.onscroll = function () {
-      var margin =
-        document.documentElement.scrollHeight - window.innerHeight - 500;
-      if (
-        window.scrollY > margin &&
-        empty_page == false &&
-        block_request == false
-      ) {
-        block_request = true;
-        if (connect) {
-          page += 1;
-        }
-        var request = new XMLHttpRequest();
-        request.onreadystatechange = function () {
-          if (
-            connect == false &&
-            (this.readyState == 2 || this.readyState == 3)
-          ) {
-            connect = true;
-            document.getElementById("connection-error").hidden = true;
-          }
-          if (this.readyState == 4 && this.status == 200) {
-            var response = this.responseText;
-            document
-              .getElementById("people-list")
-              .insertAdjacentHTML("beforeend", response);
-            block_request = false;
-          } else if (this.readyState == 4 && this.status == 404) {
-            empty_page = true;
-            block_request = true;
-          }
-        };
-        request.onerror = function () {
-          document.getElementById("connection-error").hidden = false;
-          connect = false;
-          block_request = false;
-        };
-        request.open("GET", "?page=" + page, true);
-        request.setRequestHeader("x-requested-with", "XMLHttpRequest");
-        request.send();
-      }
-    };
+  function success(response) {
+    document
+      .getElementById("people-list")
+      .insertAdjacentHTML("beforeend", response);
   }
-  window.ready(getPosts);
+  window.ready(function () {
+    getData("?page=", "{{ request.GET.page }}", success);
+  });
 </script>
 {% endblock script %}
   

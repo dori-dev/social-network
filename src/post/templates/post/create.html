@@ -24,17 +24,17 @@
   <div class="py-5"></div>
 {% endblock content %}
 {% block script %}
-  <script>
-    var output = document.getElementById("preview");
-    var loadImage = function (event) {
-      if (event.target.files[0] !== undefined) {
-        output.src = URL.createObjectURL(event.target.files[0]);
-        output.onload = function () {
-          URL.revokeObjectURL(output.src);
-        };
-      } else {
-        output.src = "{% static 'img/default.png' %}";
-      }
-    };
-  </script>
+<script>
+  var output = document.getElementById("preview");
+  var loadImage = function (event) {
+    if (event.target.files[0] !== undefined) {
+      output.src = URL.createObjectURL(event.target.files[0]);
+      output.onload = function () {
+        URL.revokeObjectURL(output.src);
+      };
+    } else {
+      output.src = "{% static 'img/default.png' %}";
+    }
+  };
+</script>
 {% endblock script %}
