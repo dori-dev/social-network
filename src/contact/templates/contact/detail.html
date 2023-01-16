@@ -20,6 +20,7 @@
           data-id="{{ user.id }}"
           data-action="{% if request.user in user.followers.all %}un{% endif %}follow"
           class="btn {% if request.user in user.followers.all %}btn-success{% else %}btn-outline-success{% endif %}"
+          id="follow-btn"
         >
           {% if request.user in user.followers.all %}دنبال میکنید{% else %}دنبال کردن{%endif %}
         </a>
@@ -30,13 +31,13 @@
           <span class="bold-font">{{ user.posts.count }}</span>
           <span>پست</span>
         </div>
-        <div class="total-following me-5">
+        <div class="total-followers me-5">
+          <span class="bold-font" id="followers-count">{{ user.followers.count }}</span>
+          <span>دنبال کننده</span>
+        </div>
+        <div class="total-following">
           <span class="bold-font">{{ user.following.count }}</span>
           <span>دنبال شونده</span>
-        </div>
-        <div class="total-followers">
-          <span class="bold-font">{{ user.followers.count }}</span>
-          <span>دنبال کننده</span>
         </div>
       </div>
       <div class="mx-2 username bold-font mt-4">
@@ -49,4 +50,37 @@
     {% include 'post/add-posts.html' with posts=user.posts.all %}
   </div>
 </div>
+<div id="csrf" hidden>
+  {% csrf_token %}
+</div>
 {% endblock %}
+
+{% block script %}
+<script>
+  var followButton = document.getElementById("follow-btn");
+  var followCount = document.getElementById("followers-count");
+  function success(response, action) {
+    if (response["status"] == "OK") {
+      if (action == "follow") {
+        followButton.dataset.action = "unfollow";
+        followButton.className = "btn btn-success"
+        followButton.innerText = "دنبال میکنید"
+        followCount.innerText = parseInt(followCount.innerText) + 1;
+      } else {
+        followButton.dataset.action = "follow";
+        followButton.className = "btn btn-outline-success"
+        followButton.innerText = "دنبال کردن"
+        followCount.innerText = parseInt(followCount.innerText) - 1;
+      }
+    }
+  }
+  window.ready(function () {
+    ajaxPost(
+      "{% url 'user:follow' user.username %}",
+      "{% url 'account:login' %}?next={{ request.path }}",
+      followButton,
+      success
+    );
+  });
+</script>
+{% endblock script %}
