@@ -14,17 +14,20 @@
         <h3 class="header-username bold-font me-3">
           {{ user.username }}
         </h3>
-        <div>
-          <a
-          href="#"
-          data-id="{{ user.id }}"
-          data-action="{% if request.user in user.followers.all %}un{% endif %}follow"
-          class="btn {% if request.user in user.followers.all %}btn-success{% else %}btn-outline-success{% endif %}"
-          id="follow-btn"
-        >
-          {% if request.user in user.followers.all %}دنبال میکنید{% else %}دنبال کردن{%endif %}
-        </a>
-        </div>
+        {% if request.user.username != user.username  %}
+          <div>
+            <a
+              href="#"
+              data-id="{{ user.id }}"
+              data-action="{% if request.user in user.followers.all %}un{% endif %}follow"
+              class="btn {% if request.user in user.followers.all %}btn-success{% else %}btn-outline-success{% endif %}"
+              id="follow-btn"
+            >
+              {% if request.user in user.followers.all %}دنبال میکنید{% else %}دنبال کردن{%endif %}
+            </a>
+          </div>
+        {% endif %}
+          
       </div>
       <div class="user-info d-flex align-content-center mt-4">
         <div class="total-posts me-5">

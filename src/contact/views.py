@@ -44,9 +44,9 @@ class FollowUser(LoginRequiredMixin, AjaxRequiredMixin, generic.UpdateView):
 
     def post(self, request, *args, **kwargs):
         action = request.POST.get('action')
-        if action:
+        user = self.get_object()
+        if action and user != request.user:
             try:
-                user = self.get_object()
                 if action == 'follow':
                     models.Contact.objects.get_or_create(
                         user_from=request.user,
