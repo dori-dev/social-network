@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'account.apps.AccountConfig',
     'post.apps.PostConfig',
     'contact.apps.ContactConfig',
+    'action.apps.ActionConfig',
 ]
 
 MIDDLEWARE = [
