@@ -27,3 +27,18 @@ def create_action(user, verb, target=None):
         action.save()
         return True
     return False
+
+
+def remove_action(user, verb, target=None):
+    actions = models.Action.objects.filter(
+        user=user,
+        verb=verb,
+    )
+    if target is not None:
+        target_ct = ContentType.objects.get_for_model(target)
+        actions.filter(
+            target_ct=target_ct,
+            target_id=target.id,
+        )
+    if actions.exists():
+        actions.delete()
