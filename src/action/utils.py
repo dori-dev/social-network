@@ -14,11 +14,11 @@ def create_action(user, verb, target=None):
     )
     if target is not None:
         target_ct = ContentType.objects.get_for_model(target)
-        similar_action = similar_actions.filter(
+        similar_actions = similar_actions.filter(
             target_ct=target_ct,
             target_id=target.id,
         )
-    if not similar_action.exists():
+    if not similar_actions.exists():
         action = models.Action(
             user=user,
             verb=verb,

@@ -6,6 +6,7 @@ from django.contrib.auth import login, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
+from action.utils import create_action
 from . import forms
 
 User = get_user_model()
@@ -100,11 +101,16 @@ class Edit(LoginRequiredMixin, generic.View):
 
     def form_valid(self, user_form, profile_form, **kwargs):
         user_form.save()
-        profile_form.save()
+        profile = profile_form.save(commit=False)
+        profile.save()
         messages.add_message(
             self.request,
             messages.SUCCESS,
             "پروفایلت با موفقیت بروزرسانی شد!",
+        )
+        create_action(
+            self.request.user,
+            'update',
         )
         return redirect(self.success_url)
 

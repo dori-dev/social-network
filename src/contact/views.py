@@ -5,6 +5,7 @@ from utils.mixins import AjaxRequiredMixin
 from django.utils.decorators import method_decorator
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
+from action.utils import create_action, remove_action
 from . import models
 
 UserModel = get_user_model()
@@ -48,9 +49,14 @@ class FollowUser(LoginRequiredMixin, AjaxRequiredMixin, generic.UpdateView):
         if action and user != request.user:
             try:
                 if action == 'follow':
-                    models.Contact.objects.get_or_create(
+                    contact, _ = models.Contact.objects.get_or_create(
                         user_from=request.user,
                         user_to=user,
+                    )
+                    create_action(
+                        self.request.user,
+                        'follow',
+                        contact,
                     )
                 else:
                     contact_object = models.Contact.objects.filter(
@@ -58,6 +64,11 @@ class FollowUser(LoginRequiredMixin, AjaxRequiredMixin, generic.UpdateView):
                         user_to=user,
                     )
                     if contact_object.exists():
+                        remove_action(
+                            self.request.user,
+                            'follow',
+                            contact_object.first(),
+                        )
                         contact_object.delete()
                 return JsonResponse(
                     {

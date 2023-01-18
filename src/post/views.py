@@ -6,6 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.http import JsonResponse
+from action.utils import create_action, remove_action
 from . import forms
 from . import models
 
@@ -29,9 +30,14 @@ class CreatePost(LoginRequiredMixin, generic.FormView):
         return self.form_invalid(form, **kwargs)
 
     def form_valid(self, form: forms.CreatePostForm, **kwargs):
-        post = form.save(commit=False)
+        post: models.Post = form.save(commit=False)
         post.user = self.request.user
         post.save()
+        create_action(
+            self.request.user,
+            'share',
+            post,
+        )
         messages.add_message(
             self.request,
             messages.SUCCESS,
@@ -64,8 +70,18 @@ class LikePost(LoginRequiredMixin, AjaxRequiredMixin, generic.UpdateView):
                 post: models.Post = self.get_object()
                 if action == 'like':
                     post.users_like.add(request.user)
+                    create_action(
+                        self.request.user,
+                        'like',
+                        post,
+                    )
                 else:
                     post.users_like.remove(request.user)
+                    remove_action(
+                        self.request.user,
+                        'like',
+                        post,
+                    )
                 return JsonResponse(
                     {
                         'status': 'OK',
