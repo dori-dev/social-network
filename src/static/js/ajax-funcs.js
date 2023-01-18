@@ -67,6 +67,29 @@ function getData(url, page, successFunc) {
   };
 }
 
+function getPrimaryData(url, successFunc, connect) {
+  var request = new XMLHttpRequest();
+  request.onreadystatechange = function () {
+    if (connect == false && (this.readyState == 2 || this.readyState == 3)) {
+      connect = true;
+      document.getElementById("connection-error").hidden = true;
+    }
+    if (this.readyState == 4 && this.status == 200) {
+      var response = this.responseText;
+      successFunc(response);
+    }
+  };
+  request.onerror = function () {
+    document.getElementById("connection-error").hidden = false;
+    setTimeout(function () {
+      getPrimaryData(url, successFunc, false);
+    }, 1000);
+  };
+  request.open("GET", url + 1, true);
+  request.setRequestHeader("x-requested-with", "XMLHttpRequest");
+  request.send();
+}
+
 function ajaxPost(url, loginUrl, button, successFunc) {
   var csrf = document.getElementById("csrf").querySelector("input").value;
   button.onclick = function (e) {

@@ -3,6 +3,10 @@
 {% block title %}پروفایل{% endblock %}
 
 {% block content %}
+  <div class="alert alert-danger alert-dismissible fade show alert-fixed" role="alert" id="connection-error" hidden>
+    خطا در برقراری ارتباط با سرور!
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
   <h2 class="bold-font mt-4">پروفایل</h2>
   <p class="mt-4">به پروفایل ات خوش آمدی</p>
   {% with total_images_created=request.user.posts.count %}
@@ -26,4 +30,22 @@
       تغییر رمز عبور
     </a>
   </p>
-{% endblock %}
+  <h3 class="mt-5 bold-font">آخرین فعالیت های دوستات</h3>    
+  <div class="row mt-4 mx-2" id="action-list">
+  </div>
+{% endblock content %}
+
+{% block script %}
+<script>
+  function success(response) {
+    document
+      .getElementById("action-list")
+      .insertAdjacentHTML("beforeend", response);
+  }
+  var url = "{% url 'action:list' %}?page="
+  window.ready(function () {
+    getPrimaryData(url, success, true);
+    getData(url, 1, success);
+  });
+</script>
+{% endblock script %}
