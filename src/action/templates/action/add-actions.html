@@ -26,7 +26,7 @@
           </a>
           {% elif action.verb == 'follow' %}
             <p class="bold-font">
-              کاربر
+              صفحه
               {% with action.target.user_to as user %}
                 <a href="{% url 'user:detail' user %}">{{ user }}</a>
               {% endwith %}
