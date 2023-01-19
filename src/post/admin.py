@@ -17,21 +17,18 @@ class LikeFilter(admin.SimpleListFilter):
         )
 
     def queryset(self, request, queryset):
-        likes = queryset.annotate(
-            likes=Count('users_like'),
-        )
         if self.value() == 'low':
-            return likes.filter(
-                likes__lte=1000,
+            return queryset.filter(
+                total_likes__lte=100,
             )
         if self.value() == 'normal':
-            return likes.filter(
-                likes__gt=1000,
-                likes__lt=50_000,
+            return queryset.filter(
+                total_likes__gt=100,
+                total_likes__lt=500,
             )
         if self.value() == 'much':
-            return likes.filter(
-                likes__gte=50_000,
+            return queryset.filter(
+                total_likes__gte=500,
             )
 
 
@@ -42,7 +39,7 @@ class PostAdmin(admin.ModelAdmin):
         'post_link',
         'image_file',
         'created',
-        'likes',
+        'total_likes',
     ]
     search_fields = [
         'user__username',
@@ -100,6 +97,3 @@ class PostAdmin(admin.ModelAdmin):
         return format_html(
             f'<a target="_blank" href="{image_url}">File</a>'
         )
-
-    def likes(self, model: models.Post):
-        return model.users_like.count()

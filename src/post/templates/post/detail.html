@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ post.title }}{% endblock title %}
+{% block title %}پست {{ post.user.username }}{% endblock title %}
 
 {% block content %}
   <div class="alert alert-danger alert-dismissible fade show alert-fixed" role="alert" id="connection-error" hidden>
@@ -74,7 +74,7 @@
       <div class="row">
         <div class="col-6 text-start">
           <span id="total-like">
-            {{ post.users_like.count }}
+            {{ post.total_likes }}
           </span>
           لایک
         </div>

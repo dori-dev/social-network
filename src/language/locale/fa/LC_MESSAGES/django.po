@@ -161,3 +161,6 @@ msgstr "آدرس"
 
 msgid "Users like"
 msgstr "کاربرهایی که لایک کردند"
+
+msgid "Total likes"
+msgstr "تعداد لایک ها"

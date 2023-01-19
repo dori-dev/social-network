@@ -6,3 +6,6 @@ class PostConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'post'
     verbose_name = _('Post')
+
+    def ready(self) -> None:
+        from . import signals

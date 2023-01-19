@@ -58,6 +58,11 @@ class Post(models.Model):
         blank=True,
         verbose_name=_('Users like'),
     )
+    total_likes = models.PositiveBigIntegerField(
+        _('Total likes'),
+        db_index=True,
+        default=0,
+    )
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -93,7 +98,7 @@ class Post(models.Model):
             ),
         ]
         ordering = (
-            '-created',
+            '-total_likes',
         )
         verbose_name = _('Post')
         verbose_name_plural = _('Posts')
