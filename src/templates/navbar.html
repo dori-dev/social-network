@@ -78,23 +78,6 @@
             {% endif %}
           </ul>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            تغییر زبان
-          </a>
-          <ul class="dropdown-menu bg-success">
-            <li>
-              <a class="dropdown-item text-light" href="{% url 'language:change' %}?lang=fa&next={{ request.path }}">
-                {% translate "Persian" %}
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item text-light" href="{% url 'language:change' %}?lang=en&next={{ request.path }}">
-                {% translate "English" %}
-              </a>
-            </li>
-          </ul>
-        </li>
       </ul>
       <form class="d-flex custom-search" role="search">
         <input class="form-control me-2 search-input" type="search" placeholder="جستجو..." aria-label="Search">

@@ -12,7 +12,6 @@ urlpatterns = [
     path('posts/', include('post.urls', namespace='post')),
     path('users/', include('contact.urls', namespace='user')),
     path('actions/', include('action.urls', namespace='action')),
-    path('language/', include('language.urls', namespace='language')),
 ]
 
 if settings.DEBUG:
