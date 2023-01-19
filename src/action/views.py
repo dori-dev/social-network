@@ -21,7 +21,6 @@ class ActionList(LoginRequiredMixin, AjaxRequiredMixin, generic.ListView):
             actions.filter(
                 user__in=following_users,
             )
-        print(len(actions))
         actions = actions.select_related(
             'user',
             'user__profile',

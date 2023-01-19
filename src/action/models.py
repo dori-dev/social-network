@@ -2,8 +2,8 @@ from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.auth import get_user_model
-from django.contrib.humanize.templatetags import humanize
-from django.utils.translation import gettext as _
+from utils.functions import humanize
+
 
 UserModel = get_user_model()
 
@@ -50,22 +50,7 @@ class Action(models.Model):
         )
 
     def humanize(self):
-        time = humanize.naturaltime(self.created)
-        if time in ["now", "الان"]:
-            return "الان"
-        print(time)
-        time = time.\
-            replace(",", " and").\
-            replace("ago", "")
-        # replace(".", "").\
-        # replace("،", " and ").\
-        # replace("ها", "").\
-        # replace("  ", " ").\
-        # time = time.split("and")[0].strip()
-        print(time)
-        time = f"{time} ago"
-        # return " ".join(_(word) for word in time.split())
-        return _(time)
+        return humanize(self.created)
 
     def __str__(self) -> str:
         return f"{self.user}:{self.verb}"

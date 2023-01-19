@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'post.apps.PostConfig',
     'contact.apps.ContactConfig',
     'action.apps.ActionConfig',
+    'language.apps.LanguageConfig',
 ]
 
 MIDDLEWARE = [
@@ -110,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fa-IR'
 
 TIME_ZONE = 'Asia/Tehran'
 
@@ -167,3 +168,8 @@ SOCIAL_AUTH_PROTECTED_USER_FIELDS = [
 ]
 
 CSRF_USE_SESSIONS = True
+
+LANGUAGES = [
+    ('fa', 'Persian'),
+    ('en', 'English'),
+]

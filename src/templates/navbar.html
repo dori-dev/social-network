@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <nav class="navbar navbar-expand-lg bg-success" data-bs-theme="dark">
   <div class="container-fluid">
     <a class="navbar-brand bold-font" href="#">بگو مگو</a>
@@ -74,6 +76,23 @@
                 </a>
               </li>
             {% endif %}
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            تغییر زبان
+          </a>
+          <ul class="dropdown-menu bg-success">
+            <li>
+              <a class="dropdown-item text-light" href="{% url 'language:change' %}?lang=fa&next={{ request.path }}">
+                {% translate "Persian" %}
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item text-light" href="{% url 'language:change' %}?lang=en&next={{ request.path }}">
+                {% translate "English" %}
+              </a>
+            </li>
           </ul>
         </li>
       </ul>
