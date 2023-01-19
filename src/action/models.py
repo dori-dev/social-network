@@ -3,6 +3,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.auth import get_user_model
 from utils.functions import humanize
+from django.utils.translation import gettext_lazy as _
 
 
 UserModel = get_user_model()
@@ -14,11 +15,14 @@ class Action(models.Model):
         related_name='actions',
         db_index=True,
         on_delete=models.CASCADE,
+        verbose_name=_('User'),
     )
     verb = models.CharField(
+        _('Verb'),
         max_length=256,
     )
     created = models.DateTimeField(
+        _('Created'),
         auto_now_add=True,
         db_index=True,
         editable=True,
@@ -33,11 +37,13 @@ class Action(models.Model):
         limit_choices_to=limit,
         blank=True,
         null=True,
+        verbose_name=_('Target ct'),
     )
     target_id = models.PositiveIntegerField(
         blank=True,
         null=True,
         db_index=True,
+        verbose_name=_('Target id'),
     )
     target = GenericForeignKey(
         'target_ct',
@@ -48,6 +54,8 @@ class Action(models.Model):
         ordering = (
             '-created',
         )
+        verbose_name = _('Action')
+        verbose_name_plural = _('Actions')
 
     def humanize(self):
         return humanize(self.created)

@@ -6,10 +6,12 @@ from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.db.models.fields.files import ImageFieldFile
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 
 class CustomUser(AbstractUser):
     email = models.EmailField(
+        _('Email'),
         unique=True,
     )
     following = models.ManyToManyField(
@@ -37,12 +39,15 @@ class Profile(models.Model):
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
+        verbose_name=_('User'),
     )
     date_of_birth = models.DateField(
+        _('Date of birth'),
         blank=True,
         null=True,
     )
     photo = models.ImageField(
+        _('Photo'),
         upload_to='users/%Y/%m/%d/',
         blank=True,
         validators=[
@@ -50,6 +55,10 @@ class Profile(models.Model):
         ],
         default='profile.png',
     )
+
+    class Meta:
+        verbose_name = _('Profile')
+        verbose_name_plural = _('Profiles')
 
     @receiver(post_save, sender=User)
     def create_profile(sender, instance, created, **kwargs):

@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.db.models import Count
 from django.utils.html import format_html
+from django.utils.translation import gettext_lazy as _
 from . import models
 
 
@@ -61,21 +62,21 @@ class PostAdmin(admin.ModelAdmin):
             }
         ),
         (
-            'Information', {
+            _('Information'), {
                 'fields': [
                     'description',
                 ]
             }
         ),
         (
-            'Image', {
+            _('Image'), {
                 'fields': [
                     'image',
                 ]
             }
         ),
         (
-            'Other', {
+            _('Other'), {
                 'fields': [
                     'slug',
                     'users_like',

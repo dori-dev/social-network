@@ -25,6 +25,7 @@
 body {
   font-family: Vazirmatn;
   background-color: #fefefe;
+  direction: rtl;
 }
 
 * {

@@ -83,3 +83,81 @@ msgstr "فارسی"
 
 msgid "English"
 msgstr "انگلیسی"
+
+msgid "Action"
+msgstr "فعالیت"
+
+msgid "Actions"
+msgstr "فعالیت ها"
+
+msgid "Profile"
+msgstr "پروفایل"
+
+msgid "Profiles"
+msgstr "پروفایل ها"
+
+msgid "Account"
+msgstr "اکانت"
+
+msgid "Contact"
+msgstr "ارتباط"
+
+msgid "Contacts"
+msgstr "ارتباطات"
+
+msgid "Post"
+msgstr "پست"
+
+msgid "Posts"
+msgstr "پست ها"
+
+msgid "Django"
+msgstr "جنگو"
+
+msgid "Email"
+msgstr "ایمیل"
+
+msgid "User"
+msgstr "کاربر"
+
+msgid "Date of birth"
+msgstr "روز تولد"
+
+msgid "Photo"
+msgstr "تصویر"
+
+msgid "User from"
+msgstr "از کاربر"
+
+msgid "User to"
+msgstr "به کاربر"
+
+msgid "Created"
+msgstr "زمان ساخت"
+
+msgid "Target ct"
+msgstr "مدل هدف"
+
+msgid "Target id"
+msgstr "آیدی هدف"
+
+msgid "Verb"
+msgstr "فعل"
+
+msgid "Description"
+msgstr "توضیحات"
+
+msgid "Image"
+msgstr "تصویر"
+
+msgid "Other"
+msgstr "دیگر"
+
+msgid "Information"
+msgstr "اطلاعات"
+
+msgid "Slug"
+msgstr "آدرس"
+
+msgid "Users like"
+msgstr "کاربرهایی که لایک کردند"

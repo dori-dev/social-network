@@ -1,0 +1,19 @@
+body {
+  direction: ltr;
+}
+
+.rtl {
+  direction: rtl;
+}
+
+.ltr {
+  direction: ltr;
+}
+
+.search-input {
+  margin: 0px 8px 0px 0px;
+}
+
+.navbar-nav {
+  margin: 0 auto 0 0 !important;
+}

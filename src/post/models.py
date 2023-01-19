@@ -6,6 +6,7 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.db.models.fields.files import ImageFieldFile
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 
 UserModel = get_user_model()
@@ -23,8 +24,10 @@ class Post(models.Model):
         UserModel,
         related_name='posts',
         on_delete=models.CASCADE,
+        verbose_name=_('User'),
     )
     slug = models.SlugField(
+        _('Slug'),
         max_length=8,
         editable=True,
         unique=False,
@@ -32,16 +35,19 @@ class Post(models.Model):
         blank=True,
     )
     image = models.ImageField(
+        _('Image'),
         upload_to='images/%Y/%m/%d/',
         validators=[
             check_image,
         ],
     )
     description = models.TextField(
+        _('Description'),
         null=False,
         blank=False,
     )
     created = models.DateField(
+        _('Created'),
         auto_now_add=True,
         db_index=True,
         editable=True,
@@ -50,6 +56,7 @@ class Post(models.Model):
         UserModel,
         related_name='posts_liked',
         blank=True,
+        verbose_name=_('Users like'),
     )
 
     def save(self, *args, **kwargs):
@@ -88,3 +95,5 @@ class Post(models.Model):
         ordering = (
             '-created',
         )
+        verbose_name = _('Post')
+        verbose_name_plural = _('Posts')
