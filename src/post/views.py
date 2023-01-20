@@ -1,6 +1,9 @@
 from django.views import generic
 from django.views.decorators.csrf import csrf_protect
-from utils.mixins import AjaxRequiredMixin
+from utils.mixins import (
+    AjaxRequiredMixin,
+    ViewCounterMixin,
+)
 from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
@@ -51,7 +54,7 @@ class CreatePost(LoginRequiredMixin, generic.FormView):
         return self.render_to_response(context)
 
 
-class PostDetail(generic.DeleteView):
+class PostDetail(ViewCounterMixin, generic.DeleteView):
     model = models.Post
     template_name = 'post/detail.html'
 
