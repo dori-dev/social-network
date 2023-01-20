@@ -8,3 +8,4 @@ django-dotenv==1.4.2
 certifi==2022.12.7
 easy-thumbnails==2.8.5
 redis==4.4.2
+django_debug_toolbar==3.8.1
