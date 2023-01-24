@@ -7,6 +7,7 @@ from django.core.exceptions import ValidationError
 from django.db.models.fields.files import ImageFieldFile
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from django_jalali.db import models as jalali_models
 
 
 class CustomUser(AbstractUser):
@@ -41,7 +42,7 @@ class Profile(models.Model):
         on_delete=models.CASCADE,
         verbose_name=_('User'),
     )
-    date_of_birth = models.DateField(
+    date_of_birth = jalali_models.jDateField(
         _('Date of birth'),
         blank=True,
         null=True,

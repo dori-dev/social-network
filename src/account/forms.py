@@ -3,7 +3,10 @@ from django.core.exceptions import ValidationError
 from django import forms
 from django.contrib.auth import forms as auth_forms
 from django.contrib.auth import get_user_model
+from jalali_date.fields import JalaliDateField
+from jalali_date.widgets import AdminJalaliDateWidget
 from .models import Profile
+
 
 User = get_user_model()
 User._meta.get_field('first_name').validators[0].limit_value = 30
@@ -257,10 +260,6 @@ class UserEditForm(forms.ModelForm):
         ] = 'اسمتو بهم بگو تا بدونم چی صدات کنم!'
 
 
-class DateInput(forms.DateInput):
-    input_type = 'date'
-
-
 class ImageField(forms.FileField):
     default_error_messages = {
         "invalid_image": (
@@ -313,10 +312,11 @@ class UserProfileEditForm(forms.ModelForm):
             'photo',
         )
         widgets = {
-            'date_of_birth': DateInput(),
+            'date_of_birth': AdminJalaliDateWidget,
         }
         field_classes = {
             'photo': ImageField,
+            'date_of_birth': JalaliDateField,
         }
         labels = {
             'date_of_birth': 'تاریخ تولد',
@@ -330,14 +330,16 @@ class UserProfileEditForm(forms.ModelForm):
                 'required': 'پر کردن این فیلد ضروری است!',
                 'invalid': 'این فیلد رو به درستی وارد کن!',
             }
-        # date of birth
         date_of_birth = self.fields['date_of_birth']
         date_of_birth.widget.attrs[
             'class'
-        ] = 'form-control mt-2 mb-2 direction-change'
+        ] = 'form-control mt-2 mb-2 ltr jalali_date-date'
         date_of_birth.widget.attrs[
             'placeholder'
-        ] = 'تاریخ تولدت رو اینجا وارد کن...'
+        ] = '1370-11-24'
+        date_of_birth.widget.attrs[
+            'autocomplete'
+        ] = 'off'
         # photo
         photo = self.fields['photo']
         photo.widget.attrs['class'] = 'form-control mt-2 mb-2'

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load jformat %}
 
 {% block title %}پست {{ post.user.username }}{% endblock title %}
 
@@ -84,7 +85,7 @@
           بازدید
         </div>
         <div class="col-6 text-end">
-          {{ post.created }}
+          {{ post.created|jformat:"%d %B %Y" }}
         </div>
       </div>
       <br>

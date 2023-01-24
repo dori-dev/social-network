@@ -7,7 +7,7 @@ from django.core.exceptions import ValidationError
 from django.db.models.fields.files import ImageFieldFile
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-
+from django_jalali.db import models as jalali_models
 
 UserModel = get_user_model()
 
@@ -46,7 +46,7 @@ class Post(models.Model):
         null=False,
         blank=False,
     )
-    created = models.DateField(
+    created = jalali_models.jDateField(
         _('Created'),
         auto_now_add=True,
         db_index=True,

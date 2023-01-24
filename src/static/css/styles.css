@@ -29,7 +29,7 @@ body {
 }
 
 * {
-  font-family: Vazirmatn;
+  font-family: Vazirmatn !important;
 }
 
 a {

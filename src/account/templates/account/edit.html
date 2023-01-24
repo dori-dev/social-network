@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static jalali_tags %}
 
 {% block title %}تغییر اطلاعات حساب{% endblock %}
 
@@ -43,5 +44,8 @@
   <div class="py-5"></div>
 {% endblock %}
 
-
-
+{% block script %}
+<link rel="stylesheet" href="{% static 'admin/jquery.ui.datepicker.jalali/themes/base/jquery-ui.min.css' %}">
+<script src="{% static 'admin/js/django_jalali.min.js' %}"></script>
+{% endblock script %}
+  
