@@ -9,6 +9,8 @@ import dotenv
 def main():
     """Run administrative tasks."""
     DOT_ENV_PATH = pathlib.Path() / '.env'
+    if not DOT_ENV_PATH.exists():
+        DOT_ENV_PATH = pathlib.Path() / 'src/.env'
     if DOT_ENV_PATH.exists():
         dotenv.read_dotenv(str(DOT_ENV_PATH))
     else:
