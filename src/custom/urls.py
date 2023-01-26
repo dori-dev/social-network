@@ -5,6 +5,7 @@ urlpatterns = [
     # Pages
     path('pages/transaction/', views.transaction, name="transaction"),
     path('pages/settings/', views.settings, name="settings"),
+    path('users/csv/', views.UsersExportCSV.as_view(), name='users_csv'),
     # Tables
     path('tables/bs-tables/', views.bs_tables, name="bs_tables"),
     # Components

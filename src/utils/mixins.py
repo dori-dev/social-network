@@ -17,6 +17,13 @@ class AjaxRequiredMixin:
         return HttpResponseBadRequest()
 
 
+class SuperUserRequireMixin:
+    def dispatch(self, request: HttpRequest, *args, **kwargs):
+        if request.user.is_superuser:
+            return super().dispatch(request, *args, **kwargs)
+        return HttpResponseBadRequest()
+
+
 class ViewCounterMixin:
     def get_context_data(self, **kwargs):
         request: HttpRequest = self.request
