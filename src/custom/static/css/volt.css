@@ -1,5 +1,4 @@
 @charset "UTF-8";
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
 .datepicker {
   display: none;
 }
@@ -978,7 +977,7 @@
   --bs-black-rgb: 17, 24, 39;
   --bs-body-color-rgb: 55, 65, 81;
   --bs-body-bg-rgb: 242, 244, 246;
-  --bs-font-sans-serif: "Inter", sans-serif;
+  --bs-font-sans-serif: "Vazirmatn", sans-serif;
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(
@@ -22720,7 +22719,7 @@ fieldset:disabled .btn {
   border-radius: 0.5rem;
 }
 .sidebar .nav-link .sidebar-icon {
-  margin-right: 0.5rem;
+  margin-left: 0.5rem;
   color: #9ca3af;
 }
 .sidebar .nav-link .link-arrow {
@@ -27587,7 +27586,7 @@ h6,
 .h4,
 .h5,
 .h6 {
-  font-family: "Inter", sans-serif;
+  font-family: "Vazirmatn", sans-serif;
   font-weight: 500;
 }
 

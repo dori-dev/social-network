@@ -164,3 +164,57 @@ msgstr "کاربرهایی که لایک کردند"
 
 msgid "Total likes"
 msgstr "تعداد لایک ها"
+
+msgid "Python Social Auth"
+msgstr "احراز هویت"
+
+msgid "Association"
+msgstr "ارتباط"
+
+msgid "Associations"
+msgstr "ارتباطات"
+
+msgid "Nonce"
+msgstr "متفرقه"
+
+msgid "Nonces"
+msgstr "متفرقه ها"
+
+msgid "User social auth"
+msgstr "کاربر"
+
+msgid "User social auths"
+msgstr "کاربران"
+
+msgid "Server url"
+msgstr "آدرس سرور"
+
+msgid "Handle"
+msgstr "هندل"
+
+msgid "Secret"
+msgstr "رمز"
+
+msgid "Issued"
+msgstr "صادر شده"
+
+msgid "Lifetime"
+msgstr "طول عمر"
+
+msgid "Assoc type"
+msgstr "نوع وابسته"
+
+msgid "Timestamp"
+msgstr "زمان"
+
+msgid "Salt"
+msgstr "افزودنی"
+
+msgid "Provider"
+msgstr "ارائه دهنده"
+
+msgid "Uid"
+msgstr "UID"
+
+msgid "Extra data"
+msgstr "اطلاعات اضافه"
