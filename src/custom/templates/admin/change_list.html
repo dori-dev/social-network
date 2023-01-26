@@ -57,13 +57,13 @@
 
 {% block content %}
     <div class="table-settings mt-5 mb-4 ms-4">
-        <div class="row align-items-center justify-content-between">
-            <div class="col col-md-8 col-lg-3 col-xl-8">
+        <div class="row justify-content-between">
+            <div class="col-8">
                 {% block search %}{% search_form cl %}{% endblock %}
             </div>
-            <div class="d-block mb-4 mb-md-0 col-4 col-md-2">
+            <div class="d-block mb-4 mb-md-0 col-4 col-4">
                 <div class="btn-toolbar mb-2 mb-md-0">
-                    <div class="btn-group">
+                    <div class="btn-group w-100 fmxw-300">
                         {% block object-tools-items %}
                             {% change_list_object_tools %}
                         {% endblock %}
@@ -74,10 +74,12 @@
     </div>
 
     <div class="row mx-3">
-        <div class="{% if cl.has_filters %}col-md-10{% else %}col-md-12{% endif %}">
+        <div class="col-md-12">
             {% block date_hierarchy %}
                 {% if cl.date_hierarchy %}{% date_hierarchy cl %}{% endif %}
             {% endblock %}
+        </div>
+        <div class="{% if cl.has_filters %}col-md-9{% else %}col-md-12{% endif %}">
             <form id="changelist-form" method="post" {% if cl.formset and cl.formset.is_multipart %}
                   enctype="multipart/form-data"{% endif %} novalidate>
                 {% csrf_token %}
@@ -103,7 +105,7 @@
                 </div>
             </form>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3 filter-section">
             {% if cl.has_filters %}
                 {% block filters %}
                     <div class="card card-body border-0 shadow table-wrapper table-responsive">

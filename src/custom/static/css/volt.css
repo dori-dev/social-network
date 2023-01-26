@@ -23455,10 +23455,12 @@ label {
 .avatar-md {
   width: 3rem;
   height: 3rem;
+  object-fit: cover;
 }
 .avatar-md img {
   width: 3rem;
   height: 3rem;
+  object-fit: cover;
 }
 
 .avatar-lg {
@@ -27233,6 +27235,7 @@ label {
 .avatar-md {
   width: 3rem;
   height: 3rem;
+  object-fit: cover;
 }
 
 .avatar-lg {

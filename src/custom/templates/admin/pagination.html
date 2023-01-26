@@ -8,11 +8,11 @@
     <div class="card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
         <nav aria-label="Page navigation example">
             <ul class="pagination mb-0">
-                <li class="page-item">
+                <li class="page-item previous">
                     {% if cl.page_num > 1 %}
-                        <a class="page-link" href="?p={{ cl.page_num|neg_num:1 }}">Previous</a>
+                        <a class="page-link" href="?p={{ cl.page_num|neg_num:1 }}">قبلی</a>
                     {% else %}
-                        <span class="page-link">Previous</span>
+                        <span class="page-link">قبلی</span>
                     {% endif %}
                 </li>
                 {% if pagination_required %}
@@ -23,11 +23,11 @@
                         </li>
                     {% endfor %}
                 {% endif %}
-                <li class="page-item">
+                <li class="page-item next">
                     {% if cl.page_num < cl.paginator.num_pages %}
-                        <a class="page-link" href="?p={{ cl.page_num|sum_number:1 }}">Next</a>
+                        <a class="page-link" href="?p={{ cl.page_num|sum_number:1 }}">بعدی</a>
                     {% else %}
-                        <span class="page-link">Next</span>
+                        <span class="page-link">بعدی</span>
                     {% endif %}
                 </li>
                 {% if show_all_url %}
@@ -38,13 +38,9 @@
             </ul>
         </nav>
         <div class="fw-normal small mt-4 mt-lg-0">
-            Showing <b>{{ cl.result_list|length }}</b>
-            {% if cl.result_count == 1 %}
-                {{ cl.opts.verbose_name }}
-            {% else %}
-                {{ cl.opts.verbose_name_plural }}
-            {% endif %}
-            out of <b>{{ cl.result_count }}</b> entries
+            لیست <b>{{ cl.result_list|length }}</b>
+            {{ cl.opts.verbose_name }}
+            از <b>{{ cl.result_count }}</b> {{ cl.opts.verbose_name }}
         </div>
 
         {% if cl.formset and cl.result_count %}

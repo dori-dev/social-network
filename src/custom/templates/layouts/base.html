@@ -21,5 +21,16 @@
   </main>
   {% include 'includes/scripts.html' %}
   {% block extra_js %}{% endblock extra_js %}
+  <script>
+    function success(response) {
+      document
+        .getElementById("action-list")
+        .insertAdjacentHTML("beforeend", response);
+    }
+    var url = "{% url 'action:last' %}?page="
+    window.ready(function () {
+      getPrimaryData(url, success, true);
+    });
+  </script>
 </body>
 </html>

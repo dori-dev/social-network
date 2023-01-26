@@ -19,6 +19,23 @@ body {
   direction: rtl !important;
 }
 
+* {
+  direction: rtl !important;
+}
+
+ul {
+  list-style: none;
+  padding-right: 0;
+}
+
+.bold-font {
+  font-family: VazirmatnBold;
+}
+
+.filter_panel ul {
+  padding: 0;
+}
+
 .nav-link {
   font-family: VazirmatnBold;
   font-size: 16px;
@@ -59,10 +76,6 @@ ul.nav {
   padding-left: 40px;
 }
 
-.custom-dropdown .dropdown-item {
-  padding: 8px 4px 8px 16px;
-}
-
 .custom-dropdown-toggle {
   position: relative;
 }
@@ -74,7 +87,121 @@ ul.nav {
   left: 0 !important;
 }
 
+.custom-dropdown .dropdown-item {
+  padding: 8px 10px;
+}
+
 .navbar-nav .dropdown-menu-center {
   left: 0;
   transform: translateX(0);
+}
+
+.input-group {
+  flex-direction: row-reverse;
+}
+
+.add-button {
+  color: #fefefe;
+  font-family: VazirmatnBold;
+  border-radius: 5px !important;
+}
+
+.add-button:hover {
+  color: #fefefe;
+}
+
+.add-button svg {
+  width: 18px;
+  height: 18px;
+  fill: #fefefe;
+}
+
+.page-item.previous a,
+.page-item.previous span {
+  border-radius: 0 5px 5px 0 !important;
+}
+
+.page-item.next a,
+.page-item.next span {
+  border-radius: 5px 0 0 5px !important;
+}
+
+.multi-level .nav-item .nav-link .sidebar-text {
+  padding-right: 30px;
+}
+
+.filter-section .card-body {
+  padding: 20px 12px;
+}
+
+.xfull .toplinks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.xfull .toplinks li {
+  margin-left: 15px;
+}
+
+.xfull .toplinks .date-back {
+  width: 100%;
+  font-family: VazirmatnBold;
+}
+
+.btn-toolbar {
+  justify-content: flex-end;
+}
+
+.filter_panel {
+  margin-bottom: 40px;
+}
+
+.filter_panel ul {
+  padding: 0;
+  padding-right: 10px;
+}
+
+.related-widget-wrapper {
+  float: none !important;
+  display: flex !important;
+  flex-direction: column;
+  text-align: center !important;
+  justify-content: center !important;
+}
+
+.related-widget-wrapper-link.add-related {
+  margin-top: 5px;
+}
+
+.related-widget-wrapper-link.add-related img {
+  width: 20px;
+}
+
+fieldset.module.aligned {
+  margin-top: 30px;
+}
+
+fieldset.module.aligned .title {
+  margin-bottom: 20px;
+  font-family: VazirmatnBold;
+}
+
+fieldset.module.aligned .row {
+  margin-right: 5px;
+}
+
+p.datetime {
+  font-weight: normal !important;
+  color: #666;
+  font-size: 13px;
+}
+
+.related-lookup {
+  display: none !important;
+}
+
+.text-right {
+  text-align: right;
 }

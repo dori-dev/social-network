@@ -28,3 +28,20 @@ class ActionList(LoginRequiredMixin, AjaxRequiredMixin, generic.ListView):
             'target',
         )
         return actions
+
+
+class LastAction(LoginRequiredMixin, generic.ListView):
+    context_object_name = 'actions'
+    template_name = 'action/actions.html'
+
+    def get_queryset(self):
+        actions = models.Action.objects.exclude(
+            user=self.request.user,
+        )[:10]
+        actions = actions.select_related(
+            'user',
+            'user__profile',
+        ).prefetch_related(
+            'target',
+        )
+        return actions

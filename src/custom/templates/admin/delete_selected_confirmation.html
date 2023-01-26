@@ -87,8 +87,8 @@
                             {% else %}
                                 <p class="txt-left-dir">
                                     {% blocktrans %}
-                                        Are you sure you want to delete the selected {{ objects_name }}? All of the
-                                        following objects and their related items will be deleted:
+                                        آیا مطمئنی میخواهی {{ objects_name }} را حذف کنی؟
+                                        تمام اشیاء زیر و آیتم های مرتبط با آن حذف خواهند شد:
                                     {% endblocktrans %}
                                 </p>
                             {% endif %}
@@ -119,7 +119,7 @@
                                     <input type="hidden" name="action" value="delete_selected">
                                     <input type="hidden" name="post" value="yes">
                                     <button type="submit" class="btn btn-sm btn-primary">
-                                        {% trans "Yes, I'm sure" %}
+                                        بله، مطمئن ام
                                     </button>
                                     <a href="{% url opts|admin_urlname:'changelist' %}" class="btn btn-sm btn-warning">{% trans "No, take me back" %}</a>
                                 </div>

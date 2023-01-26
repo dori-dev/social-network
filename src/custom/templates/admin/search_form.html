@@ -7,7 +7,7 @@
     <div class="{{ direction.panel }}">
         <form id="changelist-search" method="get">
             <div class="row">
-                <div class="input-group me-2 me-lg-3 fmxw-400">
+                <div class="input-group me-2 me-lg-3 fmxw-500">
                     <span class="input-group-text">
                       <svg class="icon icon-xs" x-description="Heroicon name: solid/search"
                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
@@ -19,18 +19,18 @@
                     </span>
                     <input type="text" class="form-control" name="{{ search_var }}" value="{{ cl.query }}" id="searchbar" placeholder="{% trans 'Search' %}">
                 </div>
-                <div class="col-md-3 pl-md-1">
+                <div class="col-md-12 mt-2 me-2 me-lg-3 result-section">
                     <div class="form-group">
                         {% if show_result_count %}
                             <span class="small quiet">
                                 {% blocktrans count counter=cl.result_count %}
-                                    {{ counter }} result
+                                    {{ counter }} آیتم
                                 {% plural %}
-                                    {{ counter }} results
-                                {% endblocktrans %} (<a
+                                    {{ counter }} آیتم
+                                {% endblocktrans %} (<a class="bold-font"
                                     href="?{% if cl.is_popup %}_popup=1{% endif %}">{% if cl.show_full_result_count %}
                                 {% blocktrans with full_result_count=cl.full_result_count %}
-                                    {{ full_result_count }} total
+                                    از {{ full_result_count }} تا
                                 {% endblocktrans %}
                             {% else %}
                                 {% trans "Show all" %}
