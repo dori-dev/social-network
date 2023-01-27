@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block content %}
-
   <div class="py-4">
     <div class="dropdown">
       <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1">
@@ -85,40 +84,28 @@
           <div class="row d-block d-xl-flex align-items-center">
             <div
               class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
-              <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
-                <svg class="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z">
-                  </path>
-                </svg>
-              </div>
-              <div class="d-sm-none">
-                <h2 class="h5">Customers</h2>
-                <h3 class="fw-extrabold mb-1">345,678</h3>
+              <div class="icon-shape icon-shape-success rounded me-4 me-sm-0">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M144 160c-44.2 0-80-35.8-80-80S99.8 0 144 0s80 35.8 80 80s-35.8 80-80 80zm368 0c-44.2 0-80-35.8-80-80s35.8-80 80-80s80 35.8 80 80s-35.8 80-80 80zM0 298.7C0 239.8 47.8 192 106.7 192h42.7c15.9 0 31 3.5 44.6 9.7c-1.3 7.2-1.9 14.7-1.9 22.3c0 38.2 16.8 72.5 43.3 96c-.2 0-.4 0-.7 0H21.3C9.6 320 0 310.4 0 298.7zM405.3 320c-.2 0-.4 0-.7 0c26.6-23.5 43.3-57.8 43.3-96c0-7.6-.7-15-1.9-22.3c13.6-6.3 28.7-9.7 44.6-9.7h42.7C592.2 192 640 239.8 640 298.7c0 11.8-9.6 21.3-21.3 21.3H405.3zM416 224c0 53-43 96-96 96s-96-43-96-96s43-96 96-96s96 43 96 96zM128 485.3C128 411.7 187.7 352 261.3 352H378.7C452.3 352 512 411.7 512 485.3c0 14.7-11.9 26.7-26.7 26.7H154.7c-14.7 0-26.7-11.9-26.7-26.7z"/></svg>
               </div>
             </div>
             <div class="col-12 col-xl-7 px-xl-0">
               <div class="d-none d-sm-block">
-                <h2 class="h6 text-gray-400 mb-0">Customers</h2>
-                <h3 class="fw-extrabold mb-2">345k</h3>
+                <h3 class="h4 mb-2">کاربران</h3>
+                <h5 class="bold-font mb-3">{{ users_count }}</h5>
               </div>
-              <small class="d-flex align-items-center text-gray-500">
-                Feb 1 - Apr 1,
-                <svg class="icon icon-xxs text-gray-500 ms-2 me-1" fill="currentColor" viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z"
-                    clip-rule="evenodd"></path>
-                </svg>
-                USA
-              </small>
               <div class="small d-flex mt-1">
-                <div>Since last month <svg class="icon icon-xs text-success" fill="currentColor" viewBox="0 0 20 20"
+                <div class="d-flex align-items-center">
+                  <div class="d-flex align-items-center">
+                    <span class="text-success bold-font increase-num">{{ users_last_month }}</span>
+                    <svg class="icon icon-xs text-success" fill="currentColor" viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd"
                       d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
                       clip-rule="evenodd"></path>
-                  </svg><span class="text-success fw-bolder">22%</span></div>
+                    </svg>
+                  </div>
+                  <span class="me-2">در یک ماه اخیر</span>
+                </div>
               </div>
             </div>
           </div>
@@ -131,40 +118,28 @@
           <div class="row d-block d-xl-flex align-items-center">
             <div
               class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
-              <div class="icon-shape icon-shape-secondary rounded me-4 me-sm-0">
-                <svg class="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd"
-                    d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z"
-                    clip-rule="evenodd"></path>
-                </svg>
-              </div>
-              <div class="d-sm-none">
-                <h2 class="fw-extrabold h5">Revenue</h2>
-                <h3 class="mb-1">$43,594</h3>
+              <div class="custom-icon-shape icon-shape-gray rounded me-4 me-sm-0">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.0.0-alpha3 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M447.1 32h-384C28.64 32-.0091 60.65-.0091 96v320c0 35.35 28.65 64 63.1 64h384c35.35 0 64-28.65 64-64V96C511.1 60.65 483.3 32 447.1 32zM111.1 96c26.51 0 48 21.49 48 48S138.5 192 111.1 192s-48-21.49-48-48S85.48 96 111.1 96zM446.1 407.6C443.3 412.8 437.9 416 432 416H82.01c-6.021 0-11.53-3.379-14.26-8.75c-2.73-5.367-2.215-11.81 1.334-16.68l70-96C142.1 290.4 146.9 288 152 288s9.916 2.441 12.93 6.574l32.46 44.51l93.3-139.1C293.7 194.7 298.7 192 304 192s10.35 2.672 13.31 7.125l128 192C448.6 396 448.9 402.3 446.1 407.6z"/></svg>
               </div>
             </div>
             <div class="col-12 col-xl-7 px-xl-0">
               <div class="d-none d-sm-block">
-                <h2 class="h6 text-gray-400 mb-0">Revenue</h2>
-                <h3 class="fw-extrabold mb-2">$43,594</h3>
+                <h3 class="h4 mb-2">پست</h3>
+                <h5 class="bold-font mb-3">{{ posts_count }}</h5>
               </div>
-              <small class="d-flex align-items-center text-gray-500">
-                Feb 1 - Apr 1,
-                <svg class="icon icon-xxs text-gray-500 ms-2 me-1" fill="currentColor" viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z"
-                    clip-rule="evenodd"></path>
-                </svg>
-                GER
-              </small>
               <div class="small d-flex mt-1">
-                <div>Since last month <svg class="icon icon-xs text-danger" fill="currentColor" viewBox="0 0 20 20"
+                <div class="d-flex align-items-center">
+                  <div class="d-flex align-items-center">
+                    <span class="text-success bold-font increase-num">{{ posts_last_month }}</span>
+                    <svg class="icon icon-xs text-success" fill="currentColor" viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd"
-                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
                       clip-rule="evenodd"></path>
-                  </svg><span class="text-danger fw-bolder">2%</span></div>
+                    </svg>
+                  </div>
+                  <span class="me-2">در یک ماه اخیر</span>
+                </div>
               </div>
             </div>
           </div>
@@ -177,33 +152,28 @@
           <div class="row d-block d-xl-flex align-items-center">
             <div
               class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
-              <div class="icon-shape icon-shape-tertiary rounded me-4 me-sm-0">
-                <svg class="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd"
-                    d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z"
-                    clip-rule="evenodd"></path>
-                </svg>
-              </div>
-              <div class="d-sm-none">
-                <h2 class="fw-extrabold h5"> Bounce Rate</h2>
-                <h3 class="mb-1">50.88%</h3>
+              <div class="icon-shape icon-shape-info rounded me-4 me-sm-0">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Pro 6.0.0-alpha3 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) --><path d="M576 192c35.35 0 64-28.65 64-64c0-35.35-28.65-64-64-64s-64 28.65-64 64C512 163.3 540.7 192 576 192zM576 384c-14.43 0-27.61 4.953-38.31 13.01l-81.9-49.14C460.8 334.1 464 319.5 464 304c0-19.68-4.805-38.11-12.74-54.77l42.93-31.48c10.69-7.812 13-22.84 5.156-33.53c-7.812-10.66-22.81-13.09-33.53-5.156l-42.9 31.46C400.1 189.3 369.7 176 336 176c-10.84 0-21.19 1.752-31.24 4.289l-34-72.86C281.4 96.01 288 80.82 288 64c0-35.35-28.65-64-64-64S160 28.65 160 64c0 35.35 28.65 64 64 64c1.105 0 2.133-.2715 3.225-.3262l33.99 72.84C229.1 223.8 208 261.3 208 304c0 70.69 57.31 128 128 128c37.91 0 71.6-16.79 95.04-42.98l81.95 49.17C512.5 441.4 512 444.6 512 448c0 35.35 28.65 64 64 64S640 483.3 640 448C640 412.7 611.3 384 576 384zM336 384C291.9 384 256 348.1 256 304S291.9 224 336 224C380.1 224 416 259.9 416 304S380.1 384 336 384zM152 280H123.3C113.8 256.6 90.84 240 64 240c-35.35 0-64 28.65-64 64c0 35.35 28.65 64 64 64c26.84 0 49.75-16.56 59.25-40H152c13.25 0 24-10.75 24-24S165.3 280 152 280z"/></svg>
               </div>
             </div>
             <div class="col-12 col-xl-7 px-xl-0">
               <div class="d-none d-sm-block">
-                <h2 class="h6 text-gray-400 mb-0"> Bounce Rate</h2>
-                <h3 class="fw-extrabold mb-2">50.88%</h3>
+                <h3 class="h4 mb-2">ارتباطات</h3>
+                <h5 class="bold-font mb-3">{{ contacts_count }}</h5>
               </div>
-              <small class="text-gray-500">
-                Feb 1 - Apr 1
-              </small>
               <div class="small d-flex mt-1">
-                <div>Since last month <svg class="icon icon-xs text-success" fill="currentColor" viewBox="0 0 20 20"
+                <div class="d-flex align-items-center">
+                  <div class="d-flex align-items-center">
+                    <span class="text-success bold-font increase-num">{{ contacts_last_month }}</span>
+                    <svg class="icon icon-xs text-success" fill="currentColor" viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd"
                       d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
                       clip-rule="evenodd"></path>
-                  </svg><span class="text-success fw-bolder">4%</span></div>
+                  </svg>
+                  </div>
+                  <span class="me-2">در یک ماه اخیر</span>
+                </div>
               </div>
             </div>
           </div>
@@ -219,10 +189,7 @@
             <div class="card-header">
               <div class="row align-items-center">
                 <div class="col">
-                  <h2 class="fs-5 fw-bold mb-0">Page visits</h2>
-                </div>
-                <div class="col text-end">
-                  <a href="#" class="btn btn-sm btn-primary">See all</a>
+                  <h2 class="fs-5 fw-bold mb-0">بازدید صفحات</h2>
                 </div>
               </div>
             </div>
@@ -230,367 +197,117 @@
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                   <tr>
-                    <th class="border-bottom" scope="col">Page name</th>
-                    <th class="border-bottom" scope="col">Page Views</th>
-                    <th class="border-bottom" scope="col">Page Value</th>
-                    <th class="border-bottom" scope="col">Bounce rate</th>
+                    <th class="border-bottom" scope="col">آدرس صفحه</th>
+                    <th class="border-bottom" scope="col">تعداد بازدید</th>
                   </tr>
                 </thead>
                 <tbody>
+                  {% for path in path_views %}
                   <tr>
                     <th class="text-gray-900" scope="row">
-                      /demo/admin/index.html
+                      <a target="_blank" href="{{ path.0 }}">{{ path.0 }}</a>
                     </th>
                     <td class="fw-bolder text-gray-500">
-                      3,225
-                    </td>
-                    <td class="fw-bolder text-gray-500">
-                      $20
-                    </td>
-                    <td class="fw-bolder text-gray-500">
-                      <div class="d-flex">
-                        <svg class="icon icon-xs text-danger me-2" fill="currentColor" viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg">
-                          <path fill-rule="evenodd"
-                            d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z"
-                            clip-rule="evenodd"></path>
-                        </svg>
-                        42,55%
-                      </div>
+                      {{ path.1 }}
                     </td>
                   </tr>
-                  <tr>
-                    <th class="text-gray-900" scope="row">
-                      /demo/admin/forms.html
-                    </th>
-                    <td class="fw-bolder text-gray-500">
-                      2,987
-                    </td>
-                    <td class="fw-bolder text-gray-500">
-                      0
-                    </td>
-                    <td class="fw-bolder text-gray-500">
-                      <div class="d-flex">
-                        <svg class="icon icon-xs text-success me-2" fill="currentColor" viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg">
-                          <path fill-rule="evenodd"
-                            d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l2.293-2.293a1 1 0 011.414 0z"
-                            clip-rule="evenodd"></path>
-                        </svg>
-                        43,24%
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th class="text-gray-900" scope="row">
-                      /demo/admin/util.html
-                    </th>
-                    <td class="fw-bolder text-gray-500">
-                      2,844
-                    </td>
-                    <td class="fw-bolder text-gray-500">
-                      294
-                    </td>
-                    <td class="fw-bolder text-gray-500">
-                      <div class="d-flex">
-                        <svg class="icon icon-xs text-success me-2" fill="currentColor" viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg">
-                          <path fill-rule="evenodd"
-                            d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l2.293-2.293a1 1 0 011.414 0z"
-                            clip-rule="evenodd"></path>
-                        </svg>
-                        32,35%
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th class="text-gray-900" scope="row">
-                      /demo/admin/validation.html
-                    </th>
-                    <td class="fw-bolder text-gray-500">
-                      2,050
-                    </td>
-                    <td class="fw-bolder text-gray-500">
-                      $147
-                    </td>
-                    <td class="fw-bolder text-gray-500">
-                      <div class="d-flex">
-                        <svg class="icon icon-xs text-danger me-2" fill="currentColor" viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg">
-                          <path fill-rule="evenodd"
-                            d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z"
-                            clip-rule="evenodd"></path>
-                        </svg>
-                        50,87%
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th class="text-gray-900" scope="row">
-                      /demo/admin/modals.html
-                    </th>
-                    <td class="fw-bolder text-gray-500">
-                      1,483
-                    </td>
-                    <td class="fw-bolder text-gray-500">
-                      $19
-                    </td>
-                    <td class="fw-bolder text-gray-500">
-                      <div class="d-flex">
-                        <svg class="icon icon-xs text-success me-2" fill="currentColor" viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg">
-                          <path fill-rule="evenodd"
-                            d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l2.293-2.293a1 1 0 011.414 0z"
-                            clip-rule="evenodd"></path>
-                        </svg>
-                        26,12%
-                      </div>
-                    </td>
-                  </tr>
+                  {% endfor %}
                 </tbody>
               </table>
             </div>
           </div>
         </div>
-        <div class="col-12 col-xxl-6 mb-4">
+        <div class="col-12 mb-4">
           <div class="card border-0 shadow">
             <div class="card-header border-bottom d-flex align-items-center justify-content-between">
-              <h2 class="fs-5 fw-bold mb-0">Team members</h2>
-              <a href="#" class="btn btn-sm btn-primary">See all</a>
+              <h2 class="fs-5 fw-bold mb-0">افراد تیم</h2>
             </div>
             <div class="card-body">
               <ul class="list-group list-group-flush list my--3">
+                {% for user in staff_users %}
                 <li class="list-group-item px-0">
                   <div class="row align-items-center">
                     <div class="col-auto">
                       <!-- Avatar -->
-                      <a href="#" class="avatar">
-                        <img class="rounded" alt="Image placeholder"
-                          src="{% static 'assets/img/team/profile-picture-1.jpg' %}">
+                      <a target="_blank" href="{{ user.get_absolute_url }}" class="avatar">
+                        <img class="rounded-circle team-profile" alt="Image placeholder"
+                          src="{{ user.profile.photo.url }}">
                       </a>
                     </div>
                     <div class="col-auto ms--2">
                       <h4 class="h6 mb-0">
-                        <a href="#">Chris Wood</a>
+                        <a target="_blank" href="{{ user.get_absolute_url }}">{% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}</a>
                       </h4>
                       <div class="d-flex align-items-center">
-                        <div class="bg-success dot rounded-circle me-1"></div>
-                        <small>Online</small>
+                        <small>
+                          {% if user.is_superuser %}
+                            مدیر
+                          {% else %}
+                          کارمند
+                          {% endif %}
+                        </small>
                       </div>
                     </div>
                     <div class="col text-end">
-                      <a href="#" class="btn btn-sm btn-secondary d-inline-flex align-items-center">
-                        <svg class="icon icon-xxs me-2" fill="currentColor" viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg">
-                          <path fill-rule="evenodd"
-                            d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                            clip-rule="evenodd"></path>
-                        </svg>
-                        Invite
-                      </a>
-                    </div>
-                  </div>
-                </li>
-                <li class="list-group-item px-0">
-                  <div class="row align-items-center">
-                    <div class="col-auto">
-                      <!-- Avatar -->
-                      <a href="#" class="avatar">
-                        <img class="rounded" alt="Image placeholder"
-                          src="{% static 'assets/img/team/profile-picture-2.jpg' %}">
-                      </a>
-                    </div>
-                    <div class="col-auto ms--2">
-                      <h4 class="h6 mb-0">
-                        <a href="#">Jose Leos</a>
-                      </h4>
-                      <div class="d-flex align-items-center">
-                        <div class="bg-warning dot rounded-circle me-1"></div>
-                        <small>In a meeting</small>
-                      </div>
-                    </div>
-                    <div class="col text-end">
-                      <a href="#" class="btn btn-sm btn-secondary d-inline-flex align-items-center">
-                        <svg class="icon icon-xxs me-2" fill="currentColor" viewBox="0 0 20 20"
+                      <a target="_blank" href="{{ user.get_absolute_url }}" class="btn btn-sm btn-secondary d-inline-flex align-items-center">
+                        <svg class="icon icon-xxs ms-2" fill="currentColor" viewBox="0 0 20 20"
                           xmlns="http://www.w3.org/2000/svg">
                           <path fill-rule="evenodd"
                             d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z"
                             clip-rule="evenodd"></path>
                         </svg>
-                        Message
+                        پیام
                       </a>
                     </div>
                   </div>
                 </li>
-                <li class="list-group-item px-0">
-                  <div class="row align-items-center">
-                    <div class="col-auto">
-                      <!-- Avatar -->
-                      <a href="#" class="avatar">
-                        <img class="rounded" alt="Image placeholder"
-                          src="{% static 'assets/img/team/profile-picture-3.jpg' %}">
-                      </a>
-                    </div>
-                    <div class="col-auto ms--2">
-                      <h4 class="h6 mb-0">
-                        <a href="#">Bonnie Green</a>
-                      </h4>
-                      <div class="d-flex align-items-center">
-                        <div class="bg-danger dot rounded-circle me-1"></div>
-                        <small>Offline</small>
-                      </div>
-                    </div>
-                    <div class="col text-end">
-                      <a href="#" class="btn btn-sm btn-secondary d-inline-flex align-items-center">
-                        <svg class="icon icon-xxs me-2" fill="currentColor" viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg">
-                          <path fill-rule="evenodd"
-                            d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z"
-                            clip-rule="evenodd"></path>
-                        </svg>
-                        Message
-                      </a>
-                    </div>
-                  </div>
-                </li>
-                <li class="list-group-item px-0">
-                  <div class="row align-items-center">
-                    <div class="col-auto">
-                      <!-- Avatar -->
-                      <a href="#" class="avatar">
-                        <img class="rounded" alt="Image placeholder"
-                          src="{% static 'assets/img/team/profile-picture-4.jpg' %}">
-                      </a>
-                    </div>
-                    <div class="col-auto ms--2">
-                      <h4 class="h6 mb-0">
-                        <a href="#">Neil Sims</a>
-                      </h4>
-                      <div class="d-flex align-items-center">
-                        <div class="bg-danger dot rounded-circle me-1"></div>
-                        <small>Offline</small>
-                      </div>
-                    </div>
-                    <div class="col text-end">
-                      <a href="#" class="btn btn-sm btn-secondary d-inline-flex align-items-center">
-                        <svg class="icon icon-xxs me-2" fill="currentColor" viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg">
-                          <path fill-rule="evenodd"
-                            d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z"
-                            clip-rule="evenodd"></path>
-                        </svg>
-                        Message
-                      </a>
-                    </div>
-                  </div>
-                </li>
+                {% endfor %}
               </ul>
             </div>
           </div>
         </div>
-        <div class="col-12 col-xxl-6 mb-4">
+        <div class="col-12 mb-4">
           <div class="card border-0 shadow">
-            <div class="card-header border-bottom d-flex align-items-center justify-content-between">
-              <h2 class="fs-5 fw-bold mb-0">Progress track</h2>
-              <a href="#" class="btn btn-sm btn-primary">See tasks</a>
+            <div class="card-header">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h2 class="fs-5 fw-bold mb-0">برترین کاربران</h2>
+                </div>
+              </div>
             </div>
-            <div class="card-body">
-              <!-- Project 1 -->
-              <div class="row mb-4">
-                <div class="col-auto">
-                  <svg class="icon icon-sm text-gray-500" fill="currentColor" viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
-                    <path fill-rule="evenodd"
-                      d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
-                      clip-rule="evenodd"></path>
-                  </svg>
-                </div>
-                <div class="col">
-                  <div class="progress-wrapper">
-                    <div class="progress-info">
-                      <div class="h6 mb-0">Rocket - SaaS Template</div>
-                      <div class="small fw-bold text-gray-500"><span>75 %</span></div>
-                    </div>
-                    <div class="progress mb-0">
-                      <div class="progress-bar bg-success" role="progressbar" aria-valuenow="75" aria-valuemin="0"
-                        aria-valuemax="100" style="width: 75%;"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- Project 2 -->
-              <div class="row align-items-center mb-4">
-                <div class="col-auto">
-                  <svg class="icon icon-sm text-gray-500" fill="currentColor" viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
-                    <path fill-rule="evenodd"
-                      d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
-                      clip-rule="evenodd"></path>
-                  </svg>
-                </div>
-                <div class="col">
-                  <div class="progress-wrapper">
-                    <div class="progress-info">
-                      <div class="h6 mb-0">Themesberg - Design System</div>
-                      <div class="small fw-bold text-gray-500"><span>60 %</span></div>
-                    </div>
-                    <div class="progress mb-0">
-                      <div class="progress-bar bg-success" role="progressbar" aria-valuenow="60" aria-valuemin="0"
-                        aria-valuemax="100" style="width: 60%;"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- Project 3 -->
-              <div class="row align-items-center mb-4">
-                <div class="col-auto">
-                  <svg class="icon icon-sm text-gray-500" fill="currentColor" viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
-                    <path fill-rule="evenodd"
-                      d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
-                      clip-rule="evenodd"></path>
-                  </svg>
-                </div>
-                <div class="col">
-                  <div class="progress-wrapper">
-                    <div class="progress-info">
-                      <div class="h6 mb-0">Homepage Design in Figma</div>
-                      <div class="small fw-bold text-gray-500"><span>45 %</span></div>
-                    </div>
-                    <div class="progress mb-0">
-                      <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="45" aria-valuemin="0"
-                        aria-valuemax="100" style="width: 45%;"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- Project 4 -->
-              <div class="row align-items-center mb-3">
-                <div class="col-auto">
-                  <svg class="icon icon-sm text-gray-500" fill="currentColor" viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
-                    <path fill-rule="evenodd"
-                      d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
-                      clip-rule="evenodd"></path>
-                  </svg>
-                </div>
-                <div class="col">
-                  <div class="progress-wrapper">
-                    <div class="progress-info">
-                      <div class="h6 mb-0">Backend for Themesberg v2</div>
-                      <div class="small fw-bold text-gray-500"><span>34 %</span></div>
-                    </div>
-                    <div class="progress mb-0">
-                      <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="34" aria-valuemin="0"
-                        aria-valuemax="100" style="width: 34%;"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th class="border-bottom" scope="col">کاربر</th>
+                    <th class="border-bottom" scope="col">تعداد فالوور</th>
+                    <th class="border-bottom" scope="col">تعداد پست</th>
+                    <th class="border-bottom" scope="col">مجموع لایک</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for username, values in top_users.items %}
+                    <tr>
+                      <th class="text-gray-900" scope="row">
+                        <a target="_blank" href="{% url 'user:detail' username %}">{{ username }}</a>
+                      </th>
+                      <td class="fw-bolder text-gray-500">
+                        {{ values.0 }}
+                      </td>
+                      <td class="fw-bolder text-gray-500">
+                        {{ values.1 }}
+                      </td>
+                      <td class="fw-bolder text-gray-500">
+                        {% if values.2 %}
+                          {{ values.2 }}
+                        {% else %}
+                          0
+                        {% endif %} 
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -624,141 +341,6 @@
           </div>
         </div>
       </div>
-      <div class="col-12 px-0 mb-4">
-        <div class="card border-0 shadow">
-          <div class="card-body">
-            <div class="d-flex align-items-center justify-content-between border-bottom pb-3">
-              <div>
-                <div class="h6 mb-0 d-flex align-items-center">
-                  <svg class="icon icon-xs text-gray-500 me-2" fill="currentColor" viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z"
-                      clip-rule="evenodd"></path>
-                  </svg>
-                  Global Rank
-                </div>
-              </div>
-              <div>
-                <a href="#" class="d-flex align-items-center fw-bold">
-                  #755
-                  <svg class="icon icon-xs text-gray-500 ms-1" fill="currentColor" viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd"
-                      d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z"
-                      clip-rule="evenodd"></path>
-                  </svg>
-                </a>
-              </div>
-            </div>
-            <div class="d-flex align-items-center justify-content-between border-bottom py-3">
-              <div>
-                <div class="h6 mb-0 d-flex align-items-center">
-                  <svg class="icon icon-xs text-gray-500 me-2" fill="currentColor" viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd"
-                      d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 8l2.55 3.4A1 1 0 0116 13H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z"
-                      clip-rule="evenodd"></path>
-                  </svg>
-                  Country Rank
-                </div>
-                <div class="small card-stats">
-                  United States
-                  <svg class="icon icon-xs text-success" fill="currentColor" viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd"
-                      d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
-                      clip-rule="evenodd"></path>
-                  </svg>
-                </div>
-              </div>
-              <div>
-                <a href="#" class="d-flex align-items-center fw-bold">
-                  #32
-                  <svg class="icon icon-xs text-gray-500 ms-1" fill="currentColor" viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd"
-                      d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z"
-                      clip-rule="evenodd"></path>
-                  </svg>
-                </a>
-              </div>
-            </div>
-            <div class="d-flex align-items-center justify-content-between pt-3">
-              <div>
-                <div class="h6 mb-0 d-flex align-items-center">
-                  <svg class="icon icon-xs text-gray-500 me-2" fill="currentColor" viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd"
-                      d="M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z"
-                      clip-rule="evenodd"></path>
-                    <path d="M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z"></path>
-                  </svg>
-                  Category Rank
-                </div>
-                <div class="small card-stats">
-                  Computers Electronics > Technology
-                  <svg class="icon icon-xs text-success" fill="currentColor" viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd"
-                      d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
-                      clip-rule="evenodd"></path>
-                  </svg>
-                </div>
-              </div>
-              <div>
-                <a href="#" class="d-flex align-items-center fw-bold">
-                  #11
-                  <svg class="icon icon-xs text-gray-500 ms-1" fill="currentColor" viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd"
-                      d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z"
-                      clip-rule="evenodd"></path>
-                  </svg>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 px-0">
-        <div class="card border-0 shadow">
-          <div class="card-body">
-            <h2 class="fs-5 fw-bold mb-1">Acquisition</h2>
-            <p>Tells you where your visitors originated from, such as search engines, social networks or website
-              referrals.</p>
-            <div class="d-block">
-              <div class="d-flex align-items-center me-5">
-                <div class="icon-shape icon-sm icon-shape-danger rounded me-3">
-                  <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd"
-                      d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11 4a1 1 0 10-2 0v4a1 1 0 102 0V7zm-3 1a1 1 0 10-2 0v3a1 1 0 102 0V8zM8 9a1 1 0 00-2 0v2a1 1 0 102 0V9z"
-                      clip-rule="evenodd"></path>
-                  </svg>
-                </div>
-                <div class="d-block">
-                  <label class="mb-0">Bounce Rate</label>
-                  <h4 class="mb-0">33.50%</h4>
-                </div>
-              </div>
-              <div class="d-flex align-items-center pt-3">
-                <div class="icon-shape icon-sm icon-shape-purple rounded me-3">
-                  <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z">
-                    </path>
-                  </svg>
-                </div>
-                <div class="d-block">
-                  <label class="mb-0">Sessions</label>
-                  <h4 class="mb-0">9,567</h4>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
-
 {% endblock content %}

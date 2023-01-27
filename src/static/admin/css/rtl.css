@@ -29,7 +29,7 @@ ul {
 }
 
 .bold-font {
-  font-family: VazirmatnBold;
+  font-family: VazirmatnBold !important;
 }
 
 .filter_panel ul {
@@ -204,4 +204,52 @@ p.datetime {
 
 .text-right {
   text-align: right;
+}
+
+.icon-shape svg {
+  width: 3.4rem;
+  height: 3.4rem;
+}
+
+.custom-icon-shape svg {
+  width: 4rem;
+  height: 4rem;
+}
+
+.icon-shape-gray svg {
+  fill: #6b7280;
+}
+.icon-shape-gray {
+  background-color: rgba(107, 114, 128, 0.3);
+  background-image: linear-gradient(to right, #6b7280, #6b7280),
+    linear-gradient(to right, #6b7280, #6b7280);
+  background-repeat: no-repeat;
+  background-position: 0 0, 0 100%;
+  background-size: 100% 10px, 100% 10px;
+}
+
+.icon-shape-success {
+  background-color: rgba(16, 185, 129, 0.3);
+}
+
+.icon-shape-success svg {
+  fill: #10b981;
+}
+
+.icon-shape-info {
+  background-color: rgba(35, 97, 206, 0.3);
+}
+
+.icon-shape-info svg {
+  fill: #2361ce;
+}
+
+.increase-num {
+  padding-top: 4px;
+}
+
+.team-profile {
+  width: 50px !important;
+  height: 50px !important;
+  object-fit: cover;
 }
