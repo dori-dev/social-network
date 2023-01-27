@@ -7,12 +7,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
 from action.utils import create_action
+from utils.mixins import ViewCounterMixin
 from . import forms
 
 User = get_user_model()
 
 
-class Dashboard(LoginRequiredMixin, generic.TemplateView):
+class Dashboard(ViewCounterMixin, LoginRequiredMixin, generic.TemplateView):
     template_name = 'account/dashboard.html'
 
 
