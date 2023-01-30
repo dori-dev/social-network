@@ -61,24 +61,33 @@
         <div class="card-header d-sm-flex flex-row align-items-center flex-0">
           <div class="d-block mb-3 mb-sm-0">
             <div class="fs-5 fw-normal mb-2">فعالیت</div>
-            <h2 class="fs-3 fw-extrabold">$10,567</h2>
-            <div class="small mt-2">
-              <span class="fw-normal me-2">Yesterday</span>
-              <span class="fas fa-angle-up text-success"></span>
-              <span class="text-success fw-bold">10.57%</span>
+            <h2 class="fs-3 fw-extrabold">{{ actions_count }}</h2>
+            <div class="small mt-2 d-flex align-items-center">
+              <div class="d-flex align-items-center">
+                <span class="text-success bold-font increase-num">{{ actions_last_month }}</span>
+                <svg class="icon icon-xs text-success" fill="currentColor" viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
+                  clip-rule="evenodd"></path>
+                </svg>
+              </div>
+              <span class="fw-normal me-1 pt-1">فعالیت در ماه قبل</span>
             </div>
           </div>
           <div class="d-flex ms-auto">
-            <a href="#" class="btn btn-secondary text-dark btn-sm me-2">Month</a>
-            <a href="#" class="btn btn-dark btn-sm me-3">Week</a>
+            <a href="#" class="btn btn-secondary text-dark btn-sm me-2">ماه</a>
+            <a href="#" class="btn btn-dark btn-sm me-3">روز</a>
           </div>
         </div>
         <div class="card-body p-2">
-          <div class="ct-chart-sales-value ct-double-octave ct-series-g"></div>
+          <div class="ct-chart-sales-value ct-double-octave ct-series-g">
+            {{ actions_data|json_script:"actions_json" }}
+          </div>
         </div>
       </div>
     </div>
-    <div class="col-12 col-sm-6 col-xl-4 mb-4">
+    <div class="col-12 col-sm-4 col-xl-4 mb-4">
       <div class="card border-0 shadow">
         <div class="card-body">
           <div class="row d-block d-xl-flex align-items-center">
@@ -112,7 +121,7 @@
         </div>
       </div>
     </div>
-    <div class="col-12 col-sm-6 col-xl-4 mb-4">
+    <div class="col-12 col-sm-4 col-xl-4 mb-4">
       <div class="card border-0 shadow">
         <div class="card-body">
           <div class="row d-block d-xl-flex align-items-center">
@@ -146,7 +155,7 @@
         </div>
       </div>
     </div>
-    <div class="col-12 col-sm-6 col-xl-4 mb-4">
+    <div class="col-12 col-sm-4 col-xl-4 mb-4">
       <div class="card border-0 shadow">
         <div class="card-body">
           <div class="row d-block d-xl-flex align-items-center">
@@ -182,7 +191,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-12 col-xl-8">
+    <div class="col-12">
       <div class="row">
         <div class="col-12 mb-4">
           <div class="card border-0 shadow">
@@ -217,7 +226,7 @@
             </div>
           </div>
         </div>
-        <div class="col-12 mb-4">
+        <div class="col-8 mb-4">
           <div class="card border-0 shadow">
             <div class="card-header border-bottom d-flex align-items-center justify-content-between">
               <h2 class="fs-5 fw-bold mb-0">افراد تیم</h2>
@@ -266,6 +275,33 @@
             </div>
           </div>
         </div>
+        <div class="col-4 px-0 mb-4">
+          <div class="card border-0 shadow">
+            <div class="card-header d-flex flex-row align-items-center flex-0 border-bottom">
+              <div class="d-block">
+                <div class="h6 fw-normal text-gray mb-2">Total orders</div>
+                <h2 class="h3 fw-extrabold">452</h2>
+                <div class="small mt-2">
+                  <span class="fas fa-angle-up text-success"></span>
+                  <span class="text-success fw-bold">18.2%</span>
+                </div>
+              </div>
+              <div class="d-block ms-auto">
+                <div class="d-flex align-items-center text-end mb-2">
+                  <span class="dot rounded-circle bg-gray-800 me-2"></span>
+                  <span class="fw-normal small">July</span>
+                </div>
+                <div class="d-flex align-items-center text-end">
+                  <span class="dot rounded-circle bg-secondary me-2"></span>
+                  <span class="fw-normal small">August</span>
+                </div>
+              </div>
+            </div>
+            <div class="card-body p-2">
+              <div class="ct-chart-ranking ct-golden-section ct-series-a"></div>
+            </div>
+          </div>
+        </div>
         <div class="col-12 mb-4">
           <div class="card border-0 shadow">
             <div class="card-header">
@@ -309,35 +345,6 @@
                 </tbody>
               </table>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-xl-4">
-      <div class="col-12 px-0 mb-4">
-        <div class="card border-0 shadow">
-          <div class="card-header d-flex flex-row align-items-center flex-0 border-bottom">
-            <div class="d-block">
-              <div class="h6 fw-normal text-gray mb-2">Total orders</div>
-              <h2 class="h3 fw-extrabold">452</h2>
-              <div class="small mt-2">
-                <span class="fas fa-angle-up text-success"></span>
-                <span class="text-success fw-bold">18.2%</span>
-              </div>
-            </div>
-            <div class="d-block ms-auto">
-              <div class="d-flex align-items-center text-end mb-2">
-                <span class="dot rounded-circle bg-gray-800 me-2"></span>
-                <span class="fw-normal small">July</span>
-              </div>
-              <div class="d-flex align-items-center text-end">
-                <span class="dot rounded-circle bg-secondary me-2"></span>
-                <span class="fw-normal small">August</span>
-              </div>
-            </div>
-          </div>
-          <div class="card-body p-2">
-            <div class="ct-chart-ranking ct-golden-section ct-series-a"></div>
           </div>
         </div>
       </div>

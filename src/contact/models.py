@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
+from django_jalali.db import models as jalali_models
 
 User = get_user_model()
 
@@ -18,7 +19,7 @@ class Contact(models.Model):
         on_delete=models.CASCADE,
         verbose_name=_('User to'),
     )
-    created = models.DateTimeField(
+    created = jalali_models.jDateTimeField(
         auto_now_add=True,
         db_index=True,
         editable=True,

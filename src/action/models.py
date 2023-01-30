@@ -5,7 +5,6 @@ from django.contrib.auth import get_user_model
 from utils.functions import humanize
 from django.utils.translation import gettext_lazy as _
 
-
 UserModel = get_user_model()
 
 

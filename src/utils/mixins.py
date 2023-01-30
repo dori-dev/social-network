@@ -57,5 +57,4 @@ class ViewCounterMixin:
             f'page:{path}:view_ips',
             ip_address,
         )
-        context["total_views"] = r.scard(f'page:{path}:view_ips')
         return context

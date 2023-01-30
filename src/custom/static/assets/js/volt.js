@@ -133,13 +133,13 @@ d.addEventListener("DOMContentLoaded", function (event) {
 
   //Chartist
 
+  var data = JSON.parse(document.getElementById("actions_json").textContent);
   if (d.querySelector(".ct-chart-sales-value")) {
-    //Chart 5
     new Chartist.Line(
       ".ct-chart-sales-value",
       {
-        labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-        series: [[0, 10, 30, 40, 80, 60, 100]],
+        labels: Object.keys(data),
+        series: [Object.values(data)],
       },
       {
         low: 0,
@@ -147,17 +147,11 @@ d.addEventListener("DOMContentLoaded", function (event) {
         fullWidth: true,
         plugins: [Chartist.plugins.tooltip()],
         axisX: {
-          // On the x-axis start means top and end means bottom
-          position: "end",
-          showGrid: true,
+          showGrid: false,
         },
         axisY: {
-          // On the y-axis start means left and end means right
           showGrid: false,
           showLabel: false,
-          labelInterpolationFnc: function (value) {
-            return "$" + value / 1 + "k";
-          },
         },
       }
     );
@@ -206,30 +200,6 @@ d.addEventListener("DOMContentLoaded", function (event) {
           },
         });
       }
-    });
-  }
-
-  if (d.querySelector(".ct-chart-traffic-share")) {
-    var data = {
-      series: [70, 20, 10],
-    };
-
-    var sum = function (a, b) {
-      return a + b;
-    };
-
-    new Chartist.Pie(".ct-chart-traffic-share", data, {
-      labelInterpolationFnc: function (value) {
-        return Math.round((value / data.series.reduce(sum)) * 100) + "%";
-      },
-      low: 0,
-      high: 8,
-      donut: true,
-      donutWidth: 20,
-      donutSolid: true,
-      fullWidth: false,
-      showLabel: false,
-      plugins: [Chartist.plugins.tooltip()],
     });
   }
 
