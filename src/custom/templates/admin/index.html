@@ -76,13 +76,14 @@
             </div>
           </div>
           <div class="d-flex ms-auto">
-            <a href="#" class="btn btn-secondary text-dark btn-sm me-2">ماه</a>
-            <a href="#" class="btn btn-dark btn-sm me-3">روز</a>
+            <button onclick="setMonthData()" class="btn btn-secondary text-dark btn-sm me-2" id="monthChart">ماه</button>
+            <button onclick="setWeekData()" class="btn btn-dark btn-sm me-3" id="dayChart">روز</button>
           </div>
         </div>
         <div class="card-body p-2">
           <div class="ct-chart-sales-value ct-double-octave ct-series-g">
             {{ actions_data|json_script:"actions_json" }}
+            {{ actions_data_week|json_script:"actions_week_json" }}
           </div>
         </div>
       </div>
@@ -191,7 +192,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-8">
+    <div class="col-7">
       <div class="row">
         <div class="col-12 mb-4">
           <div class="card border-0 shadow">
@@ -322,7 +323,7 @@
         </div>
       </div>
     </div>
-    <div class="col-4">
+    <div class="col-5">
       <div class="col-12 px-0 mb-4">
         <div class="card border-0 shadow">
           <div class="h5 fw-normal text-gray mb-4 mt-3 me-3">کاربران</div>
@@ -356,3 +357,66 @@
     </div>
   </div>
 {% endblock content %}
+
+{% block extra_js %}
+<script>
+  var actionsData = JSON.parse(
+    document.getElementById("actions_json").textContent
+  );
+  function setMonthData() {
+    document.getElementById("monthChart").className =
+      "btn btn-secondary text-dark btn-sm me-2";
+    document.getElementById("dayChart").className = "btn btn-dark btn-sm me-3";
+    new Chartist.Line(
+      ".ct-chart-sales-value",
+      {
+        labels: Object.keys(actionsData),
+        series: [Object.values(actionsData)],
+      },
+      {
+        low: 0,
+        showArea: true,
+        fullWidth: true,
+        plugins: [Chartist.plugins.tooltip()],
+        axisX: {
+          showGrid: false,
+        },
+        axisY: {
+          showGrid: false,
+          showLabel: false,
+        },
+      }
+    );
+  }
+  var actionsWeekData = JSON.parse(
+    document.getElementById("actions_week_json").textContent
+  );
+  function setWeekData() {
+    document.getElementById("monthChart").className =
+      "btn btn-dark text-dark btn-sm me-2";
+    document.getElementById("dayChart").className =
+      "btn btn-secondary btn-sm me-3";
+    new Chartist.Line(
+      ".ct-chart-sales-value",
+      {
+        labels: Object.keys(actionsWeekData),
+        series: [Object.values(actionsWeekData)],
+      },
+      {
+        low: 0,
+        showArea: true,
+        fullWidth: true,
+        plugins: [Chartist.plugins.tooltip()],
+        axisX: {
+          showGrid: false,
+        },
+        axisY: {
+          showGrid: false,
+          showLabel: false,
+        },
+      }
+    );
+  }
+</script>
+{% endblock extra_js %}
+  

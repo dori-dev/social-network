@@ -88,11 +88,12 @@ def date_clear(datetime: datetime.datetime, day=True) -> datetime.datetime:
     return datetime
 
 
-def get_last_week_info(model: Union[Post, UserModel, Contact], now):
-    field_name = 'date_joined'
+def get_last_week_info(model, now):
+    field_name = 'created'
     week_days = WEEK_DAYS
-    if model != UserModel:
-        field_name = 'created'
+    if model == UserModel:
+        field_name = 'date_joined'
+    if model in (Post, Contact):
         now = date2jdate(now)
         week_days = JALALI_WEEK_DAYS
     data = {}
@@ -114,6 +115,18 @@ def get_last_week_info(model: Union[Post, UserModel, Contact], now):
         }).count()
         first_day = second_day
     return data
+
+
+def format_data(data: dict):
+    data = {
+        key: value
+        for key, value in reversed(data.items())
+    }
+    keys = list(data.keys())
+    keys.append('')
+    values = list(data.values())
+    values.insert(0, 0)
+    return dict(zip(keys, values))
 
 
 def access_data(request):
@@ -192,15 +205,7 @@ def access_data(request):
         month_name = MONTHS[second_month.month]
         data[month_name] = actions.count()
         first_month = second_month
-    data = {
-        key: value
-        for key, value in reversed(data.items())
-    }
-    keys = list(data.keys())
-    keys.append('')
-    values = list(data.values())
-    values.insert(0, 0)
-    data = dict(zip(keys, values))
+    data = format_data(data)
     return {
         'users_count': users_count,
         'users_last_month': users_last_month,
@@ -217,4 +222,5 @@ def access_data(request):
         'posts_data': get_last_week_info(Post, now),
         'contacts_data': get_last_week_info(Contact, now),
         'users_data': get_last_week_info(UserModel, now),
+        'actions_data_week': format_data(get_last_week_info(Action, now)),
     }
