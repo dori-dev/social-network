@@ -60,7 +60,7 @@
       <div class="card bg-yellow-100 border-0 shadow">
         <div class="card-header d-sm-flex flex-row align-items-center flex-0">
           <div class="d-block mb-3 mb-sm-0">
-            <div class="fs-5 fw-normal mb-2">فعالیت</div>
+            <div class="fs-5 fw-normal mb-2">فعالیت ها</div>
             <h2 class="fs-3 fw-extrabold">{{ actions_count }}</h2>
             <div class="small mt-2 d-flex align-items-center">
               <div class="d-flex align-items-center">
@@ -191,7 +191,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-12">
+    <div class="col-8">
       <div class="row">
         <div class="col-12 mb-4">
           <div class="card border-0 shadow">
@@ -226,7 +226,7 @@
             </div>
           </div>
         </div>
-        <div class="col-8 mb-4">
+        <div class="col-12 mb-4">
           <div class="card border-0 shadow">
             <div class="card-header border-bottom d-flex align-items-center justify-content-between">
               <h2 class="fs-5 fw-bold mb-0">افراد تیم</h2>
@@ -275,33 +275,6 @@
             </div>
           </div>
         </div>
-        <div class="col-4 px-0 mb-4">
-          <div class="card border-0 shadow">
-            <div class="card-header d-flex flex-row align-items-center flex-0 border-bottom">
-              <div class="d-block">
-                <div class="h6 fw-normal text-gray mb-2">Total orders</div>
-                <h2 class="h3 fw-extrabold">452</h2>
-                <div class="small mt-2">
-                  <span class="fas fa-angle-up text-success"></span>
-                  <span class="text-success fw-bold">18.2%</span>
-                </div>
-              </div>
-              <div class="d-block ms-auto">
-                <div class="d-flex align-items-center text-end mb-2">
-                  <span class="dot rounded-circle bg-gray-800 me-2"></span>
-                  <span class="fw-normal small">July</span>
-                </div>
-                <div class="d-flex align-items-center text-end">
-                  <span class="dot rounded-circle bg-secondary me-2"></span>
-                  <span class="fw-normal small">August</span>
-                </div>
-              </div>
-            </div>
-            <div class="card-body p-2">
-              <div class="ct-chart-ranking ct-golden-section ct-series-a"></div>
-            </div>
-          </div>
-        </div>
         <div class="col-12 mb-4">
           <div class="card border-0 shadow">
             <div class="card-header">
@@ -344,6 +317,38 @@
                   {% endfor %}
                 </tbody>
               </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="col-12 px-0 mb-4">
+        <div class="card border-0 shadow">
+          <div class="h5 fw-normal text-gray mb-4 mt-3 me-3">کاربران</div>
+          <div class="card-body p-2">
+            <div class="ct-chart-ranking ct-golden-section ct-series-a users-chart">
+              {{ users_data|json_script:"users_json" }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 px-0 mb-4">
+        <div class="card border-0 shadow">
+          <div class="h5 fw-normal text-gray mb-4 mt-3 me-3">پست ها</div>
+          <div class="card-body p-2">
+            <div class="ct-chart-ranking ct-golden-section ct-series-a posts-chart">
+              {{ posts_data|json_script:"posts_json" }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 px-0 mb-4">
+        <div class="card border-0 shadow">
+          <div class="h5 fw-normal text-gray mb-4 mt-3 me-3">ارتباطات</div>
+          <div class="card-body p-2">
+            <div class="ct-chart-ranking ct-golden-section ct-series-a contacts-chart">
+              {{ contacts_data|json_script:"contacts_json" }}
             </div>
           </div>
         </div>

@@ -157,51 +157,51 @@ d.addEventListener("DOMContentLoaded", function (event) {
     );
   }
 
-  if (d.querySelector(".ct-chart-ranking")) {
-    var chart = new Chartist.Bar(
-      ".ct-chart-ranking",
-      {
-        labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-        series: [
-          [1, 5, 2, 5, 4, 3],
-          [2, 3, 4, 8, 1, 2],
-        ],
-      },
-      {
-        low: 0,
-        showArea: true,
-        plugins: [Chartist.plugins.tooltip()],
-        axisX: {
-          // On the x-axis start means top and end means bottom
-          position: "end",
-        },
-        axisY: {
-          // On the y-axis start means left and end means right
-          showGrid: false,
-          showLabel: false,
-          offset: 0,
-        },
-      }
+  function setChartData(chartName) {
+    var data = JSON.parse(
+      document.getElementById(chartName + "_json").textContent
     );
-
-    chart.on("draw", function (data) {
-      if (data.type === "line" || data.type === "area") {
-        data.element.animate({
-          d: {
-            begin: 2000 * data.index,
-            dur: 2000,
-            from: data.path
-              .clone()
-              .scale(1, 0)
-              .translate(0, data.chartRect.height())
-              .stringify(),
-            to: data.path.clone().stringify(),
-            easing: Chartist.Svg.Easing.easeOutQuint,
+    if (d.querySelector("." + chartName + "-chart")) {
+      var chart = new Chartist.Bar(
+        "." + chartName + "-chart",
+        {
+          labels: Object.keys(data),
+          series: [Object.values(data)],
+        },
+        {
+          reverseData: true,
+          plugins: [Chartist.plugins.tooltip()],
+          axisY: {
+            showGrid: false,
+            showLabel: false,
+            offset: 0,
           },
-        });
-      }
-    });
+        }
+      );
+
+      chart.on("draw", function (data) {
+        if (data.type === "line" || data.type === "area") {
+          data.element.animate({
+            d: {
+              begin: 2000 * data.index,
+              dur: 2000,
+              from: data.path
+                .clone()
+                .scale(1, 0)
+                .translate(0, data.chartRect.height())
+                .stringify(),
+              to: data.path.clone().stringify(),
+              easing: Chartist.Svg.Easing.easeOutQuint,
+            },
+          });
+        }
+      });
+    }
   }
+
+  setChartData("users");
+  setChartData("posts");
+  setChartData("contacts");
 
   if (d.getElementById("loadOnClick")) {
     d.getElementById("loadOnClick").addEventListener("click", function () {

@@ -1,3 +1,4 @@
+from typing import Union
 import datetime
 import pytz
 from django.utils import timezone
@@ -21,15 +22,40 @@ r = redis.Redis(
 UserModel = get_user_model()
 
 
+MONTHS = {
+    jdatetime.datetime.j_month_fa_to_num(month): month
+    for month in jdatetime.datetime.j_months_fa
+}
+
+WEEK_DAYS = {
+    0: 'دوشنبه',
+    1: 'سه شنبه',
+    2: 'چهار شنبه',
+    3: 'پنج شنبه',
+    4: 'جمعه',
+    5: 'شنبه',
+    6: 'یک شنبه',
+}
+
+JALALI_WEEK_DAYS = {
+    0: 'شنبه',
+    1: 'یک شنبه',
+    2: 'دوشنبه',
+    3: 'سه شنبه',
+    4: 'چهار شنبه',
+    5: 'پنج شنبه',
+    6: 'جمعه',
+}
+
+
 def key2path(key: bytes):
     key = key.decode('utf-8')
     return key.split(':')[1]
 
 
 def date2jdate(datetime) -> datetime.datetime:
-    return datetime2jalali(
-        datetime
-    ).replace(tzinfo=pytz.utc).astimezone(
+    return timezone.make_aware(
+        datetime2jalali(datetime),
         pytz.timezone(settings.TIME_ZONE)
     )
 
@@ -40,29 +66,54 @@ def jdate2date(jalali_datetime: jdatetime.datetime) -> datetime.datetime:
         jmonth=jalali_datetime.month,
         jday=jalali_datetime.day
     ).getGregorianList()
-    return datetime.datetime(
-        year=year,
-        month=month,
-        day=day,
-    ).replace(tzinfo=pytz.utc).astimezone(
+    return timezone.make_aware(
+        datetime.datetime(
+            year=year,
+            month=month,
+            day=day,
+        ),
         pytz.timezone(settings.TIME_ZONE)
     )
 
 
-def date_clear(datetime: datetime.datetime) -> datetime.datetime:
-    return datetime.replace(
-        day=1,
+def date_clear(datetime: datetime.datetime, day=True) -> datetime.datetime:
+    datetime = datetime.replace(
         hour=0,
         minute=0,
         second=0,
         microsecond=0,
     )
+    if day:
+        return datetime.replace(day=1)
+    return datetime
 
 
-MONTHS = {
-    jdatetime.datetime.j_month_fa_to_num(month): month
-    for month in jdatetime.datetime.j_months_fa
-}
+def get_last_week_info(model: Union[Post, UserModel, Contact], now):
+    field_name = 'date_joined'
+    week_days = WEEK_DAYS
+    if model != UserModel:
+        field_name = 'created'
+        now = date2jdate(now)
+        week_days = JALALI_WEEK_DAYS
+    data = {}
+    today = date_clear(now, False)
+    one_day = datetime.timedelta(days=1)
+    day_name = week_days[today.weekday()]
+    data[day_name] = model.objects.filter(**{
+        f"{field_name}__gte": today,
+        f"{field_name}__lte": now,
+    }).count()
+    first_day = today
+    for _ in range(1, 7):
+        second_day = first_day - one_day
+        second_day = date_clear(second_day, False)
+        day_name = week_days[second_day.weekday()]
+        data[day_name] = model.objects.filter(**{
+            f"{field_name}__gte": second_day,
+            f"{field_name}__lt": first_day,
+        }).count()
+        first_day = second_day
+    return data
 
 
 def access_data(request):
@@ -123,27 +174,24 @@ def access_data(request):
         created__lte=now,
     ).count()
     first_month = this_month
-    for amount in range(1, 5):
-        if first_month.month - amount > 0:
+    for _ in range(1, 5):
+        if first_month.month - 1 > 0:
             second_month = first_month.replace(
-                month=first_month.month - amount,
+                month=first_month.month - 1,
             )
-            print('a')
         else:
-            amount = first_month.month - amount
             second_month = first_month.replace(
-                month=(12 + amount),
+                month=12,
                 year=first_month.year - 1,
             )
-            print('b')
         second_month = date_clear(second_month)
-        print(second_month)
         actions = Action.objects.filter(
             created__gte=jdate2date(second_month),
             created__lt=jdate2date(first_month),
         )
         month_name = MONTHS[second_month.month]
         data[month_name] = actions.count()
+        first_month = second_month
     data = {
         key: value
         for key, value in reversed(data.items())
@@ -166,4 +214,7 @@ def access_data(request):
         'staff_users': staff_users,
         'top_users': top_users_data,
         'actions_data': data,
+        'posts_data': get_last_week_info(Post, now),
+        'contacts_data': get_last_week_info(Contact, now),
+        'users_data': get_last_week_info(UserModel, now),
     }
