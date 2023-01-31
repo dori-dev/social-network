@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'contact.apps.ContactConfig',
     'action.apps.ActionConfig',
     'language.apps.LanguageConfig',
+    'home.apps.HomeConfig',
 ]
 
 MIDDLEWARE = [
