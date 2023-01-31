@@ -3,29 +3,18 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="fa" data-layout-mode="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="{% static 'css/bootstrap.rtl.css' %}" rel="stylesheet">
-  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/favicon/apple-touch-icon.png' %}">
-  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon/favicon-32x32.png' %}">
-  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favicon/favicon-16x16.png' %}">
-  <link rel="manifest" href="{% static 'img/favicon/site.webmanifest' %}">
-  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-  <title>{% block title %}{% endblock %}</title>
+  {% include 'inc/head.html' %}
 </head>
 <body>
   <header id="header">
-    {% include 'navbar.html' %}
+    {% include 'inc/navbar.html' %}
   </header>
-  {% include 'messages.html' %}
+  {% include 'inc/messages.html' %}
   <div class="container-fluid" id="content">
     {% block content %}
     {% endblock %}
   </div>
-  <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
-  <script src="{% static 'js/direction-change.js' %}"></script>
-  <script src="{% static 'js/ajax-funcs.js' %}"></script>
+  {% include 'inc/scripts.html' %}
   {% block script %}
   {% endblock script %}
 </body>
