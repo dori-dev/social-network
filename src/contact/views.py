@@ -1,17 +1,21 @@
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.decorators.csrf import csrf_protect
-from utils.mixins import AjaxRequiredMixin
 from django.utils.decorators import method_decorator
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
+
 from action.utils import create_action, remove_action
+from utils.mixins import (
+    ViewCounterMixin,
+    AjaxRequiredMixin,
+)
 from . import models
 
 UserModel = get_user_model()
 
 
-class UserList(LoginRequiredMixin, generic.ListView):
+class UserList(ViewCounterMixin, LoginRequiredMixin, generic.ListView):
     queryset = UserModel.objects.filter(
         is_active=True,
     )

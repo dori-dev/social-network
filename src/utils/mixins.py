@@ -43,18 +43,15 @@ class PostViewCounterMixin:
 
 
 class ViewCounterMixin:
-    def get_context_data(self, **kwargs):
-        request: HttpRequest = self.request
-        context = super().get_context_data(**kwargs)
+    def dispatch(self, request: HttpRequest, *args, **kwargs):
         x_forwarded_for: str = request.META.get('HTTP_X_FORWARDED_FOR')
         if x_forwarded_for:
             ip_address = x_forwarded_for.split(',')[0]
         else:
             ip_address = request.META.get('REMOTE_ADDR')
         path = request.path
-        print(path)
         r.sadd(
             f'page:{path}:view_ips',
             ip_address,
         )
-        return context
+        return super().dispatch(request, *args, **kwargs)

@@ -1,9 +1,11 @@
 
 import csv
+
 from django.views import generic
 from django.http import HttpResponse
 from django.db.models import Count
 from django.contrib.auth import get_user_model
+
 from utils.mixins import SuperUserRequireMixin
 
 UserModel = get_user_model()

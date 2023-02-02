@@ -6,6 +6,7 @@ from django.contrib.auth import login, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
+
 from action.utils import create_action
 from utils.mixins import ViewCounterMixin
 from . import forms
@@ -17,7 +18,7 @@ class Dashboard(ViewCounterMixin, LoginRequiredMixin, generic.TemplateView):
     template_name = 'account/dashboard.html'
 
 
-class UserLogin(auth_views.LoginView):
+class UserLogin(ViewCounterMixin, auth_views.LoginView):
     form_class = forms.LoginForm
     template_name = 'account/login.html'
     redirect_authenticated_user = True
@@ -31,11 +32,11 @@ class UserLogin(auth_views.LoginView):
         return super().get_success_url()
 
 
-class UserLogout(auth_views.LogoutView):
+class UserLogout(ViewCounterMixin, auth_views.LogoutView):
     template_name = 'account/logged_out.html'
 
 
-class Register(generic.FormView):
+class Register(ViewCounterMixin, generic.FormView):
     form_class = forms.RegisterForm
     success_url = reverse_lazy('account:dashboard')
     template_name = 'account/register.html'
@@ -71,7 +72,7 @@ class Register(generic.FormView):
         return self.render_to_response(context)
 
 
-class Edit(LoginRequiredMixin, generic.View):
+class Edit(ViewCounterMixin, LoginRequiredMixin, generic.View):
     success_url = reverse_lazy('account:dashboard')
     template_name = 'account/edit.html'
 
@@ -123,7 +124,10 @@ class Edit(LoginRequiredMixin, generic.View):
         return render(self.request, self.template_name, context)
 
 
-class ChangePassword(LoginRequiredMixin, auth_views.PasswordChangeView):
+class ChangePassword(
+        ViewCounterMixin,
+        LoginRequiredMixin,
+        auth_views.PasswordChangeView):
     form_class = forms.ChangePasswordForm
     template_name = "account/change-password.html"
 
@@ -136,7 +140,7 @@ class ChangePassword(LoginRequiredMixin, auth_views.PasswordChangeView):
         return reverse('account:dashboard')
 
 
-class ResetPassword(auth_views.PasswordResetView):
+class ResetPassword(ViewCounterMixin, auth_views.PasswordResetView):
     form_class = forms.ResetPasswordForm
     email_template_name = 'account/reset-password/email.html'
     template_name = 'account/reset-password/form.html'

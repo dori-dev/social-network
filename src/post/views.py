@@ -1,20 +1,22 @@
 from django.views import generic
 from django.views.decorators.csrf import csrf_protect
-from utils.mixins import (
-    AjaxRequiredMixin,
-    PostViewCounterMixin,
-)
 from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.http import JsonResponse
+
 from action.utils import create_action, remove_action
+from utils.mixins import (
+    AjaxRequiredMixin,
+    PostViewCounterMixin,
+    ViewCounterMixin,
+)
 from . import forms
 from . import models
 
 
-class CreatePost(LoginRequiredMixin, generic.FormView):
+class CreatePost(ViewCounterMixin, LoginRequiredMixin, generic.FormView):
     form_class = forms.CreatePostForm
     template_name = 'post/create.html'
 
@@ -99,7 +101,7 @@ class LikePost(LoginRequiredMixin, AjaxRequiredMixin, generic.UpdateView):
         )
 
 
-class PostList(generic.ListView):
+class PostList(ViewCounterMixin, generic.ListView):
     model = models.Post
     context_object_name = 'posts'
     paginate_by = 24

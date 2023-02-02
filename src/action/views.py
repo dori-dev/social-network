@@ -1,5 +1,6 @@
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
+
 from utils.mixins import AjaxRequiredMixin
 from . import models
 
@@ -35,9 +36,7 @@ class LastAction(LoginRequiredMixin, generic.ListView):
     template_name = 'action/actions.html'
 
     def get_queryset(self):
-        actions = models.Action.objects.exclude(
-            user=self.request.user,
-        )[:10]
+        actions = models.Action.objects.all()[:10]
         actions = actions.select_related(
             'user',
             'user__profile',
