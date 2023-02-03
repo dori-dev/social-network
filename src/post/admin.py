@@ -1,19 +1,18 @@
 from django.contrib import admin
-from django.db.models import Count
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 from . import models
 
 
 class LikeFilter(admin.SimpleListFilter):
-    title = 'likes count'
+    title = 'تعداد لایک'
     parameter_name = 'likes'
 
     def lookups(self, request, model_admin):
         return (
-            ('low', 'Few likes'),
-            ('normal', 'Lot of Likes'),
-            ('much', "Too many likes"),
+            ('low', 'کم'),
+            ('normal', 'متوسط'),
+            ('much', 'زیاد'),
         )
 
     def queryset(self, request, queryset):

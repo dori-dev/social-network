@@ -13,7 +13,7 @@
         </li>
         {% if request.user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'user:detail' request.user.username %} ">
+            <a class="nav-link active" aria-current="page" href="{{ request.user.get_absolute_url }}">
               پروفایل
             </a>
           </li>
