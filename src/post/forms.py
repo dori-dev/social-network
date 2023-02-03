@@ -3,7 +3,7 @@ from account.forms import ImageField
 from . import models
 
 
-class CreatePostForm(forms.ModelForm):
+class CreateUpdatePostFrom(forms.ModelForm):
     class Meta:
         model = models.Post
         fields = [

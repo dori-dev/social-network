@@ -17,16 +17,16 @@ from . import models
 
 
 class CreatePost(ViewCounterMixin, LoginRequiredMixin, generic.FormView):
-    form_class = forms.CreatePostForm
+    form_class = forms.CreateUpdatePostFrom
     template_name = 'post/create.html'
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
-        context['form'] = forms.CreatePostForm()
+        context['form'] = forms.CreateUpdatePostFrom()
         return self.render_to_response(context)
 
     def post(self, request, *args, **kwargs):
-        form: forms.CreatePostForm = forms.CreatePostForm(
+        form: forms.CreateUpdatePostFrom = forms.CreateUpdatePostFrom(
             request.POST,
             files=request.FILES,
         )
@@ -34,7 +34,7 @@ class CreatePost(ViewCounterMixin, LoginRequiredMixin, generic.FormView):
             return self.form_valid(form, **kwargs)
         return self.form_invalid(form, **kwargs)
 
-    def form_valid(self, form: forms.CreatePostForm, **kwargs):
+    def form_valid(self, form: forms.CreateUpdatePostFrom, **kwargs):
         post: models.Post = form.save(commit=False)
         post.user = self.request.user
         post.save()
@@ -82,14 +82,14 @@ class PostUpdate(LoginRequiredMixin, generic.View):
 
     def get(self, request, *args, **kwargs):
         context = {
-            'form': forms.CreatePostForm(
+            'form': forms.CreateUpdatePostFrom(
                 instance=self.object,
             ),
         }
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        form = forms.CreatePostForm(
+        form = forms.CreateUpdatePostFrom(
             data=request.POST,
             instance=self.object,
             files=request.FILES,
