@@ -6,7 +6,7 @@ from social_core.exceptions import AuthAlreadyAssociated
 User = get_user_model()
 
 
-class EmailAuthBackend(object):
+class EmailAuthBackend:
     def authenticate(self, request, username=None, password=None):
         try:
             user = User.objects.get(email=username)
