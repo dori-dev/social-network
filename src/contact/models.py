@@ -19,11 +19,11 @@ class Contact(models.Model):
         on_delete=models.CASCADE,
         verbose_name=_('User to'),
     )
-    created = jalali_models.jDateTimeField(
+    created = jalali_models.jDateField(
+        _('Created'),
         auto_now_add=True,
         db_index=True,
         editable=True,
-        verbose_name=_('Created'),
     )
 
     class Meta:
