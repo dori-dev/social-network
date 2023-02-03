@@ -1,12 +1,15 @@
 import datetime
 import pytz
+
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.db.models import Count, Sum
+from django.urls import reverse
 import redis
 import jdatetime
 from jalali_date import datetime2jalali
+
 from post.models import Post
 from action.models import Action
 from contact.models import Contact
@@ -46,10 +49,7 @@ JALALI_WEEK_DAYS = {
     6: 'جمعه',
 }
 
-
-def key2path(key: bytes):
-    key = key.decode('utf-8')
-    return key.split(':')[1]
+TOP_USERS_COUNT = 12
 
 
 def date2jdate(datetime) -> datetime.datetime:
@@ -128,13 +128,9 @@ def format_data(data: dict):
     return dict(zip(keys, values))
 
 
-def access_data(request):
-    if not request.META['PATH_INFO'] == "/admin/":
-        return {}
-    now = timezone.now()
+def calc_objects_count(now: datetime.datetime) -> dict:
     last_month = now - datetime.timedelta(days=30)
     jalali_last_month = date2jdate(last_month)
-    # Object count
     users_count = UserModel.objects.count()
     users_last_month = UserModel.objects.filter(
         date_joined__gte=last_month,
@@ -151,38 +147,42 @@ def access_data(request):
     contacts_last_month = Contact.objects.filter(
         created__gte=jalali_last_month,
     ).count()
-    # Visits
-    path_views = [
-        (key2path(key), r.scard(key))
-        for key in r.keys('page:*')
-    ]
-    # Managers
-    staff_users = UserModel.objects.filter(
-        is_staff=True,
-    )
-    # Top users
+    return {
+        'users_count': users_count,
+        'users_last_month': users_last_month,
+        'posts_count': posts_count,
+        'posts_last_month': posts_last_month,
+        'contacts_count': contacts,
+        'contacts_last_month': contacts_last_month,
+        'actions_count': actions_count,
+        'actions_last_month': actions_last_month,
+    }
+
+
+def get_top_users() -> dict:
     top_users = UserModel.objects.annotate(
         total_followers=Count('followers_set', distinct=True)
     ).annotate(
         total_posts=Count('posts', distinct=True),
+    ).annotate(
+        total_posts_likes=Sum('posts__total_likes', distinct=True),
     ).order_by(
-        '-total_followers'
-    )[:10]
+        '-total_followers',
+        '-total_posts_likes',
+    )
     top_users_data = list(top_users.values_list(
         'username',
         'total_followers',
         'total_posts',
-    ))
+        'total_posts_likes',
+    )[:TOP_USERS_COUNT])
     top_users_data = {
         item[0]: list(item[1:]) for item in top_users_data
     }
-    for user in top_users:
-        top_users_data[user.username].append(
-            user.posts.aggregate(
-                sum=Sum('total_likes'),
-            )['sum']
-        )
-    # Actions data
+    return top_users_data
+
+
+def get_actions_data(now: datetime.datetime) -> dict:
     data = {}
     this_month = clear_data(date2jdate(now))
     month_name = MONTHS[this_month.month]
@@ -210,26 +210,45 @@ def access_data(request):
         data[month_name] = actions.count()
         first_month = second_month
     data = format_data(data)
+    return data
+
+
+def get_chart_data(now: datetime.datetime) -> dict:
     return {
-        # Object count
-        'users_count': users_count,
-        'users_last_month': users_last_month,
-        'posts_count': posts_count,
-        'posts_last_month': posts_last_month,
-        'contacts_count': contacts,
-        'contacts_last_month': contacts_last_month,
-        'actions_count': actions_count,
-        'actions_last_month': actions_last_month,
-        # Visits
-        'path_views': path_views,
-        # Managers
-        'staff_users': staff_users,
-        # Top users
-        'top_users': top_users_data,
-        # Chart data
-        'actions_data': data,
+        'actions_data': get_actions_data(now),
         'actions_data_week': format_data(get_last_week_info(Action, now)),
         'posts_data': get_last_week_info(Post, now),
         'contacts_data': get_last_week_info(Contact, now),
         'users_data': get_last_week_info(UserModel, now),
+    }
+
+
+def key2path(key: bytes):
+    key = key.decode('utf-8')
+    return key.split(':')[1]
+
+
+def get_visits_count() -> list:
+    return [
+        (key2path(key), r.scard(key))
+        for key in r.keys('page:*')
+    ]
+
+
+def get_managers():
+    return UserModel.objects.filter(
+        is_staff=True,
+    )
+
+
+def access_data(request):
+    if not request.META['PATH_INFO'] == reverse('admin:index'):
+        return {}
+    now = timezone.now()
+    return {
+        **calc_objects_count(now),
+        'path_views': get_visits_count(),
+        'staff_users': get_managers(),
+        "top_users": get_top_users(),
+        **get_chart_data(now),
     }
