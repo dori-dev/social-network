@@ -7,9 +7,17 @@
   <h2 class="mt-4 bold-font">انتشار پست</h2>
   <div class="row form mx-md-3 d-flex justify-content-between align-content-center">
     <div class="col-md-6 order-md-0 order-1 mt-0 mt-md-4">
-      <form method="post" enctype="multipart/form-data">
+      <form method="post" enctype="multipart/form-data" novalidate>
         <div class="d-grid gap-2 col-md-12">
-          {{ form.as_p }}
+          <p class="mb-2">
+            {{ form.image.errors }}
+            <label for="id_image">تصویر:</label>
+            <input type="file" name="image" accept="image/*" class="form-control mt-2 mb-2" autofocus="true" onchange="loadImage(event)" id="id_image">
+          </p>
+          <p class="mt-2">
+            <label for="id_body">توضیحات:</label>
+            {{ form.description }}
+          </p>
         </div>
         {% csrf_token %}
         <div class="d-grid gap-2 col-md-12">
@@ -18,7 +26,7 @@
       </form>
     </div>
     <div class="col-md-5 order-md-1 order-0 mb-md-0 mb-4 mt-md-4 mt-3">
-      <img src="{% static 'img/default.png' %}" id="preview" class="w-100 rounded" alt="تصویر پست">
+      <img src="{{ form.image.value.url }}" id="preview" class="w-100 rounded" alt="تصویر پست">
     </div>
   </div>
   <div class="py-5"></div>
@@ -33,7 +41,7 @@
         URL.revokeObjectURL(output.src);
       };
     } else {
-      output.src = "{% static 'img/default.png' %}";
+      output.src = "{{ form.image.value.url }}";
     }
   };
 </script>

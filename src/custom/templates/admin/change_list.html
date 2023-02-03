@@ -81,7 +81,7 @@
         </div>
         <div class="{% if cl.has_filters %}col-md-9{% else %}col-md-12{% endif %}">
             <form id="changelist-form" method="post" {% if cl.formset and cl.formset.is_multipart %}
-                  enctype="multipart/form-data"{% endif %} novalidate>
+                  enctype="multipart/form-data"{% endif %}>
                 {% csrf_token %}
 
                 {% if cl.formset %}

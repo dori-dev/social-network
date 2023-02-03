@@ -82,7 +82,7 @@
             <div class="card">
                 <div class="card-body">
                     <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}"
-                          method="post" id="{{ opts.model_name }}_form" novalidate>
+                          method="post" id="{{ opts.model_name }}_form">
 
                         {% csrf_token %}
                         <div class="{{ direction.panel }}">{% block form_top %}{% endblock %}</div>

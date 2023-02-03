@@ -3,7 +3,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.http import JsonResponse
 
 from action.utils import create_action, remove_action
@@ -56,9 +56,84 @@ class CreatePost(ViewCounterMixin, LoginRequiredMixin, generic.FormView):
         return self.render_to_response(context)
 
 
-class PostDetail(PostViewCounterMixin, generic.DeleteView):
+class PostDetail(PostViewCounterMixin, generic.DetailView):
     model = models.Post
     template_name = 'post/detail.html'
+
+
+class PostUpdate(LoginRequiredMixin, generic.View):
+    template_name = 'post/update.html'
+
+    def setup(self, request, *args, **kwargs):
+        self.object = None
+        slug = kwargs['slug']
+        post = models.Post.objects.filter(
+            slug=slug,
+            user=request.user,
+        )
+        if post.exists():
+            self.object = post.first()
+        return super().setup(request, *args, **kwargs)
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.object is None:
+            return redirect(request.user.get_absolute_url())
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        context = {
+            'form': forms.CreatePostForm(
+                instance=self.object,
+            ),
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        form = forms.CreatePostForm(
+            data=request.POST,
+            instance=self.object,
+            files=request.FILES,
+        )
+        if form.is_valid():
+            return self.form_valid(form, *args, **kwargs)
+        return self.form_invalid(form, *args, **kwargs)
+
+    def form_valid(self, form, *args, **kwargs):
+        post = form.save(commit=False)
+        post.save()
+        messages.add_message(
+            self.request,
+            messages.SUCCESS,
+            "پست ات با موفقیت بروزرسانی شد!",
+        )
+        return redirect(post.get_absolute_url())
+
+    def form_invalid(self, form, *args, **kwargs):
+        context = {
+            'form': form,
+        }
+        return render(self.request, self.template_name, context)
+
+
+class PostDelete(LoginRequiredMixin, generic.View):
+    def get(self, request, slug):
+        post = models.Post.objects.filter(
+            user=self.request.user,
+            slug=slug,
+        )
+        if post.exists():
+            remove_action(
+                self.request.user,
+                'share',
+                post.first(),
+            )
+            post.delete()
+            messages.add_message(
+                self.request,
+                messages.WARNING,
+                "پست ات با موفقیت حذف شد!",
+            )
+        return redirect(self.request.user.get_absolute_url())
 
 
 @method_decorator(csrf_protect, name='dispatch')
