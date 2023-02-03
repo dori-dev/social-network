@@ -27,9 +27,7 @@
           {% elif action.verb == 'follow' %}
             <p class="bold-font">
               صفحه
-              {% with action.target.user_to as user %}
-                <a href="{% url 'user:detail' user %}">{{ user }}</a>
-              {% endwith %}
+                <a href="{{ action.target.user_to.get_absolute_url }}">{{ action.target.user_to }}</a>
               را دنبال کرد
             </p>
           {% elif action.verb == 'like' %}

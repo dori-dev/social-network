@@ -2,7 +2,7 @@
 
 {% for action in actions %}
   {% with user=action.user %}
-  <a href="{% if action.verb == 'update' %}{{ user.get_absolute_url }}{% elif action.verb == 'follow' %}{% url 'user:detail' action.target.user_to %}{% elif action.verb == 'like' %}{{ action.target.get_absolute_url }}{% elif action.verb == 'share' %}{{ action.target.get_absolute_url }}{% endif %}" class="list-group-item list-group-item-action border-bottom">
+  <a href="{% if action.verb == 'update' %}{{ user.get_absolute_url }}{% elif action.verb == 'follow' %}{{ action.target.user_to.get_absolute_url }}{% elif action.verb == 'like' %}{{ action.target.get_absolute_url }}{% elif action.verb == 'share' %}{{ action.target.get_absolute_url }}{% endif %}" class="list-group-item list-group-item-action border-bottom">
     <div class="row align-items-center">
       <div class="col-auto">
         {% if action.target.image %}

@@ -34,9 +34,10 @@ class ActionList(LoginRequiredMixin, AjaxRequiredMixin, generic.ListView):
 class LastAction(LoginRequiredMixin, generic.ListView):
     context_object_name = 'actions'
     template_name = 'action/actions.html'
+    action_count = 10
 
     def get_queryset(self):
-        actions = models.Action.objects.all()[:10]
+        actions = models.Action.objects.all()[:self.action_count]
         actions = actions.select_related(
             'user',
             'user__profile',
