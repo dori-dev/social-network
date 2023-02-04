@@ -24,10 +24,15 @@
       <div class="d-grid gap-2 col-md-6 mt-2">
         <input class="btn btn-success" type="submit" value="ثبت نام">
       </div>
+      {% if next %}
+      <input type="hidden" name="next" value="{{ next }}" />
+      {% else %}
+      <input type="hidden" name="next" value="{{ request.GET.next }}" />
+      {% endif %}
     </form>
     <p class="mt-5 mb-2">
       حساب کاربری داری؟
-      <a href="{% url 'account:login' %}" class="btn btn-primary btn-sm">
+      <a href="{% if request.GET.next %}{% url 'account:login' %}?next={{ request.GET.next }}{% else %}{% url 'account:login' %}{% endif %}" class="btn btn-primary btn-sm">
         ورود به حساب کاربری
       </a>
     </p>

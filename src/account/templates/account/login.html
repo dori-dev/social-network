@@ -28,13 +28,13 @@
     </form>
     <p class="mt-5 mb-2">
       حساب کاربری نداری؟
-      <a href="{% url 'account:register' %}" class="btn btn-primary btn-sm">
+      <a href="{% if request.GET.next %}{% url 'account:register' %}?next={{ request.GET.next }}{% else %}{% url 'account:register' %}{% endif %}" class="btn btn-primary btn-sm">
         ثبت نام
       </a>
     </p>
     <p class="mb-5">
       رمز عبورت رو فراموش کردی؟
-      <a href="{% url 'account:reset_password' %}" class="btn btn-primary btn-sm">
+      <a href="{% if request.GET.next %}{% url 'account:reset_password' %}?next={{ request.GET.next }}{% else %}{% url 'account:reset_password' %}{% endif %}" class="btn btn-primary btn-sm">
         بازنشانی رمز عبور
       </a>
     </p>

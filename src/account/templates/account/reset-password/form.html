@@ -16,6 +16,11 @@
         <input class="btn btn-success" type="submit" value="ارسال لینک به ایمیل">
       </div>
       {% csrf_token %}
+      {% if next %}
+      <input type="hidden" name="next" value="{{ next }}" />
+      {% else %}
+      <input type="hidden" name="next" value="{{ request.GET.next }}" />
+      {% endif %}
     </form>
   </div>
 {% endblock %}

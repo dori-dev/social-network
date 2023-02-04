@@ -16,15 +16,14 @@
         </h3>
         {% if request.user.username != user.username  %}
           <div>
-            <a
-              href="#"
+            <button
               data-id="{{ user.id }}"
               data-action="{% if request.user in user.followers.all %}un{% endif %}follow"
               class="btn {% if request.user in user.followers.all %}btn-success{% else %}btn-outline-success{% endif %}"
               id="follow-btn"
             >
               {% if request.user in user.followers.all %}دنبال میکنید{% else %}دنبال کردن{%endif %}
-            </a>
+            </button>
           </div>
         {% endif %}
           

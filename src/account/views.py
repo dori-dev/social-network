@@ -64,11 +64,15 @@ class Register(ViewCounterMixin, generic.FormView):
             messages.SUCCESS,
             "به سایت <strong>بگو مگو</strong> خوش اومدی :)",
         )
+        next = self.request.POST.get('next')
+        if next:
+            return redirect(next)
         return redirect(self.success_url)
 
     def form_invalid(self, form, **kwargs):
         context = self.get_context_data(**kwargs)
         context['form'] = form
+        context['next'] = self.request.POST.get('next')
         return self.render_to_response(context)
 
 
@@ -152,7 +156,11 @@ class ResetPassword(ViewCounterMixin, auth_views.PasswordResetView):
             messages.WARNING,
             "لینک بازنشانی رمز عبور به ایمیل ات ارسال شد.",
         )
-        return reverse('account:login')
+        next = self.request.POST.get('next')
+        login_page = reverse('account:login')
+        if next:
+            return f"{login_page}?next={next}"
+        return login_page
 
 
 class ResetPasswordConfirm(auth_views.PasswordResetConfirmView):
