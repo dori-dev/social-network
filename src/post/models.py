@@ -64,24 +64,6 @@ class Post(models.Model):
         default=0,
     )
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            slug = self._random_slug(8)
-            while Post.objects.filter(slug=slug).exists():
-                slug = self._random_slug(8)
-            self.slug = slug
-        return super().save(*args, **kwargs)
-
-    @staticmethod
-    def _random_slug(length: int) -> str:
-        return "".join(choices(ascii_letters, k=length))
-
-    def get_absolute_url(self):
-        return reverse('post:detail', kwargs={'slug': self.slug})
-
-    def __str__(self):
-        return self.slug
-
     class Meta:
         indexes = [
             models.Index(
@@ -102,3 +84,21 @@ class Post(models.Model):
         )
         verbose_name = _('Post')
         verbose_name_plural = _('Posts')
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            slug = self._random_slug(8)
+            while Post.objects.filter(slug=slug).exists():
+                slug = self._random_slug(8)
+            self.slug = slug
+        return super().save(*args, **kwargs)
+
+    @staticmethod
+    def _random_slug(length: int) -> str:
+        return "".join(choices(ascii_letters, k=length))
+
+    def get_absolute_url(self):
+        return reverse('post:detail', kwargs={'slug': self.slug})
+
+    def __str__(self):
+        return self.slug
