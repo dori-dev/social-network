@@ -43,8 +43,8 @@ class Post(models.Model):
     )
     description = models.TextField(
         _('Description'),
-        null=False,
-        blank=False,
+        null=True,
+        blank=True,
     )
     created = jalali_models.jDateField(
         _('Created'),

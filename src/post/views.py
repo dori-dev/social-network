@@ -1,7 +1,7 @@
 from django.views import generic
 from django.views.decorators.csrf import csrf_protect
 from django.utils.decorators import method_decorator
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, AccessMixin
 from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.http import JsonResponse
@@ -61,21 +61,22 @@ class PostDetail(PostViewCounterMixin, generic.DetailView):
     template_name = 'post/detail.html'
 
 
-class PostUpdate(LoginRequiredMixin, generic.View):
+class PostUpdate(AccessMixin, generic.View):
     template_name = 'post/update.html'
 
     def setup(self, request, *args, **kwargs):
         self.object = None
-        slug = kwargs['slug']
-        post = models.Post.objects.filter(
-            slug=slug,
-            user=request.user,
-        )
-        if post.exists():
-            self.object = post.first()
+        if request.user.is_authenticated:
+            post = request.user.posts.filter(
+                slug=kwargs['slug'],
+            )
+            if post.exists():
+                self.object = post.first()
         return super().setup(request, *args, **kwargs)
 
     def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return self.handle_no_permission()
         if self.object is None:
             return redirect(request.user.get_absolute_url())
         return super().dispatch(request, *args, **kwargs)
@@ -85,6 +86,7 @@ class PostUpdate(LoginRequiredMixin, generic.View):
             'form': forms.CreateUpdatePostFrom(
                 instance=self.object,
             ),
+            'slug': self.object.slug,
         }
         return render(request, self.template_name, context)
 
@@ -111,14 +113,14 @@ class PostUpdate(LoginRequiredMixin, generic.View):
     def form_invalid(self, form, *args, **kwargs):
         context = {
             'form': form,
+            'slug': self.object.slug,
         }
         return render(self.request, self.template_name, context)
 
 
 class PostDelete(LoginRequiredMixin, generic.View):
     def get(self, request, slug):
-        post = models.Post.objects.filter(
-            user=self.request.user,
+        post = request.user.posts.filter(
             slug=slug,
         )
         if post.exists():

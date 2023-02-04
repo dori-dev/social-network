@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}انتشار یک پست{% endblock title %}
+{% block title %}بروزرسانی {{ slug }}{% endblock title %}
 
 {% block content %}
-  <h2 class="mt-4 bold-font">انتشار پست</h2>
+  <h2 class="mt-4 bold-font">تغییر پست</h2>
   <div class="row form mx-md-3 d-flex justify-content-between align-content-center">
     <div class="col-md-6 order-md-0 order-1 mt-0 mt-md-4">
-      <form method="post" enctype="multipart/form-data" novalidate>
+      <form method="post" enctype="multipart/form-data">
         <div class="d-grid gap-2 col-md-12">
           <p class="mb-2">
             {{ form.image.errors }}
@@ -15,6 +15,7 @@
             <input type="file" name="image" accept="image/*" class="form-control mt-2 mb-2" autofocus="true" onchange="loadImage(event)" id="id_image">
           </p>
           <p class="mt-2">
+            {{ form.description.errors }}
             <label for="id_body">توضیحات:</label>
             {{ form.description }}
           </p>
