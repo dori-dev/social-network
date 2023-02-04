@@ -218,3 +218,18 @@ msgstr "UID"
 
 msgid "Extra data"
 msgstr "اطلاعات اضافه"
+
+msgid "Comment"
+msgstr "کامنت"
+
+msgid "Comments"
+msgstr "کامنت ها"
+
+msgid "Reply"
+msgstr "پاسخ به"
+
+msgid "Is reply"
+msgstr "به عنوان پاسخ"
+
+msgid "Body"
+msgstr "محتوا"

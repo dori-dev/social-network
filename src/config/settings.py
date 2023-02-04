@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'action.apps.ActionConfig',
     'language.apps.LanguageConfig',
     'home.apps.HomeConfig',
+    'comment.apps.CommentConfig',
 ]
 
 MIDDLEWARE = [
