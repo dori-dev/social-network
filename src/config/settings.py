@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'language.apps.LanguageConfig',
     'home.apps.HomeConfig',
     'comment.apps.CommentConfig',
+    'search.apps.SearchConfig',
 ]
 
 MIDDLEWARE = [
@@ -89,6 +90,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'custom.context_processors.access_data',
+                'search.context_processors.search',
             ],
         },
     },

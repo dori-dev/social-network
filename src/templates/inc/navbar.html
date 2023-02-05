@@ -86,8 +86,8 @@
           </ul>
         </li>
       </ul>
-      <form class="d-flex custom-search" role="search">
-        <input class="form-control me-2 search-input" type="search" placeholder="جستجو..." aria-label="Search">
+      <form action="{% url 'search:search' %}" class="d-flex custom-search" role="search" method="get">
+        {{ search_form.search }}
         <button class="btn btn-success" type="submit">جستجو</button>
       </form>
     </div>

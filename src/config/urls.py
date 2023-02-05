@@ -14,6 +14,7 @@ urlpatterns = [
     path('posts/', include('post.urls', namespace='post')),
     path('users/', include('contact.urls', namespace='user')),
     path('actions/', include('action.urls', namespace='action')),
+    path('search/', include('search.urls', namespace='search')),
     path('__debug__/', include('debug_toolbar.urls')),
 ]
 
