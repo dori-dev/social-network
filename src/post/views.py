@@ -13,6 +13,8 @@ from utils.mixins import (
     ViewCounterMixin,
 )
 from . import forms
+from comment.forms import CommentCreateForm
+from comment.models import Comment
 from . import models
 
 
@@ -56,9 +58,51 @@ class CreatePost(ViewCounterMixin, LoginRequiredMixin, generic.FormView):
         return self.render_to_response(context)
 
 
-class PostDetail(PostViewCounterMixin, generic.DetailView):
+class PostDetail(
+        AccessMixin,
+        PostViewCounterMixin,
+        generic.DetailView,
+        generic.CreateView):
     model = models.Post
     template_name = 'post/detail.html'
+    form_class = CommentCreateForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = self.form_class()
+        context['comments'] = self.get_object().comments.exclude(
+            is_reply=True,
+        ).order_by('-created')
+        return context
+
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return self.handle_no_permission()
+        form = self.form_class(request.POST)
+        comment_id = request.POST.get('comment_id')
+        if comment_id:
+            self.reply_comment(request, form, comment_id)
+        self.send_comment(request, form)
+        return redirect(self.get_object().get_absolute_url())
+
+    def send_comment(self, request, form, commit=True):
+        if form.is_valid():
+            new_comment: Comment = form.save(commit=False)
+            new_comment.user = request.user
+            new_comment.post = self.get_object()
+            if commit:
+                new_comment.save()
+            return new_comment
+
+    def reply_comment(self, request, form, comment_id: int):
+        comment = Comment.objects.filter(
+            pk=comment_id,
+        )
+        if comment.exists():
+            new_comment = self.send_comment(request, form, commit=False)
+            new_comment.reply = comment.first()
+            new_comment.is_reply = True
+            new_comment.save()
 
 
 class PostUpdate(AccessMixin, generic.View):

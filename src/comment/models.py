@@ -42,6 +42,9 @@ class Comment(models.Model):
     class Meta:
         verbose_name = _('Comment')
         verbose_name_plural = _('Comments')
+        ordering = (
+            'created',
+        )
 
     def __str__(self):
         return f'{self.user} - {self.post}'
