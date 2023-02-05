@@ -1,4 +1,4 @@
-{% load thumbnail %}
+{% load thumbnail timesince %}
 
 {% for action in actions %}	
 	{% with user=action.user %}
@@ -46,7 +46,7 @@
           {% endif %}    
         </div>      
         <div class="time">
-          <span class="date text-muted">{{ action.humanize }}</span>
+          <span class="date text-muted">{{ action.created|timesince }} پیش</span>
         </div>
       </div>
     </div>

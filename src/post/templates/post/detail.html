@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load jformat %}
+{% load jformat timesince %}
 
 {% block title %}پست {{ post.user.username }}{% endblock title %}
 
@@ -118,6 +118,24 @@
         </div>
       {% endif %}
     </div>
+  </div>
+  <div class="mt-5 col-5">
+    <h1>{{ post.comments.count }}</h1>
+    {% for comment in post.comments.all %}
+      <div class="card bg-dark text-white">
+        <p class="card-header">
+          <span>{{ comment.user }}</span>
+        </p>
+        <p class="card-header">
+          <span>{{ comment.created|timesince }} پیش</span>
+        </p>
+        <p class="card-body">
+          {{ comment.body }}
+        </p>
+      </div>
+    {% empty %}
+    <h1>هنوز کامنتی نداریم</h1>
+    {% endfor %}
   </div>
   <div id="csrf" hidden>
     {% csrf_token %}

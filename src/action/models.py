@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.auth import get_user_model
-from utils.functions import humanize
 from django.utils.translation import gettext_lazy as _
 
 UserModel = get_user_model()
@@ -55,9 +54,6 @@ class Action(models.Model):
         )
         verbose_name = _('Action')
         verbose_name_plural = _('Actions')
-
-    def humanize(self):
-        return humanize(self.created)
 
     def __str__(self) -> str:
         return f"{self.user}:{self.verb}"

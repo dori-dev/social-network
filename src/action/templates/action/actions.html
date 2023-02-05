@@ -1,4 +1,4 @@
-{% load static thumbnail %}
+{% load static thumbnail timesince %}
 
 {% for action in actions %}
   {% with user=action.user %}
@@ -19,7 +19,7 @@
             <h4 class="h6 mb-0 text-small">{{ user.username }}</h4>
           </div>
           <div class="text-end">
-            <small class="text-danger">{{ action.humanize }}</small>
+            <small class="text-danger">{{ action.created|timesince }} پیش</small>
           </div>
         </div>
         <p class="font-small mt-1 mb-0 text-right">
