@@ -28,6 +28,13 @@
             چت
           </a>
         </li>
+        {% if request.user.is_authenticated and request.user.is_staff %}
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'admin:index' %}">
+              ادمین
+            </a>
+          </li>
+        {% endif %}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             {% if request.user.is_authenticated %}
