@@ -308,6 +308,7 @@ class UserProfileEditForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = (
+            'bio',
             'date_of_birth',
             'photo',
         )
@@ -319,6 +320,7 @@ class UserProfileEditForm(forms.ModelForm):
             'date_of_birth': JalaliDateField,
         }
         labels = {
+            'bio': 'بیو',
             'date_of_birth': 'تاریخ تولد',
             'photo': 'عکس پروفایل',
         }
@@ -346,3 +348,15 @@ class UserProfileEditForm(forms.ModelForm):
         photo.widget.attrs[
             'placeholder'
         ] = 'عکس پروفایل ات رو آپلود کن...'
+        # bio
+        bio = self.fields['bio']
+        bio.widget.attrs[
+            'class'
+        ] = 'form-control mt-2 mb-2 rtl'
+        bio.widget.attrs['dir'] = 'auto'
+        bio.widget.attrs[
+            'placeholder'
+        ] = 'توضیحی در مورد خودت بنویس...'
+        bio.error_messages = {
+            'max_length': 'توضیحات ات خیلی زیاد شد!',
+        }

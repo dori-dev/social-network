@@ -9,6 +9,7 @@ class ProfileAdmin(admin.ModelAdmin):
     list_display = [
         'user',
         'date_of_birth',
+        'bio',
         'photo',
     ]
     list_filter = [
@@ -16,6 +17,7 @@ class ProfileAdmin(admin.ModelAdmin):
     ]
     search_fields = [
         'user__username',
+        'bio',
     ]
     date_hierarchy = 'date_of_birth'
     raw_id_fields = [
