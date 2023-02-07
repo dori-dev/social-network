@@ -19,7 +19,7 @@ class ActionList(LoginRequiredMixin, AjaxRequiredMixin, generic.ListView):
             following_users = following.distinct().values_list(
                 'id', flat=True
             )
-            actions.filter(
+            actions = actions.filter(
                 user__in=following_users,
             )
         actions = actions.select_related(
