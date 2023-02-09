@@ -5,7 +5,7 @@ migrations
 */media/users/
 */media/images/
 */media/profile.png.*
-README.md
+Todo.md
 cert.crt
 cert.key
 .env
