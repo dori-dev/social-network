@@ -64,6 +64,13 @@ class PostDetail(
         generic.DetailView,
         generic.CreateView):
     model = models.Post
+    queryset = models.Post.objects.select_related(
+        'user',
+        'user__profile',
+    ).prefetch_related(
+        'users_like',
+        'users_like__profile',
+    )
     template_name = 'post/detail.html'
     form_class = CommentCreateForm
 
