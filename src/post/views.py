@@ -231,6 +231,11 @@ class LikePost(LoginRequiredMixin, AjaxRequiredMixin, generic.UpdateView):
 
 class PostList(ViewCounterMixin, generic.ListView):
     model = models.Post
+    queryset = models.Post.objects.values(
+        'total_likes',
+        'image',
+        'slug',
+    )
     context_object_name = 'posts'
     paginate_by = 24
 
