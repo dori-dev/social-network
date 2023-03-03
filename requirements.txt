@@ -10,3 +10,4 @@ easy-thumbnails==2.8.5
 redis==4.4.2
 django_debug_toolbar==3.8.1
 django-jalali-date==1.0.1
+django-jalali==6.0.1
