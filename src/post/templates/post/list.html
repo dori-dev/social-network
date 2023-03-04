@@ -7,7 +7,11 @@
     خطا در برقراری ارتباط با سرور!
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
-  <h2 class="mt-4 bold-font">پست های پیشنهادی</h2>    
+  {% if "search" in request.GET %}
+  <h2 class="mt-4 bold-font">جستجو برای {{ request.GET.search }}</h2>
+  {% else %}
+  <h2 class="mt-4 bold-font">پست های پیشنهادی</h2>
+  {% endif %}
   <div class="row mt-4 mx-2" id="post-list">
       {% include 'post/add-posts.html' %}
   </div>
