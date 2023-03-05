@@ -321,6 +321,45 @@
             </div>
           </div>
         </div>
+        <div class="col-12 mb-4">
+          <div class="card border-0 shadow">
+            <div class="card-header">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h2 class="fs-5 fw-bold mb-0">لاگ ادمین</h2>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th class="border-bottom" scope="col">اتفاق</th>
+                    <th class="border-bottom" scope="col">کاربر</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for entry in logentry %}
+                  <tr>
+                    <th class="text-gray-900" scope="row">
+                      {% if entry.is_addition %}
+                      <a target="_blank" {% if entry.get_admin_url %}href="{{ entry.get_admin_url }}"{% endif %}>{{ entry.content_type.name }} {{ entry.object_repr }} افزوده شد.</a>
+                      {% elif entry.is_change %}
+                      <a target="_blank" {% if entry.get_admin_url %}href="{{ entry.get_admin_url }}"{% endif %}>در {{ entry.content_type.name }} {{ entry.object_repr }} {{ entry.get_change_message }}</a>
+                      {% elif entry.is_deletion %}
+                      <a target="_blank">{{ entry.content_type.name }} {{ entry.object_repr }} حذف شد.</a>
+                      {% endif %}
+                    </th>
+                    <td class="fw-bolder text-gray-500">
+                      {{ entry.user.username }}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-5">

@@ -6,6 +6,7 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.db.models import Count, Sum
 from django.urls import reverse
+from django.contrib.admin.models import LogEntry
 import redis
 import jdatetime
 from jalali_date import datetime2jalali
@@ -241,6 +242,10 @@ def get_managers():
     )
 
 
+def last_10_logentry():
+    return LogEntry.objects.all()[:10]
+
+
 def access_data(request):
     if not request.META['PATH_INFO'] == reverse('admin:index'):
         return {}
@@ -251,4 +256,5 @@ def access_data(request):
         'staff_users': get_managers(),
         "top_users": get_top_users(),
         **get_chart_data(now),
+        'logentry': last_10_logentry(),
     }
