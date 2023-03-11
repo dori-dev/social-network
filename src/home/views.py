@@ -5,7 +5,11 @@ from utils.mixins import ViewCounterMixin
 
 
 class Home(ViewCounterMixin, generic.ListView):
-    queryset = Post.objects.order_by("?")
+    queryset = Post.objects.order_by("?").values(
+        'total_likes',
+        'image',
+        'slug',
+    )
     context_object_name = 'posts'
     paginate_by = 24
 

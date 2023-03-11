@@ -19,6 +19,16 @@ class CustomUser(AbstractUser):
         related_name='followers',
         symmetrical=False,
     )
+    posts_count = models.IntegerField(
+        _('Posts Count'),
+        db_index=True,
+        default=0,
+    )
+
+    class Meta:
+        ordering = (
+            '-posts_count',
+        )
 
     def get_absolute_url(self):
         return reverse('user:detail', args=(self.username,))
