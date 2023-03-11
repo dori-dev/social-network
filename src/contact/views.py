@@ -38,6 +38,11 @@ class UserList(ViewCounterMixin, LoginRequiredMixin, generic.ListView):
 class UserDetail(generic.DetailView):
     queryset = UserModel.objects.filter(
         is_active=True,
+    ).select_related(
+        "profile",
+    ).prefetch_related(
+        'posts',
+        'followers',
     )
     template_name = 'contact/detail.html'
     slug_field = 'username'
