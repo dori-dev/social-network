@@ -26,7 +26,6 @@
             </button>
           </div>
         {% endif %}
-          
       </div>
       <div class="user-info d-flex align-content-center mt-4">
         <div class="total-posts me-5">
@@ -42,9 +41,19 @@
           <span>دنبال شونده</span>
         </div>
       </div>
-      <div class="mx-2 username bold-font mt-4">
-        {{ user.first_name }}
+      <div class="mt-3">
+        <b>{{ user.first_name }}</b>
+        {% if user.profile.bio %}
+          <br>
+          {{ user.profile.bio }}
+        {% endif %}
       </div>
+      {% if user == request.user %}
+        <div class="mt-3 d-flex justify-content-between w-100">
+          <a href="{% url 'post:create' %}" class="btn btn-success w-100 me-1">افزودن پست</a>
+          <a href="{% url 'account:edit' %}" class="btn btn-success w-100 ms-1">تغییر پروفایل</a>
+        </div>
+      {% endif %}
     </div>
   </div>
   <hr class="my-4">

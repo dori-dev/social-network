@@ -5,17 +5,13 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth import login, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse
 
 from action.utils import create_action
 from utils.mixins import ViewCounterMixin
 from . import forms
 
 User = get_user_model()
-
-
-class Dashboard(ViewCounterMixin, LoginRequiredMixin, generic.TemplateView):
-    template_name = 'account/dashboard.html'
 
 
 class UserLogin(ViewCounterMixin, auth_views.LoginView):
@@ -29,7 +25,8 @@ class UserLogin(ViewCounterMixin, auth_views.LoginView):
             messages.SUCCESS,
             "با موفقیت وارد حساب ات شدی!",
         )
-        return super().get_success_url()
+        username = self.request.user.username
+        return reverse('user:detail', args=(username,))
 
 
 class UserLogout(ViewCounterMixin, auth_views.LogoutView):
@@ -38,7 +35,6 @@ class UserLogout(ViewCounterMixin, auth_views.LogoutView):
 
 class Register(ViewCounterMixin, generic.FormView):
     form_class = forms.RegisterForm
-    success_url = reverse_lazy('account:dashboard')
     template_name = 'account/register.html'
 
     def get(self, request, *args, **kwargs):
@@ -67,7 +63,7 @@ class Register(ViewCounterMixin, generic.FormView):
         next = self.request.POST.get('next')
         if next:
             return redirect(next)
-        return redirect(self.success_url)
+        return redirect('user:detail', username=user.username)
 
     def form_invalid(self, form, **kwargs):
         context = self.get_context_data(**kwargs)
@@ -77,7 +73,6 @@ class Register(ViewCounterMixin, generic.FormView):
 
 
 class Edit(ViewCounterMixin, LoginRequiredMixin, generic.View):
-    success_url = reverse_lazy('account:dashboard')
     template_name = 'account/edit.html'
 
     def get(self, request, *args, **kwargs):
@@ -114,11 +109,12 @@ class Edit(ViewCounterMixin, LoginRequiredMixin, generic.View):
             messages.SUCCESS,
             "پروفایلت با موفقیت بروزرسانی شد!",
         )
+        user = self.request.user
         create_action(
-            self.request.user,
+            user,
             'update',
         )
-        return redirect(self.success_url)
+        return redirect('user:detail', username=user.username)
 
     def form_invalid(self, user_form, profile_form, **kwargs):
         context = {
@@ -141,7 +137,8 @@ class ChangePassword(
             messages.SUCCESS,
             "پسورد ات ما موفقیت تغییر کرد.",
         )
-        return reverse('account:dashboard')
+        username = self.request.user.username
+        return reverse('user:detail', args=(username,))
 
 
 class ResetPassword(ViewCounterMixin, auth_views.PasswordResetView):
