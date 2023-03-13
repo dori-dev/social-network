@@ -62,7 +62,7 @@
               <img src="{% thumbnail post.user.profile.photo 240x0 %}" class="img-thumbnail rounded-circle mini-img">
               <div class="mx-2 d-flex flex-column justify-content-center align-content-center">
                 <span class="text-end username bold-font">{{ post.user.username }}</span>
-                <span>{{ post.user.posts.count }} پست</span>
+                <span>{{ post.user.posts_count }} پست</span>
               </div>
             </div>
           </a>
@@ -132,53 +132,55 @@
       </form>
     </div>
     <h1>{{ post.comments.count }}</h1>
-    {% for comment in comments %}
-      <div class="card bg-dark text-white mb-2">
-        <div class="d-flex">
-          <p class="card-header">
-            <span>{{ comment.user }}</span>
+    {% for comment in post.comments.all %}
+      {% if comment.is_reply == False %}
+        <div class="card bg-dark text-white mb-2">
+          <div class="d-flex">
+            <p class="card-header">
+              <span>{{ comment.user }}</span>
+            </p>
+            <p class="card-header">
+              <span>{{ comment.created|timesince }} پیش</span>
+            </p>
+            <p class="card-header">
+              <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="collapseExample">
+                پاسخ
+              </button>
+            </p>
+          </div>
+          <p class="card-body">
+            {{ comment.body }}
           </p>
-          <p class="card-header">
-            <span>{{ comment.created|timesince }} پیش</span>
-          </p>
-          <p class="card-header">
-            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="collapseExample">
-              پاسخ
-            </button>
-          </p>
-        </div>
-        <p class="card-body">
-          {{ comment.body }}
-        </p>
-        <div class="collapse card bg-white text-dark ms-3 me-1 mb-2" id="collapse{{ forloop.counter }}">
-          <form action="" method="post" class="card-body">
-            {% csrf_token %}
-            {{ form.body.errors }}
-            {{ form.body }}
-            <input type="hidden" name="comment_id" value="{{ comment.id }}" />
-            <div class="d-grid gap-2 col-md-12">
-              <input class="btn btn-success" type="submit" value="ارسال">
-            </div>
-          </form>
-        </div>
-        {% with comment.replies.all as replies %}
-          {% for reply in replies %}
-          <div class="card bg-white text-dark ms-3 me-1 mb-2">
-              <div class="d-flex">
-                  <p class="card-header">
-                    <span>{{ reply.user }}</span>
-                  </p>
-                  <p class="card-header">
-                    <span>{{ reply.created|timesince }} پیش</span>
-                  </p>
+          <div class="collapse card bg-white text-dark ms-3 me-1 mb-2" id="collapse{{ forloop.counter }}">
+            <form action="" method="post" class="card-body">
+              {% csrf_token %}
+              {{ form.body.errors }}
+              {{ form.body }}
+              <input type="hidden" name="comment_id" value="{{ comment.id }}" />
+              <div class="d-grid gap-2 col-md-12">
+                <input class="btn btn-success" type="submit" value="ارسال">
               </div>
-              <p class="card-body">
-                {{ reply.body }}
-              </p>
-            </div>
-          {% endfor %}
-        {% endwith %}
-      </div>
+            </form>
+          </div>
+          {% with comment.replies.all as replies %}
+            {% for reply in replies %}
+            <div class="card bg-white text-dark ms-3 me-1 mb-2">
+                <div class="d-flex">
+                    <p class="card-header">
+                      <span>{{ reply.user }}</span>
+                    </p>
+                    <p class="card-header">
+                      <span>{{ reply.created|timesince }} پیش</span>
+                    </p>
+                </div>
+                <p class="card-body">
+                  {{ reply.body }}
+                </p>
+              </div>
+            {% endfor %}
+          {% endwith %}
+        </div>
+      {% endif %}
     {% empty %}
     <h1>هنوز نظری نداریم</h1>
     {% endfor %}

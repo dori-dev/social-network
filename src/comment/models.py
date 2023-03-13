@@ -43,7 +43,7 @@ class Comment(models.Model):
         verbose_name = _('Comment')
         verbose_name_plural = _('Comments')
         ordering = (
-            'created',
+            '-created',
         )
 
     def __str__(self):

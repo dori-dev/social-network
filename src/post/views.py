@@ -70,6 +70,10 @@ class PostDetail(
     ).prefetch_related(
         'users_like',
         'users_like__profile',
+        'comments',
+        'comments__user',
+        'comments__replies',
+        'comments__replies__user',
     )
     template_name = 'post/detail.html'
     form_class = CommentCreateForm
@@ -77,9 +81,6 @@ class PostDetail(
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = self.form_class()
-        context['comments'] = self.get_object().comments.exclude(
-            is_reply=True,
-        ).order_by('-created')
         return context
 
     def post(self, request, *args, **kwargs):
