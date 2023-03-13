@@ -4,6 +4,8 @@
 {% block title %}پست {{ post.user.username }}{% endblock title %}
 
 {% block content %}
+  {% with request.user as client %}
+  {% with post.users_like as likers %}
   <div class="alert alert-danger alert-dismissible fade show alert-fixed" role="alert" id="connection-error" hidden>
     خطا در برقراری ارتباط با سرور!
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -11,8 +13,8 @@
   <div class="row mt-4 form mx-md-3 d-flex justify-content-between align-content-center">
     <div class="col-md-6 order-md-0 order-1 mt-0 mt-md-4">
       <div class="row mt-md-3 mt-1 mb-4 d-flex justify-content-center align-content-center align-items-center">
-        <div id="like-button" class="like col-6 d-flex" data-action="{% if request.user in post.users_like.all %}un{% endif %}like">
-          <div id="like-svg" class="liked" {% if request.user not in post.users_like.all %}hidden{% endif %}>
+        <div id="like-button" class="like col-6 d-flex" data-action="{% if client in likers.all %}un{% endif %}like">
+          <div id="like-svg" class="liked" {% if client not in likers.all %}hidden{% endif %}>
             <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="768.000000pt" height="768.000000pt" viewBox="0 0 768.000000 768.000000" preserveAspectRatio="xMidYMid meet">
               <g transform="translate(0.000000,768.000000) scale(0.100000,-0.100000)" stroke="none">
                 <path d="M4545 6816 c-82 -19 -183 -66 -261 -121 -87 -62 -120 -106 -744 -975
@@ -29,7 +31,7 @@
               </g>
             </svg>
           </div>
-          <div id="unlike-svg" class="default" {% if request.user in post.users_like.all %}hidden{% endif %}>
+          <div id="unlike-svg" class="default" {% if client in likers.all %}hidden{% endif %}>
             <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="768.000000pt" height="768.000000pt" viewBox="0 0 768.000000 768.000000" preserveAspectRatio="xMidYMid meet">
               <g transform="translate(0.000000,768.000000) scale(0.100000,-0.100000)" stroke="none">
                 <path d="M4545 6816 c-82 -19 -183 -66 -261 -121 -87 -62 -120 -106 -744 -975
@@ -90,10 +92,10 @@
       </div>
       <br>
       <br>
-      {% if post.users_like.exists %}
+      {% if likers.exists %}
       <h5 class="bold-font">افرادی که این پست رو پسندیدند</h5>
       <div id="like-profile-list" class="row mt-4">
-        {% for user in post.users_like.all %}
+        {% for user in likers.all %}
           <div class="col-md-4 col-6 mb-5">
             <a class="text-center d-flex flex-column justify-content-center align-content-center" href="{{ user.get_absolute_url }}">
               <div>
@@ -111,7 +113,7 @@
     </div>
     <div class="col-md-5 order-md-1 order-0 mb-md-0 mb-5 mt-md-4 mt-2">
       <img src="{{ post.image.url }}" class="w-100 rounded img-thumbnail" alt="تصویر پست">
-      {% if post.user == request.user %}
+      {% if post.user == client %}
         <div class="mt-3 d-flex justify-content-between">
           <a href="{% url 'post:update' post.slug %}" class="btn btn-success btn-sm w-100 me-5">تغییر</a>
           <a href="{% url 'post:delete' post.slug %}" class="btn btn-danger btn-sm w-100">حذف</a>
@@ -131,7 +133,7 @@
         </div>
       </form>
     </div>
-    <h1>{{ post.comments.count }}</h1>
+    <br>
     {% for comment in post.comments.all %}
       {% if comment.is_reply == False %}
         <div class="card bg-dark text-white mb-2">
@@ -193,15 +195,17 @@
       <a class="text-center d-flex flex-column justify-content-center align-content-center" href="">
         <div>
           {% load thumbnail %}
-          <img src="{% thumbnail request.user.profile.photo 240x0 %}" class="img-thumbnail rounded-circle mini-img">
+          <img src="{% thumbnail client.profile.photo 240x0 %}" class="img-thumbnail rounded-circle mini-img">
         </div>
         <div class="mt-1">
-          <span class="mini-username bold-font text-center">{{ request.user.username }}</span>
+          <span class="mini-username bold-font text-center">{{ client.username }}</span>
         </div>
       </a>
     </div>
   </div>
   <div class="py-5"></div>
+  {% endwith %}
+  {% endwith %}
 {% endblock content %}
 
 {% block script %}
