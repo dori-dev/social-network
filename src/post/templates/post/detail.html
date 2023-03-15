@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load jformat timesince %}
+{% load jformat timesince post %}
 
 {% block title %}پست {{ post.user.username }}{% endblock title %}
 
@@ -71,7 +71,7 @@
         </div>
       </div>
       <div dir="auto">
-        {{ post.description|linebreaks }}
+        {{ post.description|linebreaks|render }}
       </div>
       <hr>
       <div class="row">

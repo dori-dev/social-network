@@ -9,6 +9,8 @@
   </div>
   {% if "search" in request.GET %}
   <h2 class="mt-4 bold-font">جستجو برای {{ request.GET.search }}</h2>
+  {% elif tag %}
+  <h2 class="mt-4 bold-font">#{{ tag }}</h2>
   {% else %}
   <h2 class="mt-4 bold-font">پست های پیشنهادی</h2>
   {% endif %}

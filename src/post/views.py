@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, AccessMixin
 from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.http import JsonResponse
+from taggit.models import Tag
 
 from action.utils import create_action, remove_action
 from utils.mixins import (
@@ -12,6 +13,7 @@ from utils.mixins import (
     PostViewCounterMixin,
     ViewCounterMixin,
 )
+from utils.functions import extract_tags
 from . import forms
 from comment.forms import CommentCreateForm
 from comment.models import Comment
@@ -38,8 +40,11 @@ class CreatePost(ViewCounterMixin, LoginRequiredMixin, generic.FormView):
 
     def form_valid(self, form: forms.CreateUpdatePostFrom, **kwargs):
         post: models.Post = form.save(commit=False)
+        tags = extract_tags(post.description)
         post.user = self.request.user
         post.save()
+        post.tags.clear()
+        post.tags.add(*tags)
         create_action(
             self.request.user,
             'share',
@@ -153,8 +158,11 @@ class PostUpdate(AccessMixin, generic.View):
         return self.form_invalid(form, *args, **kwargs)
 
     def form_valid(self, form, *args, **kwargs):
-        post = form.save(commit=False)
+        post: models.Post = form.save(commit=False)
+        tags = extract_tags(post.description)
         post.save()
+        post.tags.clear()
+        post.tags.add(*tags)
         messages.add_message(
             self.request,
             messages.SUCCESS,
@@ -239,6 +247,32 @@ class PostList(ViewCounterMixin, generic.ListView):
     )
     context_object_name = 'posts'
     paginate_by = 24
+
+    def get_template_names(self):
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return 'post/add-posts.html'
+        return 'post/list.html'
+
+
+class PostTagList(generic.ListView):
+    model = models.Post
+    context_object_name = 'posts'
+    paginate_by = 24
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["tag"] = self.kwargs.get('slug')
+        return context
+
+    def get_queryset(self):
+        tag_slug = self.kwargs.get('slug')
+        return models.Post.objects.filter(
+            tags__slug=tag_slug,
+        ).values(
+            'total_likes',
+            'image',
+            'slug',
+        )
 
     def get_template_names(self):
         if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
