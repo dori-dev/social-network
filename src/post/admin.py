@@ -61,6 +61,7 @@ class PostAdmin(admin.ModelAdmin):
             _('Information'), {
                 'fields': [
                     'description',
+                    'tags',
                 ]
             }
         ),

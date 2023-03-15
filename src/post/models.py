@@ -8,6 +8,7 @@ from django.db.models.fields.files import ImageFieldFile
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django_jalali.db import models as jalali_models
+from taggit.managers import TaggableManager
 
 UserModel = get_user_model()
 
@@ -62,6 +63,15 @@ class Post(models.Model):
         _('Total likes'),
         db_index=True,
         default=0,
+    )
+    tags = TaggableManager(
+        verbose_name=_('Tags'),
+        blank=True,
+    )
+    related_posts = models.ManyToManyField(
+        'self',
+        blank=True,
+        verbose_name=_('Related posts'),
     )
 
     class Meta:

@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'jalali_date',
     'django_jalali',
+    'taggit',
     # local apps
     'account.apps.AccountConfig',
     'post.apps.PostConfig',
