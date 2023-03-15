@@ -77,6 +77,7 @@ class PostAdmin(admin.ModelAdmin):
                 'fields': [
                     'slug',
                     'users_like',
+                    'related_posts',
                 ]
             }
         ),

@@ -76,40 +76,48 @@
       <hr>
       <div class="row">
         <div class="col-6 text-start">
-          <span id="total-like">
-            {{ post.total_likes }}
-          </span>
-          لایک
-          |
-          <span id="total-view">
-            {{ total_views }}
-          </span>
-          بازدید
+          <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#likeList">
+            <span id="total-like">
+              {{ post.total_likes }}
+            </span>
+            لایک
+          </button>
+          <button class="btn btn-success btn-sm disable-btn">
+            <span id="total-view">
+              {{ total_views }}
+            </span>
+            بازدید
+          </button>
         </div>
         <div class="col-6 text-end">
           {{ post.created|jformat:"%d %B %Y" }}
         </div>
       </div>
-      <br>
-      <br>
-      {% if likers.exists %}
-      <h5 class="bold-font">افرادی که این پست رو پسندیدند</h5>
-      <div id="like-profile-list" class="row mt-4">
-        {% for user in likers.all %}
-          <div class="col-md-4 col-6 mb-5">
-            <a class="text-center d-flex flex-column justify-content-center align-content-center" href="{{ user.get_absolute_url }}">
-              <div>
-                {% load thumbnail %}
-                <img src="{% thumbnail user.profile.photo 240x0 %}" class="img-thumbnail rounded-circle mini-img">
+      <div class="modal fade" id="likeList" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">افرادی که این پست را پسندیدند</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body row" id="like-profile-list">
+              {% for user in likers.all %}
+              <div class="col-6 mb-5">
+                <a class="text-center d-flex flex-column justify-content-center align-content-center" href="{{ user.get_absolute_url }}">
+                  <div>
+                    {% load thumbnail %}
+                    <img src="{% thumbnail user.profile.photo 240x0 %}" class="img-thumbnail rounded-circle mini-img">
+                  </div>
+                  <div>
+                    <span class="mini-username bold-font text-center">{{ user.username }}</span>
+                  </div>
+                </a>
               </div>
-              <div>
-                <span class="mini-username bold-font text-center">{{ user.username }}</span>
-              </div>
-            </a>
+              {% endfor %}
+            </div>
           </div>
-        {% endfor %}
+        </div>
       </div>
-      {% endif %}
     </div>
     <div class="col-md-5 order-md-1 order-0 mb-md-0 mb-5 mt-md-4 mt-2">
       <img src="{{ post.image.url }}" class="w-100 rounded img-thumbnail" alt="تصویر پست">
@@ -120,8 +128,16 @@
         </div>
       {% endif %}
     </div>
-  </div>
-  <div class="mt-5 col-5">
+  </div>  
+  {% if post.related_posts %}
+    <div class="similar-posts ms-1 mt-5">
+      <h1>پست های مشابه</h1>
+      <div class="row mx-2">
+        {% include 'post/add-posts.html' with posts=post.related_posts.all %}
+      </div>
+    </div>
+  {% endif %}
+  <div class="mt-5 mx-2 col-lg-5">
     <div class="col-12 mt-0 mt-md-4">
       <form method="post">
         <div class="d-grid gap-2 col-md-12">
@@ -183,15 +199,13 @@
           {% endwith %}
         </div>
       {% endif %}
-    {% empty %}
-    <h1>هنوز نظری نداریم</h1>
     {% endfor %}
   </div>
   <div id="csrf" hidden>
     {% csrf_token %}
   </div>
   <div hidden>
-    <div id="new-profile" class="col-md-4 col-6 mb-5">
+    <div id="new-profile" class="col-6 mb-5">
       <a class="text-center d-flex flex-column justify-content-center align-content-center" href="">
         <div>
           {% load thumbnail %}

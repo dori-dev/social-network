@@ -5,7 +5,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin, AccessMixin
 from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.http import JsonResponse
-from taggit.models import Tag
 
 from action.utils import create_action, remove_action
 from utils.mixins import (
@@ -79,6 +78,7 @@ class PostDetail(
         'comments__user',
         'comments__replies',
         'comments__replies__user',
+        'related_posts',
     )
     template_name = 'post/detail.html'
     form_class = CommentCreateForm
