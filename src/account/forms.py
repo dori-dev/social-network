@@ -5,7 +5,7 @@ from django.contrib.auth import forms as auth_forms
 from django.contrib.auth import get_user_model
 from jalali_date.fields import JalaliDateField
 from jalali_date.widgets import AdminJalaliDateWidget
-from .models import Profile
+from .models import Profile, OTP
 
 
 User = get_user_model()
@@ -360,3 +360,73 @@ class UserProfileEditForm(forms.ModelForm):
         bio.error_messages = {
             'max_length': 'توضیحات ات خیلی زیاد شد!',
         }
+
+
+class OtpForm(forms.ModelForm):
+    class Meta:
+        model = OTP
+        fields = (
+            'phone',
+        )
+        labels = {
+            'phone': 'شماره تلفن',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].error_messages = {
+                'required': 'پر کردن این فیلد ضروری است!',
+                'invalid': 'این فیلد رو به درستی وارد کن!',
+            }
+        phone = self.fields['phone']
+        phone.widget.attrs[
+            'class'
+        ] = 'form-control mt-2 mb-2 ltr'
+        phone.widget.attrs[
+            'placeholder'
+        ] = 'مثال: 09133352042'
+        phone.error_messages = {
+            'max_length': 'طول شماره تلفن ات بیش از حد مجازه.',
+        }
+
+    def clean_phone(self):
+        phone: str = self.cleaned_data['phone']
+        if not phone.isdigit():
+            raise ValidationError('شماره تلفنی که وارد کردی اشتباهه.')
+        return phone
+
+
+class OtpLoginForm(forms.ModelForm):
+    class Meta:
+        model = OTP
+        fields = (
+            'otp',
+        )
+        labels = {
+            'otp': 'کد تایید',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].error_messages = {
+                'required': 'پر کردن این فیلد ضروری است!',
+                'invalid': 'این فیلد رو به درستی وارد کن!',
+            }
+        otp = self.fields['otp']
+        otp.widget.attrs[
+            'class'
+        ] = 'form-control mt-2 mb-2 direction-change rtl'
+        otp.widget.attrs[
+            'placeholder'
+        ] = 'کد تاییدی که به تلفنت پیامک شد رو وارد کن...'
+        otp.error_messages = {
+            'max_length': 'طول کد تایید بیش از حد مجازه.',
+        }
+
+    def clean_otp(self):
+        otp: str = self.cleaned_data['otp']
+        if isinstance(otp, str) and not otp.isdigit():
+            raise ValidationError('کد تایید باید فقط شامل عدد باشه.')
+        return otp

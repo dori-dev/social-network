@@ -49,28 +49,28 @@ class CustomGoogleOAuth2(GoogleOAuth2):
 
 
 class PhoneBackend(ModelBackend):
-    def authenticate(self, request, username=None, password=None, **kwargs):
-        try:
-            otp = models.OTP.objects.get(phone=username)
-            if not utils.check_otp_expiration(otp):
-                messages.error(
-                    request,
-                    _('Your verification code has expired.'),
-                    extra_tags='danger',
-                )
-                return None
-            if not password.isdigit() or otp.otp != int(password):
-                messages.error(
-                    request,
-                    _('You entered the wrong verification code.'),
-                    extra_tags='danger',
-                )
-                return None
-        except models.OTP.DoesNotExist:
+    def authenticate(
+        self,
+        request,
+        username=None,
+        password=None,
+        otp_obj=None,
+        **kwargs
+    ):
+        if otp_obj is None:
+            return None
+        if not utils.check_otp_expiration(otp_obj):
             messages.error(
                 request,
-                _('First apply to get the verification code.'),
+                _('Your verification code has expired.'),
                 extra_tags='danger',
             )
             return None
-        return otp.user
+        if isinstance(password, str) or otp_obj.otp != int(password):
+            messages.error(
+                request,
+                _('You entered the wrong verification code.'),
+                extra_tags='danger',
+            )
+            return None
+        return otp_obj.user

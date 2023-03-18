@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}ورود{% endblock %}
+
+{% block content %}
+  <h2 class="mt-4 bold-font">احراز هویت با شماره تلفن</h2>
+  <div class="form mx-md-3">
+    <p class="mt-4"></p>
+    <form action="" method="post">
+      <div class="d-grid gap-2 col-md-6">
+        {{ form.as_p }}
+      </div>
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ next }}" />
+      <div class="d-grid gap-2 col-md-6">
+        <input class="btn btn-success" type="submit" value="ارسال کد تایید">
+      </div>
+    </form>
+    <p class="mt-5 mb-2">
+      <p class="mb-2">احراز هویت با ایمیل:</p>
+      <a href="{% if request.GET.next %}{% url 'account:register' %}?next={{ request.GET.next }}{% else %}{% url 'account:register' %}{% endif %}" class="btn btn-primary btn-sm">
+        ثبت نام با ایمیل
+      </a>
+      <a href="{% if request.GET.next %}{% url 'account:login' %}?next={{ request.GET.next }}{% else %}{% url 'account:login' %}{% endif %}" class="btn btn-primary btn-sm">
+        ورود با ایمیل
+      </a>
+    </p>
+  </div>
+  <div class="py-5"></div>
+{% endblock %}

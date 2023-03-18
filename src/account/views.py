@@ -2,17 +2,95 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.views import generic
 from django.contrib.auth import views as auth_views
-from django.contrib.auth import login, get_user_model
+from django.contrib.auth import login, get_user_model, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 from action.utils import create_action
 from utils.mixins import ViewCounterMixin
 from . import forms
+from . import utils
+from . import models
 
 User = get_user_model()
 
+
+class FormView(ViewCounterMixin, generic.FormView):
+    form_class = None
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        context['form'] = self.form_class()
+        return self.render_to_response(context)
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            return self.form_valid(form, **kwargs)
+        return self.form_invalid(form, **kwargs)
+
+    def form_invalid(self, form, **kwargs):
+        context = self.get_context_data(**kwargs)
+        context['form'] = form
+        context['next'] = self.request.POST.get('next')
+        return self.render_to_response(context)
+
+
+class OtpAuth(FormView):
+    form_class = forms.OtpForm
+    template_name = 'account/otp/auth.html'
+
+    def form_valid(self, form, **kwargs):
+        phone = form.cleaned_data['phone']
+        otp_code = utils.generate_otp()
+        print("Verification Code:", otp_code)
+        # utils.send_otp(phone, otp_code)
+        self.request.session['phone_number'] = phone
+        otp_qs = models.OTP.objects.filter(phone=phone)
+        if otp_qs.exists():
+            otp_obj = otp_qs.first()
+            otp_obj.otp = otp_code
+            otp_obj.save()
+            return redirect('account:otp_login')
+        # models.OTP.objects.create()
+        return redirect('account:otp_register')
+
+
+class OtpLogin(FormView):
+    form_class = forms.OtpLoginForm
+    template_name = 'account/otp/login.html'
+
+    def form_valid(self, form: forms.RegisterForm, **kwargs):
+        code = form.cleaned_data['otp']
+        phone = self.request.session.get('phone_number')
+        otp = models.OTP.objects.filter(phone=phone)
+        if not otp.exists():
+            messages.error(
+                self.request,
+                _('First apply to get the verification code.'),
+                extra_tags='danger',
+            )
+            return redirect('account:otp_auth')
+        user = authenticate(
+            self.request,
+            password=code,
+            otp_obj=otp.first(),
+        )
+        if user is not None:
+            login(self.request, user)
+            messages.add_message(
+                self.request,
+                messages.SUCCESS,
+                "با موفقیت وارد حساب ات شدی!",
+            )
+            self.request.session['phone_number'] = None
+            next = self.request.POST.get('next')
+            if next:
+                return redirect(next)
+            return redirect('user:detail', username=user.username)
+        return redirect('account:otp_login')
 
 class UserLogin(ViewCounterMixin, auth_views.LoginView):
     form_class = forms.LoginForm
@@ -33,20 +111,9 @@ class UserLogout(ViewCounterMixin, auth_views.LogoutView):
     template_name = 'account/logged_out.html'
 
 
-class Register(ViewCounterMixin, generic.FormView):
+class Register(FormView):
     form_class = forms.RegisterForm
     template_name = 'account/register.html'
-
-    def get(self, request, *args, **kwargs):
-        context = self.get_context_data(**kwargs)
-        context['form'] = forms.RegisterForm()
-        return self.render_to_response(context)
-
-    def post(self, request, *args, **kwargs):
-        form: forms.RegisterForm = forms.RegisterForm(request.POST)
-        if form.is_valid():
-            return self.form_valid(form, **kwargs)
-        return self.form_invalid(form, **kwargs)
 
     def form_valid(self, form: forms.RegisterForm, **kwargs):
         user = form.save()
@@ -64,12 +131,6 @@ class Register(ViewCounterMixin, generic.FormView):
         if next:
             return redirect(next)
         return redirect('user:detail', username=user.username)
-
-    def form_invalid(self, form, **kwargs):
-        context = self.get_context_data(**kwargs)
-        context['form'] = form
-        context['next'] = self.request.POST.get('next')
-        return self.render_to_response(context)
 
 
 class Edit(ViewCounterMixin, LoginRequiredMixin, generic.View):

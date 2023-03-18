@@ -25,4 +25,7 @@ urlpatterns = [
         views.ResetPasswordConfirm.as_view(),
         name='reset_password_confirm'
     ),
+    # OTP
+    path('otp/auth/', views.OtpAuth.as_view(), name='otp_auth'),
+    path('otp/login/', views.OtpLogin.as_view(), name='otp_login'),
 ]

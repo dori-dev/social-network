@@ -95,7 +95,6 @@ class OTP(models.Model):
     phone = models.CharField(
         _("Phone"),
         max_length=15,
-        unique=True,
     )
     otp = models.PositiveIntegerField(
         _("OTP"),
