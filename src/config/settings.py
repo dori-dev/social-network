@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'jalali_date',
     'django_jalali',
     'taggit',
+    'background_task',
     # local apps
     'account.apps.AccountConfig',
     'post.apps.PostConfig',
@@ -169,6 +170,8 @@ AUTHENTICATION_BACKENDS = [
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('GOOGLE_KEY', '')
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('GOOGLE_SECRET', '')
+
+API_KEY = os.environ.get("KAVENEGAR_API_KEY", '')
 
 SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_details',

@@ -245,3 +245,15 @@ msgstr "تگ ها"
 
 msgid "Related posts"
 msgstr "پست های مشابه"
+
+msgid "OTP"
+msgstr "رمز یکبار مصرف"
+
+msgid "Phone"
+msgstr "تلفن"
+
+msgid "Custom user"
+msgstr "کاربر"
+
+msgid "Custom users"
+msgstr "کاربران"

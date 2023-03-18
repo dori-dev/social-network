@@ -29,6 +29,8 @@ class CustomUser(AbstractUser):
         ordering = (
             '-posts_count',
         )
+        verbose_name = _('Custom user')
+        verbose_name_plural = _('Custom users')
 
     def get_absolute_url(self):
         return reverse('user:detail', args=(self.username,))
@@ -82,3 +84,32 @@ class Profile(models.Model):
 
     def __str__(self):
         return f'{self.user.username}\'s profile'
+
+
+class OTP(models.Model):
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name=_('User'),
+    )
+    phone = models.CharField(
+        _("Phone"),
+        max_length=15,
+        unique=True,
+    )
+    otp = models.PositiveIntegerField(
+        _("OTP"),
+        blank=True,
+        null=True,
+    )
+    created = models.DateTimeField(
+        _("Created"),
+        auto_now=True,
+    )
+
+    class Meta:
+        verbose_name = _('OTP')
+        verbose_name_plural = _('OTP')
+
+    def __str__(self):
+        return f'{self.user} - {self.phone}'

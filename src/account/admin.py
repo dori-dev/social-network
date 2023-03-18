@@ -25,6 +25,27 @@ class ProfileAdmin(admin.ModelAdmin):
     ]
 
 
+@admin.register(models.OTP)
+class OTPAdmin(admin.ModelAdmin):
+    list_display = [
+        'user',
+        'phone',
+        'otp',
+        'created',
+    ]
+    list_filter = [
+        'created',
+    ]
+    search_fields = [
+        'user__username',
+        'phone',
+    ]
+    date_hierarchy = 'created'
+    raw_id_fields = [
+        'user',
+    ]
+
+
 @admin.register(models.CustomUser)
 class CustomUserAdmin(UserAdmin):
     pass

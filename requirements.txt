@@ -13,3 +13,5 @@ django-jalali-date==1.0.1
 django-jalali==6.0.1
 psycopg2==2.9.5
 django-taggit==3.1.0
+kavenegar==1.1.2
+django4-background-tasks==1.2.7
