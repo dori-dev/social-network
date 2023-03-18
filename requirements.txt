@@ -15,3 +15,4 @@ psycopg2==2.9.5
 django-taggit==3.1.0
 kavenegar==1.1.2
 django4-background-tasks==1.2.7
+pytz==2022.7.1

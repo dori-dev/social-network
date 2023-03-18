@@ -5,6 +5,9 @@
 {% block content %}
   <h2 class="mt-4 bold-font">ورود به حساب کاربری</h2>
   <div class="form mx-md-3">
+    <a class="mt-4 btn btn-primary google-login bold-font" href="">
+      ورود با شماره موبایل
+    </a>
     <a class="mt-4 btn btn-danger google-login bold-font" href="{% url 'social:begin' 'google-oauth2' %}">
       ورود با گوگل
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">

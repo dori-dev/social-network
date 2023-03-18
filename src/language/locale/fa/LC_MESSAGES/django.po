@@ -257,3 +257,12 @@ msgstr "کاربر"
 
 msgid "Custom users"
 msgstr "کاربران"
+
+msgid "Your verification code has expired."
+msgstr "اعتبار کد تایید ات تمام شده."
+
+msgid "You entered the wrong verification code."
+msgstr "کد تاییدی که وارد کردی اشتباه است."
+
+msgid "First apply to get the verification code."
+msgstr "اول برای دریافت کد تایید درخواست بده."

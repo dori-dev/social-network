@@ -1,7 +1,13 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.backends import ModelBackend
+from django.contrib import messages
 from django.db.utils import IntegrityError
 from social_core.backends.google import GoogleOAuth2
 from social_core.exceptions import AuthAlreadyAssociated
+from django.utils.translation import gettext_lazy as _
+
+from . import utils
+from . import models
 
 User = get_user_model()
 
@@ -40,3 +46,31 @@ class CustomGoogleOAuth2(GoogleOAuth2):
             return user
         except AuthAlreadyAssociated:
             return None
+
+
+class PhoneBackend(ModelBackend):
+    def authenticate(self, request, username=None, password=None, **kwargs):
+        try:
+            otp = models.OTP.objects.get(phone=username)
+            if not utils.check_otp_expiration(otp):
+                messages.error(
+                    request,
+                    _('Your verification code has expired.'),
+                    extra_tags='danger',
+                )
+                return None
+            if not password.isdigit() or otp.otp != int(password):
+                messages.error(
+                    request,
+                    _('You entered the wrong verification code.'),
+                    extra_tags='danger',
+                )
+                return None
+        except models.OTP.DoesNotExist:
+            messages.error(
+                request,
+                _('First apply to get the verification code.'),
+                extra_tags='danger',
+            )
+            return None
+        return otp.user
