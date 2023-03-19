@@ -28,4 +28,5 @@ urlpatterns = [
     # OTP
     path('otp/auth/', views.OtpAuth.as_view(), name='otp_auth'),
     path('otp/login/', views.OtpLogin.as_view(), name='otp_login'),
+    path('otp/register/', views.OtpRegister.as_view(), name='otp_register'),
 ]

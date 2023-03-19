@@ -11,7 +11,8 @@ from django_jalali.db import models as jalali_models
 class CustomUser(AbstractUser):
     email = models.EmailField(
         _('Email'),
-        unique=True,
+        null=True,
+        blank=True,
     )
     following = models.ManyToManyField(
         'self',
@@ -89,6 +90,8 @@ class Profile(models.Model):
 class OTP(models.Model):
     user = models.OneToOneField(
         User,
+        null=True,
+        blank=True,
         on_delete=models.CASCADE,
         verbose_name=_('User'),
     )

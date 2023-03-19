@@ -5,6 +5,7 @@ from django.contrib.auth import forms as auth_forms
 from django.contrib.auth import get_user_model
 from jalali_date.fields import JalaliDateField
 from jalali_date.widgets import AdminJalaliDateWidget
+
 from .models import Profile, OTP
 
 
@@ -135,7 +136,7 @@ class SetPasswordForm(auth_forms.SetPasswordForm):
     )
 
 
-class RegisterForm(auth_forms.UserCreationForm):
+class BaseRegisterForm(auth_forms.UserCreationForm):
     error_messages = {
         'password_mismatch': 'دو رمز عبور رو مثل هم وارد نکردی.',
     }
@@ -168,14 +169,12 @@ class RegisterForm(auth_forms.UserCreationForm):
         model = User
         fields = (
             'username',
-            'email',
         )
         field_classes = {
             'username': auth_forms.UsernameField
         }
         labels = {
             'username': 'نام کاربری',
-            'email': 'ایمیل',
         }
 
     def __init__(self, *args, **kwargs):
@@ -200,6 +199,25 @@ class RegisterForm(auth_forms.UserCreationForm):
             'invalid': 'یک نام کاربری صحیح وارد کن.',
             'unique': 'هم اکنون کاربری با این آیدی وجود دارد.',
         }
+
+
+class RegisterForm(BaseRegisterForm):
+    class Meta:
+        model = User
+        fields = (
+            'username',
+            'email',
+        )
+        field_classes = {
+            'username': auth_forms.UsernameField
+        }
+        labels = {
+            'username': 'نام کاربری',
+            'email': 'ایمیل',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         # email
         email = self.fields['email']
         email.required = True
@@ -210,8 +228,13 @@ class RegisterForm(auth_forms.UserCreationForm):
         email.error_messages = {
             'required': 'پر کردن فیلد ایمیل ضروری است!',
             'invalid': 'یک ایمیل صحیح وارد کن.',
-            'unique': 'هم اکنون کاربری با این ایمیل وجود دارد.',
         }
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if User.objects.filter(email=email).exists():
+            raise ValidationError('هم اکنون کاربری با این ایمیل وجود دارد.')
+        return email
 
 
 class UserEditForm(forms.ModelForm):
@@ -427,6 +450,40 @@ class OtpLoginForm(forms.ModelForm):
 
     def clean_otp(self):
         otp: str = self.cleaned_data['otp']
-        if isinstance(otp, str) and not otp.isdigit():
+        if isinstance(otp, str):
+            raise ValidationError('کد تایید باید فقط شامل عدد باشه.')
+        return otp
+
+
+class OtpRegisterForm(BaseRegisterForm):
+    otp = forms.IntegerField(
+        label='کد تایید',
+        required=True,
+        widget=forms.NumberInput(
+            attrs={
+                'autocomplete': 'off',
+                'class': 'form-control mt-2 mb-2 direction-change rtl',
+                'placeholder': 'کد تاییدی که به تلفنت پیامک شد رو وارد کن...',
+            }
+        )
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.order_fields([
+            'username',
+            'otp',
+            'password1',
+            'password2',
+        ])
+        # otp
+        otp = self.fields['otp']
+        otp.error_messages = {
+            'max_length': 'طول کد تایید بیش از حد مجازه.',
+        }
+
+    def clean_otp(self):
+        otp: str = self.cleaned_data['otp']
+        if isinstance(otp, str):
             raise ValidationError('کد تایید باید فقط شامل عدد باشه.')
         return otp

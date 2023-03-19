@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.shortcuts import redirect
 from django.views import generic
 from django.contrib.auth import views as auth_views
@@ -48,19 +47,31 @@ class OtpAuth(FormView):
         print("Verification Code:", otp_code)
         # utils.send_otp(phone, otp_code)
         self.request.session['phone_number'] = phone
-        otp_qs = models.OTP.objects.filter(phone=phone)
-        if otp_qs.exists():
-            otp_obj = otp_qs.first()
-            otp_obj.otp = otp_code
-            otp_obj.save()
-            return redirect('account:otp_login')
-        # models.OTP.objects.create()
-        return redirect('account:otp_register')
+        messages.success(
+            self.request,
+            'کد تایید با موفقیت ارسال شد.',
+        )
+        otp_obj, created = models.OTP.objects.get_or_create(phone=phone)
+        otp_obj.otp = otp_code
+        otp_obj.save()
+        if created or otp_obj.user is None:
+            return redirect('account:otp_register')
+        return redirect('account:otp_login')
 
 
 class OtpLogin(FormView):
     form_class = forms.OtpLoginForm
     template_name = 'account/otp/login.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.session.get('phone_number') is None:
+            messages.error(
+                self.request,
+                _('First apply to get the verification code.'),
+                extra_tags='danger',
+            )
+            return redirect('account:otp_auth')
+        return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form: forms.RegisterForm, **kwargs):
         code = form.cleaned_data['otp']
@@ -91,6 +102,64 @@ class OtpLogin(FormView):
                 return redirect(next)
             return redirect('user:detail', username=user.username)
         return redirect('account:otp_login')
+
+
+class OtpRegister(FormView):
+    form_class = forms.OtpRegisterForm
+    template_name = 'account/otp/register.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.session.get('phone_number') is None:
+            messages.error(
+                self.request,
+                _('First apply to get the verification code.'),
+                extra_tags='danger',
+            )
+            return redirect('account:otp_auth')
+        return super().dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form: forms.OtpRegisterForm, **kwargs):
+        try:
+            code = form.cleaned_data['otp']
+        except Exception:
+            print('hello')
+        phone = self.request.session.get('phone_number')
+        otp = models.OTP.objects.filter(phone=phone)
+        if not otp.exists():
+            messages.error(
+                self.request,
+                _('First apply to get the verification code.'),
+                extra_tags='danger',
+            )
+            return redirect('account:otp_auth')
+        otp_obj = otp.first()
+        if not otp_obj.user:
+            user = form.save(commit=False)
+            otp_obj.user = user
+        user = authenticate(
+            self.request,
+            password=code,
+            otp_obj=otp_obj,
+        )
+        if user is not None:
+            user.save()
+            otp_obj.save()
+            login(self.request, user)
+            messages.add_message(
+                self.request,
+                messages.SUCCESS,
+                "به سایت <strong>بگو مگو</strong> خوش اومدی :)",
+            )
+            self.request.session['phone_number'] = None
+            next = self.request.POST.get('next')
+            if next:
+                return redirect(next)
+            return redirect('user:detail', username=user.username)
+        context = self.get_context_data(**kwargs)
+        context['form'] = form
+        context['next'] = self.request.POST.get('next')
+        return self.render_to_response(context)
+
 
 class UserLogin(ViewCounterMixin, auth_views.LoginView):
     form_class = forms.LoginForm
