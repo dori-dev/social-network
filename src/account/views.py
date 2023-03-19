@@ -1,14 +1,13 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.views import generic
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import login, get_user_model, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.urls import reverse
-from django.utils.translation import gettext_lazy as _
 
 from action.utils import create_action
-from utils.mixins import ViewCounterMixin
+from utils.mixins import ViewCounterMixin, PhoneRequiredMixin
 from . import forms
 from . import utils
 from . import models
@@ -59,35 +58,16 @@ class OtpAuth(FormView):
         return redirect('account:otp_login')
 
 
-class OtpLogin(FormView):
+class OtpLogin(PhoneRequiredMixin, FormView):
     form_class = forms.OtpLoginForm
     template_name = 'account/otp/login.html'
 
-    def dispatch(self, request, *args, **kwargs):
-        if request.session.get('phone_number') is None:
-            messages.error(
-                self.request,
-                _('First apply to get the verification code.'),
-                extra_tags='danger',
-            )
-            return redirect('account:otp_auth')
-        return super().dispatch(request, *args, **kwargs)
-
     def form_valid(self, form: forms.RegisterForm, **kwargs):
         code = form.cleaned_data['otp']
-        phone = self.request.session.get('phone_number')
-        otp = models.OTP.objects.filter(phone=phone)
-        if not otp.exists():
-            messages.error(
-                self.request,
-                _('First apply to get the verification code.'),
-                extra_tags='danger',
-            )
-            return redirect('account:otp_auth')
         user = authenticate(
             self.request,
             password=code,
-            otp_obj=otp.first(),
+            otp_obj=self.otp_obj,
         )
         if user is not None:
             login(self.request, user)
@@ -104,35 +84,13 @@ class OtpLogin(FormView):
         return redirect('account:otp_login')
 
 
-class OtpRegister(FormView):
+class OtpRegister(PhoneRequiredMixin, FormView):
     form_class = forms.OtpRegisterForm
     template_name = 'account/otp/register.html'
 
-    def dispatch(self, request, *args, **kwargs):
-        if request.session.get('phone_number') is None:
-            messages.error(
-                self.request,
-                _('First apply to get the verification code.'),
-                extra_tags='danger',
-            )
-            return redirect('account:otp_auth')
-        return super().dispatch(request, *args, **kwargs)
-
     def form_valid(self, form: forms.OtpRegisterForm, **kwargs):
-        try:
-            code = form.cleaned_data['otp']
-        except Exception:
-            print('hello')
-        phone = self.request.session.get('phone_number')
-        otp = models.OTP.objects.filter(phone=phone)
-        if not otp.exists():
-            messages.error(
-                self.request,
-                _('First apply to get the verification code.'),
-                extra_tags='danger',
-            )
-            return redirect('account:otp_auth')
-        otp_obj = otp.first()
+        code = form.cleaned_data['otp']
+        otp_obj = self.otp_obj
         if not otp_obj.user:
             user = form.save(commit=False)
             otp_obj.user = user

@@ -1,7 +1,12 @@
+from django.shortcuts import redirect
 from django.http import HttpResponseBadRequest
 from django.http import HttpRequest
 from django.conf import settings
+from django.contrib import messages
+from django.utils.translation import gettext_lazy as _
 import redis
+
+from account.models import OTP
 
 r = redis.Redis(
     host=settings.REDIS_HOST,
@@ -54,4 +59,27 @@ class ViewCounterMixin:
             f'page:{path}:view_ips',
             ip_address,
         )
+        return super().dispatch(request, *args, **kwargs)
+
+
+class PhoneRequiredMixin:
+    def dispatch(self, request, *args, **kwargs):
+        phone = request.session.get('phone_number')
+        if phone is None:
+            messages.error(
+                self.request,
+                _('First apply to get the verification code.'),
+                extra_tags='danger',
+            )
+            return redirect('account:otp_auth')
+        if request.method == 'POST':
+            otp = OTP.objects.filter(phone=phone)
+            if not otp.exists():
+                messages.error(
+                    self.request,
+                    _('First apply to get the verification code.'),
+                    extra_tags='danger',
+                )
+                return redirect('account:otp_auth')
+            self.otp_obj = otp.first()
         return super().dispatch(request, *args, **kwargs)
