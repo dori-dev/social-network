@@ -1,14 +1,14 @@
 from django.urls import path
-from . import views
+from post.views import list, create, detail, update
 
 app_name = 'post'
 
 urlpatterns = [
-    path('', views.PostList.as_view(), name='list'),
-    path('create/', views.CreatePost.as_view(), name='create'),
-    path('tag/<slug:slug>/', views.PostTagList.as_view(), name='tag'),
-    path('<slug:slug>/', views.PostDetail.as_view(), name='detail'),
-    path('<slug:slug>/update/', views.PostUpdate.as_view(), name='update'),
-    path('<slug:slug>/delete/', views.PostDelete.as_view(), name='delete'),
-    path('<slug:slug>/like/', views.LikePost.as_view(), name='like'),
+    path('', list.PostList.as_view(), name='list'),
+    path('tag/<slug:slug>/', list.PostTagList.as_view(), name='tag'),
+    path('create/', create.CreatePost.as_view(), name='create'),
+    path('<slug:slug>/', detail.PostDetail.as_view(), name='detail'),
+    path('<slug:slug>/like/', detail.LikePost.as_view(), name='like'),
+    path('<slug:slug>/update/', update.PostUpdate.as_view(), name='update'),
+    path('<slug:slug>/delete/', update.PostDelete.as_view(), name='delete'),
 ]
