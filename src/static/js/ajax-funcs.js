@@ -16,7 +16,7 @@ function ready(fn) {
   }
 }
 
-function getData(url, page, successFunc) {
+function getData(url, page, successFunc, element = window) {
   if (page) {
     var page = parseInt(page);
   } else {
@@ -25,14 +25,17 @@ function getData(url, page, successFunc) {
   var empty_page = false;
   var block_request = false;
   var connect = true;
-  window.onscroll = function () {
-    var margin =
-      document.documentElement.scrollHeight - window.innerHeight - 500;
-    if (
-      window.scrollY > margin &&
-      empty_page == false &&
-      block_request == false
-    ) {
+  element.onscroll = function () {
+    if (element === window) {
+      var margin =
+        document.documentElement.scrollHeight - window.innerHeight - 500;
+      var scroll = window.scrollY;
+    } else {
+      var margin = element.scrollHeight - element.scrollTop - 200;
+      var scroll = element.offsetHeight;
+    }
+    // console.log(margin)
+    if (scroll > margin && empty_page == false && block_request == false) {
       block_request = true;
       if (connect) {
         page += 1;

@@ -211,3 +211,38 @@ input.post-title-input {
   height: 80px;
   object-fit: cover;
 }
+
+.action-list {
+  height: auto;
+  max-height: 300px;
+  overflow-x: hidden;
+}
+
+.action-list::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #f5f5f5;
+  border-radius: 10px;
+}
+
+.action-list::-webkit-scrollbar {
+  width: 10px;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+}
+
+.action-list::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #00b894;
+}
+
+.action-list li {
+  width: 400px;
+}
+
+.action-list .content {
+  display: flex;
+}
+
+.action-list img {
+  max-width: 60px;
+}

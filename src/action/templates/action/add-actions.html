@@ -1,54 +1,49 @@
-{% load thumbnail timesince %}
+{% load static thumbnail timesince %}
 
-{% for action in actions %}	
-	{% with user=action.user %}
-    <div class="action d-flex align-items-center mb-3 mt-3">
-      <div class="images">
-        <a href="{{ user.get_absolute_url }}">
-          <div class="d-flex flex-column align-items-start justify-content-center text-center">
-            <img src="{% thumbnail user.profile.photo 240x0 %}" alt="{{ user.get_full_name }}" class="img-thumbnail rounded-circle mini-img">
-            <span class="fs-6 bold-font text-center mt-2">{{ user.username }}</span>
+{% for action in actions %}
+  {% with user=action.user %}
+  <li>
+    <a class="dropdown-item text-light" href="{% if action.verb == 'update' %}{{ user.get_absolute_url }}{% elif action.verb == 'follow' %}{{ action.target.user_to.get_absolute_url }}{% elif action.verb == 'like' %}{{ action.target.get_absolute_url }}{% elif action.verb == 'share' %}{{ action.target.get_absolute_url }}{% endif %}">
+      <div class="row align-items-center content">
+        <div class="col-auto">
+          {% if action.target.image %}
+          <img alt="Image placeholder" src="{% thumbnail action.target.image 300x300 crop='smart' %}"
+            class="avatar-md rounded">
+          {% else %}
+            <img alt="Image placeholder" src="{% static 'img/default.png' %}"
+              class="avatar-md rounded">
+          {% endif %}
+        </div>
+        <div class="col ps-0 ms-2">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h4 class="h6 mb-0 text-small">{{ user.username }}</h4>
+            </div>
+            <div class="text-end">
+              <small class="text-gray-900">{{ action.created|timesince }} پیش</small>
+            </div>
           </div>
-        </a>
-      </div>
-      <div class="me-3 ms-4">
-        {% if action.target.image %}
-          <a href="{{ action.target.get_absolute_url }}">
-            <img src="{% thumbnail action.target.image 300x300 crop='smart' %}" class="img-thumbnail mini-thumbnail">
-          </a>
-        {% endif %}
-      </div>
-      <div class="info d-flex flex-column align-items-start justify-content-center">
-        <div class="text">
-          {% if action.verb == 'update' %}
-          <a href="{{ user.get_absolute_url }}" class="bold-font">
-            پروفایلش رو آپدیت کرد
-          </a>
-          {% elif action.verb == 'follow' %}
-            <p class="bold-font">
-              صفحه
-                <a href="{{ action.target.user_to.get_absolute_url }}">{{ action.target.user_to }}</a>
-              را دنبال کرد
-            </p>
-          {% elif action.verb == 'like' %}
-            <p class="bold-font">
-              پست
-              <a href="{{ action.target.get_absolute_url }}">{{ action.target.user.username }}</a>
-              را لایک کرد
-            </p>
-          {% elif action.verb == 'share' %}
-          <p class="bold-font">
-            <a href="{{ action.target.get_absolute_url }}" class="bold-font">
-              پست
-            </a>
-            گذاشت
+          <p class="font-small mt-1 mb-0 text-right">
+            {% if action.verb == 'update' %}
+              پروفایلش رو آپدیت کرد
+            {% elif action.verb == 'follow' %}
+                صفحه
+                {{ action.target.user_to }}
+                را دنبال کرد
+            {% elif action.verb == 'like' %}
+                پست
+                {{ action.target.user.username }}
+                را لایک کرد
+            {% elif action.verb == 'share' %}
+                پست گذاشت
+            {% endif %}  
           </p>
-          {% endif %}    
-        </div>      
-        <div class="time">
-          <span class="date text-muted">{{ action.created|timesince }} پیش</span>
         </div>
       </div>
-    </div>
-	{% endwith %}
+    </a>
+  </li>
+  {% if not forloop.last %}
+    <li><hr class="dropdown-divider"></li>
+  {% endif %}
+  {% endwith %}
 {% endfor %}

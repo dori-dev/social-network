@@ -5,12 +5,14 @@ from utils.mixins import AjaxRequiredMixin
 from . import models
 
 
-class ActionList(LoginRequiredMixin, AjaxRequiredMixin, generic.ListView):
+class ActionList(AjaxRequiredMixin, generic.ListView):
     context_object_name = 'actions'
     template_name = 'action/add-actions.html'
-    paginate_by = 24
+    paginate_by = 12
 
     def get_queryset(self):
+        if self.request.user.is_anonymous:
+            return models.Action.objects.all()
         actions = models.Action.objects.exclude(
             user=self.request.user,
         )

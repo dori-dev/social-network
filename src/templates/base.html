@@ -18,5 +18,14 @@
   {% include 'inc/scripts.html' %}
   {% block script %}
   {% endblock script %}
+  <script>
+    var actionList = document.getElementById("action-list")
+    function addAction(response) {
+        actionList.insertAdjacentHTML("beforeend", response);
+    }
+    var url = "{% url 'action:list' %}?page="
+    getPrimaryData(url, addAction, true);
+    getData(url, 1, addAction, element=actionList);
+  </script>
 </body>
 </html>

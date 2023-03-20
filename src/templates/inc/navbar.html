@@ -25,8 +25,23 @@
         </li>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{% url 'user:list' %}">
-            چت
+            افراد
           </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            اعلان ها
+          </a>
+          <ul class="dropdown-menu bg-success">
+            <li>
+              <a class="dropdown-item text-light text-center">
+                فعالیت ها
+              </a>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <div id="action-list" class="action-list">
+            </div>
+          </ul>
         </li>
         {% if request.user.is_authenticated and request.user.is_staff %}
           <li class="nav-item">
