@@ -1,32 +1,33 @@
 from django.urls import path
-from . import views
+from account.views import auth, edit, otp, password
 
 app_name = 'account'
 
 urlpatterns = [
-    path('login/', views.UserLogin.as_view(), name='login'),
-    path('logout/', views.UserLogout.as_view(), name='logout'),
-    path('register/', views.Register.as_view(), name='register'),
-    path('edit/', views.Edit.as_view(), name='edit'),
+    path('login/', auth.UserLogin.as_view(), name='login'),
+    path('logout/', auth.UserLogout.as_view(), name='logout'),
+    path('register/', auth.Register.as_view(), name='register'),
+    # Edit
+    path('edit/', edit.Edit.as_view(), name='edit'),
+    # OTP
+    path('otp/auth/', otp.OtpAuth.as_view(), name='otp_auth'),
+    path('otp/login/', otp.OtpLogin.as_view(), name='otp_login'),
+    path('otp/register/', otp.OtpRegister.as_view(), name='otp_register'),
     # Change password
     path(
         'change-password/',
-        views.ChangePassword.as_view(),
+        password.ChangePassword.as_view(),
         name='change_password'
     ),
     # Reset password
     path(
         'reset-password/',
-        views.ResetPassword.as_view(),
+        password.ResetPassword.as_view(),
         name='reset_password'
     ),
     path(
         'reset/<uidb64>/<token>/',
-        views.ResetPasswordConfirm.as_view(),
+        password.ResetPasswordConfirm.as_view(),
         name='reset_password_confirm'
     ),
-    # OTP
-    path('otp/auth/', views.OtpAuth.as_view(), name='otp_auth'),
-    path('otp/login/', views.OtpLogin.as_view(), name='otp_login'),
-    path('otp/register/', views.OtpRegister.as_view(), name='otp_register'),
 ]
