@@ -4,35 +4,12 @@ from django.views.decorators.csrf import csrf_protect
 from django.utils.decorators import method_decorator
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
-from django.db.models import Count
 
 from action.utils import create_action, remove_action
-from utils.mixins import (
-    ViewCounterMixin,
-    AjaxRequiredMixin,
-)
-from . import models
+from utils.mixins import AjaxRequiredMixin
+from contact import models
 
 UserModel = get_user_model()
-
-
-class UserList(ViewCounterMixin, LoginRequiredMixin, generic.ListView):
-    queryset = UserModel.objects.filter(
-        is_active=True,
-    ).select_related(
-        "profile",
-    ).values(
-        "profile__photo",
-        "posts_count",
-        "username",
-    )
-    context_object_name = 'users'
-    paginate_by = 24
-
-    def get_template_names(self):
-        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            return 'contact/add-users.html'
-        return 'contact/list.html'
 
 
 class UserDetail(generic.DetailView):
