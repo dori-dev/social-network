@@ -1,12 +1,15 @@
 from django.urls import path
-from account.views import auth, edit, otp, password
+from account.views import edit, login, otp, password, register
 
 app_name = 'account'
 
 urlpatterns = [
-    path('login/', auth.UserLogin.as_view(), name='login'),
-    path('logout/', auth.UserLogout.as_view(), name='logout'),
-    path('register/', auth.Register.as_view(), name='register'),
+    # Login
+    path('login/', login.UserLogin.as_view(), name='login'),
+    path('logout/', login.UserLogout.as_view(), name='logout'),
+    # Register
+    path('register/', register.Register.as_view(), name='register'),
+    path('activate/<uidb64>/<token>/', register.activate, name='activate'),
     # Edit
     path('edit/', edit.Edit.as_view(), name='edit'),
     # OTP
