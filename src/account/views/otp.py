@@ -14,8 +14,7 @@ class OtpAuth(FormView):
     def form_valid(self, form, **kwargs):
         phone = form.cleaned_data['phone']
         otp_code = utils.generate_otp()
-        print("Verification Code:", otp_code)
-        # utils.send_otp(phone, otp_code)
+        utils.send_otp(phone, otp_code)
         self.request.session['phone_number'] = phone
         messages.success(
             self.request,
