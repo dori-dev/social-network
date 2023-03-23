@@ -1,6 +1,6 @@
 FROM hub.hamdocker.ir/library/python:3.8
 
-WORKDIR /django_app/
+WORKDIR /social-network/
 ADD ./requirements.txt ./
 RUN pip install -r ./requirements.txt
 ADD ./ ./
