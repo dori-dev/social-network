@@ -21,6 +21,7 @@ ALLOWED_HOSTS = [
     'mysite.com',
     '127.0.0.1',
     'localhost',
+    '0.0.0.0',
 ]
 
 # Email
