@@ -15,10 +15,12 @@ urlpatterns = [
     path('users/', include('contact.urls', namespace='user')),
     path('actions/', include('action.urls', namespace='action')),
     path('search/', include('search.urls', namespace='search')),
-    path('__debug__/', include('debug_toolbar.urls')),
 ]
 
 if settings.DEBUG:
+    urlpatterns += [
+        path('__debug__/', include('debug_toolbar.urls')),
+    ]
     urlpatterns += static(
         settings.MEDIA_URL,
         document_root=settings.MEDIA_ROOT,

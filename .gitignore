@@ -13,3 +13,4 @@ posts.json
 users.json
 add_fake_data.py
 .vscode
+staticfiles
