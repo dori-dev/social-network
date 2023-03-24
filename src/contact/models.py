@@ -1,20 +1,17 @@
 from django.db import models
-from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from django_jalali.db import models as jalali_models
-
-User = get_user_model()
 
 
 class Contact(models.Model):
     user_from = models.ForeignKey(
-        User,
+        "account.CustomUser",
         related_name='following_set',
         on_delete=models.CASCADE,
         verbose_name=_('User from'),
     )
     user_to = models.ForeignKey(
-        User,
+        "account.CustomUser",
         related_name='followers_set',
         on_delete=models.CASCADE,
         verbose_name=_('User to'),
