@@ -4,12 +4,12 @@ from django.utils.encoding import force_bytes, force_str
 from django.contrib.auth import get_user_model, login
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
-from django.core.mail import EmailMessage
 from django.contrib import messages
 
 from account import forms
 from account.views.base import FormView
 from account.tokens import account_activation_token
+from account import utils
 
 
 UserModel = get_user_model()
@@ -24,7 +24,7 @@ class Register(FormView):
         user.is_active = False
         user.save()
         current_site = get_current_site(self.request)
-        mail_subject = 'فعال سازی اکانت'
+        mail_subject = 'فعال سازی اکانت ویزیتور ایکس'
         message = render_to_string('account/register/activate_account.html', {
             'user': user,
             'domain': current_site.domain,
@@ -32,12 +32,7 @@ class Register(FormView):
             'token': account_activation_token.make_token(user),
         })
         to_email = form.cleaned_data['email']
-        email = EmailMessage(
-            mail_subject,
-            message,
-            to=[to_email],
-        )
-        email.send()
+        utils.send_mail(mail_subject, message, to_email)
         context = {
             'email': to_email,
         }
@@ -70,7 +65,7 @@ def activate(request, uidb64, token):
         messages.add_message(
             request,
             messages.SUCCESS,
-            "به سایت <strong>بگو مگو</strong> خوش اومدی :)",
+            "به سایت <strong>ویزیتور ایکس</strong> خوش اومدی :)",
         )
         next = request.POST.get('next')
         if next:

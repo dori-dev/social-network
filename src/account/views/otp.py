@@ -76,7 +76,7 @@ class OtpRegister(PhoneRequiredMixin, FormView):
             messages.add_message(
                 self.request,
                 messages.SUCCESS,
-                "به سایت <strong>بگو مگو</strong> خوش اومدی :)",
+                "به سایت <strong>ویزیتور ایکس</strong> خوش اومدی :)",
             )
             self.request.session['phone_number'] = None
             next = self.request.POST.get('next')
