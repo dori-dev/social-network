@@ -4,15 +4,18 @@ from .base import *
 
 INSTALLED_APPS = [
     *BASE_INSTALLED_APPS,
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     *BASE_MIDDLEWARE,
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 DEBUG = True
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
+CSRF_TRUSTED_ORIGINS = [f"https://{host}" for host in ALLOWED_HOSTS]
 
 STATIC_ROOT = os.getenv('STATIC_ROOT', 'staticfiles')
 

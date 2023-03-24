@@ -1,18 +1,15 @@
 from .base import *
 
-THIRD_PARTY_APPS = [
+
+INSTALLED_APPS = [
+    *BASE_INSTALLED_APPS,
     'django_extensions',
     'debug_toolbar',
 ]
 
-INSTALLED_APPS = [
-    *BASE_INSTALLED_APPS,
-    *THIRD_PARTY_APPS,
-]
-
 MIDDLEWARE = [
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
     *BASE_MIDDLEWARE,
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 DEBUG = True
