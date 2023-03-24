@@ -1,36 +1,80 @@
 {% load static %}
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!-- Primary Meta Tags -->
-<title>{% if subtitle %}{{ title }} {{ subtitle }}{% else %}{{ title }}{% endif %} | بگو مگو</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="title" content="{% if subtitle %}{{ title }} {{ subtitle }}{% else %}{{ title }}{% endif %} | بگو مگو">
-<meta name="author" content="Mohammad Dori">
-<meta name="description" content="یک پنل مدیریت جنگو برای بگو مگو">
-<meta name="keywords" content="چت, سایت, شبکه اجتماعی, بگو مگو, اشتراک عکس, تصویر" />
-<link rel="canonical" href="https://mysite.com/admin">
+<title>
+  {% if subtitle %}{{ title }} {{ subtitle }}{% else %}{{ title }}{% endif %} |
+  ویزیتور ایکس
+</title>
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, shrink-to-fit=no"
+/>
+<meta
+  name="title"
+  content="{% if subtitle %}{{ title }} {{ subtitle }}{% else %}{{ title }}{% endif %} | ویزیتور ایکس"
+/>
+<meta name="author" content="Mohammad Dori" />
+<meta name="description" content="یک پنل مدیریت جنگو برای ویزیتور ایکس" />
+<meta
+  name="keywords"
+  content="چت, سایت, شبکه اجتماعی, ویزیتور ایکس, اشتراک عکس, تصویر"
+/>
+<link rel="canonical" href="https://mysite.com/admin" />
 <!-- Open Graph / Facebook -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://mysite.com/admin">
-<meta property="og:title" content="پنل مدیریت - بگو مگو">
-<meta property="og:description" content="یک پنل مدیریت جنگو برای بگو مگو">
-<meta property="og:image" content="">
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://mysite.com/admin" />
+<meta property="og:title" content="پنل مدیریت - ویزیتور ایکس" />
+<meta
+  property="og:description"
+  content="یک پنل مدیریت جنگو برای ویزیتور ایکس"
+/>
+<meta property="og:image" content="" />
 <!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image">
-<meta property="twitter:url" content="https://mysite.com/admin">
-<meta property="twitter:title" content="پنل مدیریت - بگو مگو">
-<meta property="twitter:description" content="یک پنل مدیریت جنگو برای بگو مگو">
-<meta property="twitter:image" content="">
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content="https://mysite.com/admin" />
+<meta property="twitter:title" content="پنل مدیریت - ویزیتور ایکس" />
+<meta
+  property="twitter:description"
+  content="یک پنل مدیریت جنگو برای ویزیتور ایکس"
+/>
+<meta property="twitter:image" content="" />
 <!-- Favicon -->
-<link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/favicon/apple-touch-icon.png' %}">
-<link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon/favicon-32x32.png' %}">
-<link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favicon/favicon-16x16.png' %}">
-<link rel="manifest" href="{% static 'img/favicon/site.webmanifest' %}">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="theme-color" content="#ffffff">
+<link
+  rel="apple-touch-icon"
+  sizes="180x180"
+  href="{% static 'img/favicon/apple-touch-icon.png' %}"
+/>
+<link
+  rel="icon"
+  type="image/png"
+  sizes="32x32"
+  href="{% static 'img/favicon/favicon-32x32.png' %}"
+/>
+<link
+  rel="icon"
+  type="image/png"
+  sizes="16x16"
+  href="{% static 'img/favicon/favicon-16x16.png' %}"
+/>
+<link rel="manifest" href="{% static 'img/favicon/site.webmanifest' %}" />
+<meta name="msapplication-TileColor" content="#ffffff" />
+<meta name="theme-color" content="#ffffff" />
 <!-- Sweet Alert -->
-<link type="text/css" href="{% static 'vendor/sweetalert2.min.css' %}" rel="stylesheet">
+<link
+  type="text/css"
+  href="{% static 'vendor/sweetalert2.min.css' %}"
+  rel="stylesheet"
+/>
 <!-- Notyf -->
-<link type="text/css" href="{% static 'vendor/notyf.min.css' %}" rel="stylesheet">
+<link
+  type="text/css"
+  href="{% static 'vendor/notyf.min.css' %}"
+  rel="stylesheet"
+/>
 <!-- CSS -->
-<link type="text/css" href="{% static 'css/volt.css' %}" rel="stylesheet">
-<link type="text/css" href="{% static 'admin/css/rtl.css' %}" rel="stylesheet">
+<link type="text/css" href="{% static 'css/volt.css' %}" rel="stylesheet" />
+<link
+  type="text/css"
+  href="{% static 'admin/css/rtl.css' %}"
+  rel="stylesheet"
+/>

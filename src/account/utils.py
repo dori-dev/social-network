@@ -1,6 +1,7 @@
 from random import choices
 from django.conf import settings
 from django.utils.timezone import now
+from django.core.mail import EmailMessage
 from kavenegar import (
     KavenegarAPI,
     APIException,
@@ -9,6 +10,16 @@ from kavenegar import (
 from background_task import background
 
 from . import models
+
+
+@background(schedule=0)
+def send_mail(subject, message, to_email):
+    email = EmailMessage(
+        subject,
+        message,
+        to=[to_email],
+    )
+    email.send()
 
 
 @background(schedule=0)
