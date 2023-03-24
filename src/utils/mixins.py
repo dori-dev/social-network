@@ -1,18 +1,11 @@
 from django.shortcuts import redirect
 from django.http import HttpResponseBadRequest
 from django.http import HttpRequest
-from django.conf import settings
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
-import redis
 
 from account.models import OTP
-
-r = redis.Redis(
-    host=settings.REDIS_HOST,
-    port=settings.REDIS_PORT,
-    db=settings.REDIS_DB,
-)
+from config.settings import r
 
 
 class AjaxRequiredMixin:

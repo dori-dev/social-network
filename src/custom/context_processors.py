@@ -7,20 +7,13 @@ from django.conf import settings
 from django.db.models import Count, Sum
 from django.urls import reverse
 from django.contrib.admin.models import LogEntry
-import redis
 import jdatetime
 from jalali_date import datetime2jalali
 
 from post.models import Post
 from action.models import Action
 from contact.models import Contact
-
-
-r = redis.Redis(
-    host=settings.REDIS_HOST,
-    port=settings.REDIS_PORT,
-    db=settings.REDIS_DB,
-)
+from config.settings import r
 
 UserModel = get_user_model()
 
