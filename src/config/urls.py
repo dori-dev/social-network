@@ -1,11 +1,9 @@
 """social network URL Configuration
 """
-import os
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('', include('home.urls', namespace='home')),
@@ -17,9 +15,9 @@ urlpatterns = [
     path('users/', include('contact.urls', namespace='user')),
     path('actions/', include('action.urls', namespace='action')),
     path('search/', include('search.urls', namespace='search')),
-] + staticfiles_urlpatterns()
+]
 
-if settings.DEBUG and os.getenv('STATE') == 'development':
+if settings.DEBUG:
     urlpatterns += [
         path('__debug__/', include('debug_toolbar.urls')),
     ]
