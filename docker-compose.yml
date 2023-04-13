@@ -1,0 +1,59 @@
+version: '3.7'
+
+services:
+  app:
+    build: ./src
+    container_name: app
+    restart: always
+    expose:
+      - 8000
+    env_file: src/.env
+    environment:
+      POSTGRES_HOST: db
+    volumes:
+      - type: 'bind'
+        source: './src'
+        target: '/app'
+    depends_on:
+      - db
+      - nginx
+      - cache
+
+  db:
+    image: postgres:alpine
+    container_name: postgres
+    restart: always
+    expose:
+      - 5432
+    volumes:
+      - type: 'bind'
+        source: './volumes/db'
+        target: '/var/lib/postgresql/data'
+    env_file: src/.env
+
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    restart: always
+    ports:
+      - 80:80
+    volumes:
+      - type: 'bind'
+        source: './src/media'
+        target: '/app/media'
+      - type: 'bind'
+        source: './src/staticfiles'
+        target: '/app/staticfiles'
+
+  cache:
+    image: bitnami/redis:latest
+    container_name: redis
+    restart: always
+    hostname: redis
+    expose:
+      - 6379
+    env_file: src/.env
+    environment:
+      ENABLE_OVERCOMMIT_MEMORY: true
+    volumes:
+      - ./volumes/cache/:/bitnami/redis/data
