@@ -14,8 +14,15 @@ MIDDLEWARE = [
 
 DEBUG = False
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
-CSRF_TRUSTED_ORIGINS = [f"https://{host}" for host in ALLOWED_HOSTS]
+ALLOWED_HOSTS = [
+    'app',
+]
+CSRF_TRUSTED_ORIGINS = []
+for host in os.getenv('ALLOWED_HOSTS', '').split(','):
+    CSRF_TRUSTED_ORIGINS.extend([
+        f"http://{host}",
+        f"https://{host}",
+    ])
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
