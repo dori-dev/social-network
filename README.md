@@ -20,6 +20,7 @@ cd social-network
 
 ```
 mkdir -p volumes/db volumes/cache volumes/logs
+sudo chmod -R 777 ./volumes/cache/
 ```
 
 ## Set Environment Variable
