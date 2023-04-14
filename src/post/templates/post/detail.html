@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load jformat timesince post %}
+{% load jformat i18n timesince post %}
 
 {% block title %}پست {{ post.user.username }}{% endblock title %}
 
@@ -90,7 +90,11 @@
           </button>
         </div>
         <div class="col-6 text-end">
-          {{ post.created|jformat:"%d %B %Y" }}
+          {% with date=post.created|jformat:"%d %B %Y" %}
+            {% for word in date|split_string %}
+              {% translate word %}
+            {% endfor %}
+          {% endwith %}
         </div>
       </div>
       <div class="modal fade" id="likeList" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

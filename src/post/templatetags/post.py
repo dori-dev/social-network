@@ -10,3 +10,8 @@ register = template.Library()
 def render(content):
     content = re.sub(r"#(\w+)", r"<a href='/posts/tag/\1/'>#\1</a>", content)
     return mark_safe(content)
+
+
+@register.filter
+def split_string(value: str):
+    return value.split()

@@ -266,3 +266,39 @@ msgstr "کد تاییدی که وارد کردی اشتباه است."
 
 msgid "First apply to get the verification code."
 msgstr "اول برای دریافت کد تایید درخواست بده."
+
+msgid "Farvardin"
+msgstr "فروردین"
+
+msgid "Ordibehesht"
+msgstr "اردیبهشت"
+
+msgid "Khordad"
+msgstr "خرداد"
+
+msgid "Tir"
+msgstr "تیر"
+
+msgid "Mordad"
+msgstr "مرداد"
+
+msgid "Shahrivar"
+msgstr "شهریور"
+
+msgid "Mehr"
+msgstr "مهر"
+
+msgid "Aban"
+msgstr "آبان"
+
+msgid "Azar"
+msgstr "آذر"
+
+msgid "Dey"
+msgstr "دی"
+
+msgid "Bahman"
+msgstr "بهمن"
+
+msgid "Esfand"
+msgstr "اسفند"
