@@ -14,6 +14,9 @@ services:
       - type: 'bind'
         source: './src'
         target: '/app'
+      - type: 'bind'
+        source: './volumes/logs'
+        target: '/app/logs'
     depends_on:
       - db
       - nginx

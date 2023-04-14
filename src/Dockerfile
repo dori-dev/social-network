@@ -5,6 +5,7 @@ ENV PYTHONUNBUFFERED 1
 ENV DJANGO_SUPERUSER_PASSWORD admin
 
 RUN mkdir /app
+RUN mkdir -p /app/logs
 WORKDIR /app
 RUN apk update
 RUN apk add --no-cache build-base
