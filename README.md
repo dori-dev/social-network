@@ -57,6 +57,20 @@ docker-compose up -d
 
 Main Page: [localhost](http://localhost:80/)<br>
 
+## HTTPS in Development
+
+```
+sudo chown $USER /etc/hosts
+echo '127.0.0.1 mysite.com' >> /etc/hosts
+```
+
+<br>
+Run server with https.
+
+```
+python manage.py runserver_plus --cert-file cert.crt
+```
+
 #
 
 ## Links
