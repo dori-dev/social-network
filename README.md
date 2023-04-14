@@ -71,6 +71,14 @@ Run server with https.
 python manage.py runserver_plus --cert-file cert.crt
 ```
 
+## Add Fake Data
+
+Add fake user & post data to database.
+
+```
+python manage.py fakedata
+```
+
 #
 
 ## Links
