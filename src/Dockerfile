@@ -10,6 +10,7 @@ WORKDIR /app
 ADD ./resolv.conf /etc/resolv.conf
 RUN apk update
 RUN apk add --no-cache build-base
+ADD ./resolv.conf /etc/resolv.conf
 RUN pip install --upgrade pip
 ADD ./requirements /app/requirements
 ADD ./requirements.txt /app
