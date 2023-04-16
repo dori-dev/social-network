@@ -19,7 +19,7 @@ cd social-network
 ## Create Volumes Directory
 
 ```
-mkdir -p volumes/db volumes/cache volumes/logs
+mkdir -p volumes/db volumes/cache volumes/logs src/staticfiles
 sudo chmod -R 777 ./volumes/cache/
 ```
 

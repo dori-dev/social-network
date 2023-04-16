@@ -11,3 +11,4 @@ django-taggit==3.1.0
 pytz==2022.7.1
 kavenegar==1.1.2
 django4-background-tasks==1.2.7
+django-extensions==3.2.1
