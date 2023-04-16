@@ -1,5 +1,4 @@
 -r common.txt
-django-extensions==3.2.1
 Werkzeug==2.2.2
 pyOpenSSL==23.0.0
 certifi==2022.12.7
