@@ -1,4 +1,4 @@
-FROM python:alpine
+FROM hub.hamdocker.ir/library/python:alpine
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
