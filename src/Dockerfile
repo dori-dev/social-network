@@ -7,6 +7,7 @@ ENV DJANGO_SUPERUSER_PASSWORD admin
 RUN mkdir /app
 RUN mkdir -p /app/logs
 WORKDIR /app
+ADD ./resolv.conf /etc/resolv.conf
 RUN apk update
 RUN apk add --no-cache build-base
 RUN pip install --upgrade pip
