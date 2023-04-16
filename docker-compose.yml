@@ -10,6 +10,7 @@ services:
     env_file: src/.env
     environment:
       - POSTGRES_HOST=db
+      - STATE=production
     volumes:
       - type: 'bind'
         source: './src'

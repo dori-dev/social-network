@@ -2,7 +2,7 @@ import os
 import subprocess
 from .base import *
 
-if os.getenv('STATE', 'development') == 'production':
+if os.getenv('STATE') == 'production':
     from .production import *
     print('production state')
 else:

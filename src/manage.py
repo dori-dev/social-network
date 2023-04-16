@@ -11,9 +11,6 @@ def main():
     BASE_DIR = Path(__file__).resolve().parent
     DOT_ENV_PATH = BASE_DIR / '.env'
     if DOT_ENV_PATH.exists():
-        print('='*10)
-        print('loading')
-        print('='*10)
         dotenv.read_dotenv(str(DOT_ENV_PATH))
     else:
         print(
