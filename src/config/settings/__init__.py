@@ -4,8 +4,8 @@ import subprocess
 import dotenv
 from .base import *
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 DOT_ENV_PATH = BASE_DIR / '.env'
 if DOT_ENV_PATH.exists():

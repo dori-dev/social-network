@@ -2,15 +2,14 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-import pathlib
+from pathlib import Path
 import dotenv
 
 
 def main():
     """Run administrative tasks."""
-    DOT_ENV_PATH = pathlib.Path() / '.env'
-    if not DOT_ENV_PATH.exists():
-        DOT_ENV_PATH = pathlib.Path() / 'src/.env'
+    BASE_DIR = Path(__file__).resolve().parent
+    DOT_ENV_PATH = BASE_DIR / '.env'
     if DOT_ENV_PATH.exists():
         dotenv.read_dotenv(str(DOT_ENV_PATH))
     else:
