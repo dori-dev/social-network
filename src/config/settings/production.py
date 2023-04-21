@@ -8,8 +8,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+   'corsheaders.middleware.CorsMiddleware',
     *BASE_MIDDLEWARE,
-    'corsheaders.middleware.CorsMiddleware',
 ]
 
 DEBUG = False
