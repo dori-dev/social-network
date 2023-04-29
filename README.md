@@ -54,9 +54,9 @@ Run containers in the background.
 docker-compose up -d
 ```
 
-## Open In Browser
-
 Main Page: [localhost](http://localhost:80/)<br>
+
+<br>
 
 ## HTTPS in Development
 
